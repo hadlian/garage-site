@@ -52,7 +52,7 @@ hr{border:0;border-top:1px solid var(--gl);margin:32px 0}
 a{color:inherit}
 </style></head><body><div class="wrap">
 <p class="meta"><a href="index.html">&larr; all docs</a></p><h1>Proposal — one repo, many cars</h1>
-<p><b>Status:</b> proposed, not built. Written 3 Aug 2026 at the end of the session that produced <code>ravin-z4</code>. Read this before starting the refactor.</p>
+<p><b>Status: built.</b> Written 3 Aug 2026 at the end of the session that produced <code>ravin-z4</code>, when it was a proposal; the merge happened, and the pipeline it asks for exists — <code>parsers/</code> keyed to formats, <code>model.py</code>, <code>render/</code>, <code>sections/</code>, and <code>garage.py</code> as the one command over all of it. Kept as written because the argument is the record of why the repo is shaped this way; what has since been decided differently is noted inline.</p>
 <h2>What changed</h2>
 <p><code>ravin-m3</code> and <code>ravin-z4</code> were built as separate repos. That was the right call for two cars with no shared tooling, and it is the wrong call for the actual requirement, which is: <b>one repo you can add cars to, carrying the parsers to read whatever equipment each car has.</b></p>
 <p>The decision to separate was made explicitly conditional on there being no third car. There will be more cars. This supersedes it.</p>

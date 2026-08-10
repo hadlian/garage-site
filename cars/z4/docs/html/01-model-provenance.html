@@ -52,7 +52,7 @@ hr{border:0;border-top:1px solid var(--gl);margin:32px 0}
 a{color:inherit}
 </style></head><body><div class="wrap">
 <p class="meta"><a href="index.html">&larr; all docs</a></p><h1>The model — carrying provenance per field</h1>
-<p><b>Status:</b> proposed, not built. Written 4 Aug 2026. Solves the design problem raised in <code>00-multi-car-proposal.md</code>, which should be read first.</p>
+<p><b>Status: built.</b> Written 4 Aug 2026 as a proposal; it is now <code>model.py</code> at the repo root, held by <code>test_model.py</code>. Solves the design problem raised in <code>00-multi-car-proposal.md</code>, which should be read first. Kept as written — the reasoning is why the model has the shape it has.</p>
 <p>The refactor needs one normalised model that both pipelines emit into: the M3&#x27;s hand-maintained JSON and the Z4&#x27;s parsed binaries. The proposal states the requirement — every field must say where it came from — and suggests generalising the Z4&#x27;s <code>confirmed</code> / <code>probable</code> / <code>candidate</code> markers to do it. That is the wrong generalisation, for a reason worth stating before the schema.</p>
 <h2>Provenance and confidence are two axes</h2>
 <p>The Z4&#x27;s markers do not describe values. Their own definitions, from <code>e35_map.json</code>:</p>
@@ -70,7 +70,7 @@ a{color:inherit}
 <ol><li><b>How is it presented?</b> Confidence drives that, mostly — the Z4 renderer already colours by it.</li><li><b>What may a rebuild overwrite?</b> <code>parsed</code> and <code>inferred</code> fields are regenerated every build and hand-editing them is pointless — CONVENTIONS.md already warns that the next rebuild silently discards it. <code>entered</code> fields must survive re-parsing untouched. Without origin the builder cannot tell which is which, and merging the two pipelines means one file will hold both.</li><li><b>What does disagreement mean?</b> See below.</li></ol>
 <h2>Disagreement is a finding, not a resolution</h2>
 <p>When two sources claim the same field, the model records both and emits a finding. It must never silently pick one.</p>
-<p><code>ravin-m3/schematic/build.py:38</code> (<code>apply_ecu</code>) is already this, hard-wired for one case: it joins the calibration&#x27;s assignments onto harness pins and reports <code>unassigned</code> / <code>unwired</code> rather than choosing. Generalise <i>that</i> function, not the markers. A parser producing a value where an <code>entered</code> one already exists is the most valuable event the pipeline can produce — it is the harness PDF being checked against the device — and it should read as a finding, not a merge conflict.</p>
+<p><code>cars/m3/schematic/build.py</code> (<code>apply_ecu</code>) is already this, hard-wired for one case: it joins the calibration&#x27;s assignments onto harness pins and reports <code>unassigned</code> / <code>unwired</code> rather than choosing. Generalise <i>that</i> function, not the markers. A parser producing a value where an <code>entered</code> one already exists is the most valuable event the pipeline can produce — it is the harness PDF being checked against the device — and it should read as a finding, not a merge conflict.</p>
 <h2>Field identity</h2>
 <p>Findings and provenance both need to name a field. One path scheme, dotted:</p>
 <pre><code>&lt;car&gt;.&lt;device&gt;.&lt;group&gt;.&lt;item&gt;.&lt;attribute&gt;
