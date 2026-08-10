@@ -1,0 +1,86 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>C1212 — what a controlled edit still buys</title>
+<style>:root{color-scheme:light;--s1:#fcfcfb;--pg:#f9f9f7;--tp:#0b0b0b;--ts:#52514e;--tm:#898781;
+--gl:#e1e0d9;--bl:#c3c2b7;--bd:rgba(11,11,11,.10);--crit:#d03b3b;--warn:#fab219;--good:#0ca30c;}
+@media(prefers-color-scheme:dark){:root:where(:not([data-theme=light])){color-scheme:dark;
+--s1:#1a1a19;--pg:#0d0d0d;--tp:#fff;--ts:#c3c2b7;--tm:#898781;--gl:#2c2c2a;--bl:#383835;
+--bd:rgba(255,255,255,.10);}}
+:root[data-theme=dark]{color-scheme:dark;--s1:#1a1a19;--pg:#0d0d0d;--tp:#fff;--ts:#c3c2b7;
+--tm:#898781;--gl:#2c2c2a;--bl:#383835;--bd:rgba(255,255,255,.10);}
+*{box-sizing:border-box}
+body{margin:0;background:var(--pg);color:var(--tp);
+font:14px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1400px;margin:0 auto;padding:32px 24px 64px}
+h1{font-size:24px;margin:0 0 4px;letter-spacing:-.01em}
+.sub{color:var(--ts);margin:0 0 4px}
+.meta{color:var(--tm);font-size:12px;margin:0 0 24px}
+h2{font-size:16px;margin:40px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--gl)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;padding:12px 14px;background:var(--s1);
+border:1px solid var(--bd);border-radius:8px;margin-bottom:20px}
+.lg{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--ts);white-space:nowrap}
+.lg i{width:11px;height:11px;border-radius:3px;flex:none}
+.conn header{padding:11px 14px;border-bottom:1px solid var(--gl)}
+.conn h3{margin:0;font-size:14px}
+.conn header p{margin:2px 0 0;font-size:11.5px;color:var(--tm)}
+.grid{display:flex;flex-direction:column}
+.pin:last-child{border-bottom:0}
+.hd{font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--tm);
+background:var(--pg);padding-top:6px;padding-bottom:6px}
+.pn{font-variant-numeric:tabular-nums;color:var(--tm);text-align:right}
+.f-crit{background:color-mix(in srgb,var(--crit) 11%,transparent)}
+.f-warn{background:color-mix(in srgb,var(--warn) 13%,transparent)}
+.note{background:var(--s1);border:1px solid var(--bd);border-left:3px solid var(--crit);
+border-radius:8px;padding:12px 15px;margin:0 0 16px;font-size:13px;color:var(--ts)}
+.note b{color:var(--tp)}
+.note.w{border-left-color:var(--warn)}
+code{font:11.5px ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--pg);
+padding:1px 5px;border-radius:4px;border:1px solid var(--gl)}
+th{text-align:left;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;
+color:var(--tm);padding:8px 12px;background:var(--pg);border-bottom:1px solid var(--gl)}
+td{padding:5px 12px;border-bottom:1px solid var(--gl);color:var(--ts);vertical-align:top}
+td:first-child{font-weight:600;color:var(--tp);white-space:nowrap}
+tr:last-child td{border-bottom:0}
+footer{margin-top:44px;padding-top:14px;border-top:1px solid var(--gl);font-size:11.5px;color:var(--tm)}
+h3{font-size:14px;margin:28px 0 8px}h4{font-size:13px;margin:20px 0 6px}
+p{max-width:76ch}li{max-width:72ch;margin:3px 0}ul,ol{padding-left:24px;color:var(--ts)}
+pre{background:var(--s1);border:1px solid var(--bd);border-radius:8px;padding:12px 15px;overflow-x:auto}
+pre code{border:0;background:none;padding:0;font-size:12px;line-height:1.5}
+blockquote{margin:12px 0;padding:2px 16px;border-left:3px solid var(--bl);color:var(--ts)}
+.tbl{overflow-x:auto}table{border-collapse:collapse;min-width:50%}
+hr{border:0;border-top:1px solid var(--gl);margin:32px 0}
+a{color:inherit}
+</style></head><body><div class="wrap">
+<p class="meta"><a href="index.html">&larr; all docs</a></p><h1>C1212 — what a controlled edit still buys</h1>
+<p>The four saves this checklist used to list are done, and none of them needs repeating: channel-to-pin binding, the alarm thresholds, the CHANL_D record layout and the CAN message layouts were all settled by reading the file. See the record layouts in the offset-map section of schematic/z4_pinout_schematic.html.</p>
+<p>What is left is narrower. Three saves, in value order, and only the first is worth a trip on its own. The format is known to diff cleanly — GUID churn on save is understood and suppressed by the tool — so the method is no longer in question.</p>
+<h2>Protocol</h2>
+<ol><li>Always start from the same baseline copy of C1212 Alsense.c1212v64. Never chain edits.</li><li>Give every field in a save a DIFFERENT value, so runs can be matched to fields by value.</li><li>Write down what each field read BEFORE changing it — that is what decodes the field, not just locates it.</li><li>Save As a new filename. Do not send to the dash.</li><li>Run the diff after each save before moving on.</li></ol>
+<p>After each save:</p>
+<pre><code>python cars/z4/tools/diff_e35.py &quot;cars/z4/source/C1212 Alsense.c1212v64&quot; &quot;cars/z4/source/&lt;new&gt;.c1212v64&quot; --map formats/c1212_map.json --record &quot;save 1 - display page&quot;</code></pre>
+<hr>
+<h2>Save 1 — Display page assignment — the only real gap left</h2>
+<p><b>Screens:</b> Display / screen setup</p>
+<p>The 46 field labels are located but their grouping into screens is inferred from a gap threshold, and nothing in the file marks a page boundary. Move ONE field from one page to another and the run that changes is the page reference.</p>
+<div class=tbl><table><thead><tr><th>Field</th><th>Reads now</th><th>Set to</th></tr></thead><tbody><tr><td>A display field (note which, and which page it is on)</td><td></td><td>move it to another page</td></tr></tbody></table></div>
+<p>Save as <code>Alsense PageTest.c1212v64</code>.</p>
+<p>→ A short run inside the label region means the page is a field in the label record, and all 46 resolve at once.</p>
+<p>→ A run somewhere else means pages are a separate structure that references the labels, and that structure is what to map next.</p>
+<hr>
+<h2>Save 2 — CAN template flag bits</h2>
+<p><b>Screens:</b> CAN / communications</p>
+<p>+0x1FB4 upper bits and +0x1FB8 are undecoded. Direction no longer needs them — it falls out of which channel word is populated — so this is for rate and frame format only. Change a transmit rate on one template and the frame format on another.</p>
+<div class=tbl><table><thead><tr><th>Field</th><th>Reads now</th><th>Set to</th></tr></thead><tbody><tr><td>One template&#x27;s transmit rate</td><td></td><td>any other rate</td></tr><tr><td>One template&#x27;s standard/extended setting</td><td></td><td>the other one</td></tr></tbody></table></div>
+<p>Save as <code>Alsense FlagTest.c1212v64</code>.</p>
+<p>→ Both runs should land at +0x1FB4 or +0x1FB8 of the templates you touched, which assigns the bits directly.</p>
+<hr>
+<h2>Save 3 — Harvest a built-in channel id</h2>
+<p><b>Screens:</b> CAN / communications — a transmit template</p>
+<p>Now that word 9 of a +0x00EA record is known to be the source channel id, any built-in channel&#x27;s id can be read off by putting it in a CAN message. This converts &#x27;the id table is inside Dash Manager&#x27; into something answerable one channel at a time. Bind two built-ins whose ids are unknown to two free bytes of an existing transmit template.</p>
+<div class=tbl><table><thead><tr><th>Field</th><th>Reads now</th><th>Set to</th></tr></thead><tbody><tr><td>A free byte of a transmit template</td><td>unbound</td><td>a built-in, e.g. Dig In 1 Speed</td></tr><tr><td>Another free byte</td><td>unbound</td><td>a different built-in</td></tr></tbody></table></div>
+<p>Save as <code>Alsense IdTest.c1212v64</code>.</p>
+<p>→ Read word 9 of the two new records straight out of the rebuilt schematic — no diffing needed, the parser resolves them.</p>
+<p>→ Repeat for as many built-ins as matter; each save is cheap.</p>
+<hr>
+<p><b>Note.</b> On the car, not in the tool: the PDM reads CDL3.Reverse Gear from 0x118 byte 6 and the dash&#x27;s transmit template for 0x118 binds bytes 0, 2 and 4 only. Either bind reverse gear to byte 6 on the dash, or stop the PDM reading it. <b>Note.</b> Also worth fixing while you are in there, unrelated to mapping: &#x27;RF Tire Pressure&#x27; and &#x27;LF Tire Pressure&#x27; share the short name LFTP, so the two are indistinguishable on the dash and in the log tree. &#x27;RR Tire Pressure&#x27; has no short name at all. <b>Note.</b> The C1212 has no maths channels. If you need a computed value on the dash, it has to be computed upstream — an M800 user channel or aux table — and sent over CAN.</p>
+<p>&lt;!-- generated from c1212_map.json — edit that, not this --&gt;</p><footer>rendered from <code>C1212_CHECKLIST.md</code> — edit that, not this — <code>tools/build_docs.py</code></footer></div></body></html>

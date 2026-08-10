@@ -1,0 +1,105 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BMW Z4 — M800 IO map</title>
+<style>:root{color-scheme:light;--s1:#fcfcfb;--pg:#f9f9f7;--tp:#0b0b0b;--ts:#52514e;--tm:#898781;
+--gl:#e1e0d9;--bl:#c3c2b7;--bd:rgba(11,11,11,.10);--crit:#d03b3b;--warn:#fab219;--good:#0ca30c;--c-p:#2a78d6;--c-e:#b8860b;}
+@media(prefers-color-scheme:dark){:root:where(:not([data-theme=light])){color-scheme:dark;
+--s1:#1a1a19;--pg:#0d0d0d;--tp:#fff;--ts:#c3c2b7;--tm:#898781;--gl:#2c2c2a;--bl:#383835;
+--bd:rgba(255,255,255,.10);--c-p:#5fa0d8;--c-e:#e0ab2b;}}
+:root[data-theme=dark]{color-scheme:dark;--s1:#1a1a19;--pg:#0d0d0d;--tp:#fff;--ts:#c3c2b7;
+--tm:#898781;--gl:#2c2c2a;--bl:#383835;--bd:rgba(255,255,255,.10);--c-p:#5fa0d8;--c-e:#e0ab2b;}
+*{box-sizing:border-box}
+body{margin:0;background:var(--pg);color:var(--tp);
+font:14px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1400px;margin:0 auto;padding:32px 24px 64px}
+h1{font-size:24px;margin:0 0 4px;letter-spacing:-.01em}
+.sub{color:var(--ts);margin:0 0 4px}
+.meta{color:var(--tm);font-size:12px;margin:0 0 24px}
+h2{font-size:16px;margin:40px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--gl)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;padding:12px 14px;background:var(--s1);
+border:1px solid var(--bd);border-radius:8px;margin-bottom:20px}
+.lg{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--ts);white-space:nowrap}
+.lg i{width:11px;height:11px;border-radius:3px;flex:none}
+.conn header{padding:11px 14px;border-bottom:1px solid var(--gl)}
+.conn h3{margin:0;font-size:14px}
+.conn header p{margin:2px 0 0;font-size:11.5px;color:var(--tm)}
+.grid{display:flex;flex-direction:column}
+.pin:last-child{border-bottom:0}
+.hd{font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--tm);
+background:var(--pg);padding-top:6px;padding-bottom:6px}
+.pn{font-variant-numeric:tabular-nums;color:var(--tm);text-align:right}
+.f-crit{background:color-mix(in srgb,var(--crit) 11%,transparent)}
+.f-warn{background:color-mix(in srgb,var(--warn) 13%,transparent)}
+.note{background:var(--s1);border:1px solid var(--bd);border-left:3px solid var(--crit);
+border-radius:8px;padding:12px 15px;margin:0 0 16px;font-size:13px;color:var(--ts)}
+.note b{color:var(--tp)}
+.note.w{border-left-color:var(--warn)}
+code{font:11.5px ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--pg);
+padding:1px 5px;border-radius:4px;border:1px solid var(--gl)}
+th{text-align:left;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;
+color:var(--tm);padding:8px 12px;background:var(--pg);border-bottom:1px solid var(--gl)}
+td{padding:5px 12px;border-bottom:1px solid var(--gl);color:var(--ts);vertical-align:top}
+td:first-child{font-weight:600;color:var(--tp);white-space:nowrap}
+tr:last-child td{border-bottom:0}
+footer{margin-top:44px;padding-top:14px;border-top:1px solid var(--gl);font-size:11.5px;color:var(--tm)}
+
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(430px,1fr));gap:16px}
+.grp{background:var(--s1);border:1px solid var(--bd);border-radius:8px;overflow:hidden;
+break-inside:avoid;margin-bottom:16px}
+.grp>b{display:block;padding:9px 14px;border-bottom:1px solid var(--gl);font-size:13px}
+.grp>b span{float:right;font-weight:400;color:var(--tm);font-size:11.5px}
+.io{display:grid;grid-template-columns:62px 62px minmax(0,1.3fr) minmax(0,1fr);gap:10px;
+padding:4px 14px;font-size:12.5px;border-bottom:1px solid var(--gl);align-items:baseline}
+.io:last-child{border-bottom:0}
+.io .s{font-weight:600}
+.io .raw{font:11px ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--tm)}
+.io .fromfile{color:var(--ts)}
+.io .fromtool{color:var(--tm);text-align:right;font-size:11.5px}
+.io.set .fromtool{color:var(--good);font-weight:600}
+.io.clash{background:color-mix(in srgb,var(--crit) 11%,transparent)}
+.io.clash .fromtool{color:var(--crit);font-weight:600}
+.cf{font-size:10.5px;letter-spacing:.04em;text-transform:uppercase}
+.cf-confirmed{color:var(--good);font-weight:600}
+.cf-candidate{color:var(--tm)}
+.hdr{display:grid;grid-template-columns:62px 62px minmax(0,1.3fr) minmax(0,1fr);gap:10px;
+padding:6px 14px;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;
+color:var(--tm);background:var(--pg);border-bottom:1px solid var(--gl)}
+</style></head><body><div class="wrap">
+
+<h1>BMW Z4 &mdash; M800 IO map</h1>
+<p class="sub">MoTeC M800 &middot; Z4 config 12_19_25test.e35</p>
+<p class="meta">Bytes read from the calibration through
+<code>formats/e35_map.json</code>; meanings from <code>ecu/resources.json</code>
+&middot; Generated 10 Aug 2026</p>
+
+<div class="note w"><b>Two kinds of fact, kept apart.</b>
+<i>In file</i> and <i>Decoded from the file</i> are parsed — open a different tune and they
+follow. <i>ECU Manager</i> is typed by a human from the vendor tool, because the M800
+carries not one channel, sensor or output name as text. 0 of 30 slots have been
+read off the tool so far.</div>
+
+
+<h2>Auxiliary outputs</h2>
+<div class="note i">The one table the file does give up. Each byte stores the <b>function
+number</b> &mdash; directly for functions 0&ndash;9, the function minus 90 for the
+100-series (0x0B is 101, Fuel Pump). Zero is an output never configured; a deliberately
+selected Off stores 1, which Boost Control (function 1) also would &mdash; the
+encoding&rsquo;s one open edge. All eight pinned 2026-08-09: aux 5 by its controlled edit, the rest by the Auxiliary Output Functions submenu naming each output&#x27;s current function against the stored bytes.</div>
+<div class="grp"><b>Aux 1&ndash;8<span>0/8</span></b><div class="hdr"><span>Slot</span><span>In file</span><span>Decoded from the file</span><span>ECU Manager</span></div><div class="io"><span class="s">Aux 1</span><span class="raw">05</span><span class="fromfile">Drive by Wire (Aux1 only - uses Aux2 also) <span class="cf cf-confirmed">confirmed</span></span><span class="fromtool"><span class=none>—</span></span></div><div class="io"><span class="s">Aux 2</span><span class="raw">06</span><span class="fromfile">Drive by Wire Idle Speed Control (Aux2 only) <span class="cf cf-confirmed">confirmed</span></span><span class="fromtool"><span class=none>—</span></span></div><div class="io"><span class="s">Aux 3</span><span class="raw">09</span><span class="fromfile">Lambda Sensor Heater <span class="cf cf-confirmed">confirmed</span></span><span class="fromtool"><span class=none>—</span></span></div><div class="io"><span class="s">Aux 4</span><span class="raw">09</span><span class="fromfile">Lambda Sensor Heater <span class="cf cf-confirmed">confirmed</span></span><span class="fromtool"><span class=none>—</span></span></div><div class="io"><span class="s">Aux 5</span><span class="raw">0B</span><span class="fromfile">Fuel Pump <span class="cf cf-confirmed">confirmed</span></span><span class="fromtool"><span class=none>—</span></span></div><div class="io"><span class="s">Aux 6</span><span class="raw">03</span><span class="fromfile">Aux Table <span class="cf cf-confirmed">confirmed</span></span><span class="fromtool"><span class=none>—</span></span></div><div class="io"><span class="s">Aux 7</span><span class="raw">00</span><span class="fromfile">unconfigured <span class="cf cf-confirmed">confirmed</span></span><span class="fromtool"><span class=none>—</span></span></div><div class="io"><span class="s">Aux 8</span><span class="raw">00</span><span class="fromfile">unconfigured <span class="cf cf-confirmed">confirmed</span></span><span class="fromtool"><span class=none>—</span></span></div></div>
+
+<h2>Sensors and inputs</h2>
+<div class="note i">None of this is in the file. The M800 stores no names at all, so every
+row here has to come off a screen &mdash; Sensor Setup, Input Setup, Wide Band Lambda Setup.
+The lambda rows show their bytes because those are located; what the bytes mean is not
+established, which is why the decoded column is empty rather than guessed.</div>
+<div class="cols">
+<div class="grp"><b>Analogue voltage inputs<span>0/8</span></b><div class="hdr"><span>Slot</span><span>In file</span><span>Decoded from the file</span><span>ECU Manager</span></div><div class="io"><span class="s">AV1</span><span class="raw">—</span><span class="fromfile"><span class=none>—</span></span><span class="fromtool"><span class=none>—</span></span></div><div class="io"><span class="s">AV2</span><span class="raw">—</span><span class="fromfile"><span class=none>—</span></span><span class="fromtool"><span class=none>—</span></span></div><div class="io"><span class="s">AV3</span><span class="raw">—</span><span class="fromfile"><span class=none>—</span></span><span class="fromtool"><span class=none>—</span></span></div><div class="io"><span class="s">AV4</span><span class="raw">—</span><span class="fromfile"><span class=none>—</span></span><span class="fromtool"><span class=none>—</span></span></div><div class="io"><span class="s">AV5</span><span class="raw">—</span><span class="fromfile"><span class=none>—</span></span><span class="fromtool"><span class=none>—</span></span></div><div class="io"><span class="s">AV6</span><span class="raw">—</span><span class="fromfile"><span class=none>—</span></span><span class="fromtool"><span class=none>—</span></span></div><div class="io"><span class="s">AV7</span><span class="raw">—</span><span class="fromfile"><span class=none>—</span></span><span class="fromtool"><span class=none>—</span></span></div><div class="io"><span class="s">AV8</span><span class="raw">—</span><span class="fromfile"><span class=none>—</span></span><span class="fromtool"><span class=none>—</span></span></div></div>
+<div class="grp"><b>Analogue temperature inputs<span>0/2</span></b><div class="hdr"><span>Slot</span><span>In file</span><span>Decoded from the file</span><span>ECU Manager</span></div><div class="io"><span class="s">AT1</span><span class="raw">—</span><span class="fromfile"><span class=none>—</span></span><span class="fromtool"><span class=none>—</span></span></div><div class="io"><span class="s">AT2</span><span class="raw">—</span><span class="fromfile"><span class=none>—</span></span><span class="fromtool"><span class=none>—</span></span></div></div>
+<div class="grp"><b>Digital and switch inputs<span>0/10</span></b><div class="hdr"><span>Slot</span><span>In file</span><span>Decoded from the file</span><span>ECU Manager</span></div><div class="io"><span class="s">Dig In 1</span><span class="raw">—</span><span class="fromfile"><span class=none>—</span></span><span class="fromtool"><span class=none>—</span></span></div><div class="io"><span class="s">Dig In 2</span><span class="raw">—</span><span class="fromfile"><span class=none>—</span></span><span class="fromtool"><span class=none>—</span></span></div><div class="io"><span class="s">Dig In 3</span><span class="raw">—</span><span class="fromfile"><span class=none>—</span></span><span class="fromtool"><span class=none>—</span></span></div><div class="io"><span class="s">Dig In 4</span><span class="raw">—</span><span class="fromfile"><span class=none>—</span></span><span class="fromtool"><span class=none>—</span></span></div><div class="io"><span class="s">Sw In 1</span><span class="raw">—</span><span class="fromfile"><span class=none>—</span></span><span class="fromtool"><span class=none>—</span></span></div><div class="io"><span class="s">Sw In 2</span><span class="raw">—</span><span class="fromfile"><span class=none>—</span></span><span class="fromtool"><span class=none>—</span></span></div><div class="io"><span class="s">Sw In 3</span><span class="raw">—</span><span class="fromfile"><span class=none>—</span></span><span class="fromtool"><span class=none>—</span></span></div><div class="io"><span class="s">Sw In 4</span><span class="raw">—</span><span class="fromfile"><span class=none>—</span></span><span class="fromtool"><span class=none>—</span></span></div><div class="io"><span class="s">Sw In 5</span><span class="raw">—</span><span class="fromfile"><span class=none>—</span></span><span class="fromtool"><span class=none>—</span></span></div><div class="io"><span class="s">Sw In 6</span><span class="raw">—</span><span class="fromfile"><span class=none>—</span></span><span class="fromtool"><span class=none>—</span></span></div></div>
+<div class="grp"><b>Wide band lambda<span>0/2</span></b><div class="hdr"><span>Slot</span><span>In file</span><span>Decoded from the file</span><span>ECU Manager</span></div><div class="io"><span class="s">LA1</span><span class="raw">08</span><span class="fromfile"><span class=none>—</span></span><span class="fromtool"><span class=none>—</span></span></div><div class="io"><span class="s">LA2</span><span class="raw">08</span><span class="fromfile"><span class=none>—</span></span><span class="fromtool"><span class=none>—</span></span></div></div>
+</div>
+
+<footer>Generated by <code>cars/z4/ecu/build.py</code>. Never hand-edit this file &mdash;
+edit <code>ecu/resources.json</code> and rebuild. The pinout schematic is a separate page
+covering the PDM, the dash and the rest of the M800.</footer>
+</div></body></html>

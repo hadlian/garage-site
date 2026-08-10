@@ -1,0 +1,58 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>docs/</title>
+<style>:root{color-scheme:light;--s1:#fcfcfb;--pg:#f9f9f7;--tp:#0b0b0b;--ts:#52514e;--tm:#898781;
+--gl:#e1e0d9;--bl:#c3c2b7;--bd:rgba(11,11,11,.10);--crit:#d03b3b;--warn:#fab219;--good:#0ca30c;}
+@media(prefers-color-scheme:dark){:root:where(:not([data-theme=light])){color-scheme:dark;
+--s1:#1a1a19;--pg:#0d0d0d;--tp:#fff;--ts:#c3c2b7;--tm:#898781;--gl:#2c2c2a;--bl:#383835;
+--bd:rgba(255,255,255,.10);}}
+:root[data-theme=dark]{color-scheme:dark;--s1:#1a1a19;--pg:#0d0d0d;--tp:#fff;--ts:#c3c2b7;
+--tm:#898781;--gl:#2c2c2a;--bl:#383835;--bd:rgba(255,255,255,.10);}
+*{box-sizing:border-box}
+body{margin:0;background:var(--pg);color:var(--tp);
+font:14px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1400px;margin:0 auto;padding:32px 24px 64px}
+h1{font-size:24px;margin:0 0 4px;letter-spacing:-.01em}
+.sub{color:var(--ts);margin:0 0 4px}
+.meta{color:var(--tm);font-size:12px;margin:0 0 24px}
+h2{font-size:16px;margin:40px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--gl)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;padding:12px 14px;background:var(--s1);
+border:1px solid var(--bd);border-radius:8px;margin-bottom:20px}
+.lg{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--ts);white-space:nowrap}
+.lg i{width:11px;height:11px;border-radius:3px;flex:none}
+.conn header{padding:11px 14px;border-bottom:1px solid var(--gl)}
+.conn h3{margin:0;font-size:14px}
+.conn header p{margin:2px 0 0;font-size:11.5px;color:var(--tm)}
+.grid{display:flex;flex-direction:column}
+.pin:last-child{border-bottom:0}
+.hd{font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--tm);
+background:var(--pg);padding-top:6px;padding-bottom:6px}
+.pn{font-variant-numeric:tabular-nums;color:var(--tm);text-align:right}
+.f-crit{background:color-mix(in srgb,var(--crit) 11%,transparent)}
+.f-warn{background:color-mix(in srgb,var(--warn) 13%,transparent)}
+.note{background:var(--s1);border:1px solid var(--bd);border-left:3px solid var(--crit);
+border-radius:8px;padding:12px 15px;margin:0 0 16px;font-size:13px;color:var(--ts)}
+.note b{color:var(--tp)}
+.note.w{border-left-color:var(--warn)}
+code{font:11.5px ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--pg);
+padding:1px 5px;border-radius:4px;border:1px solid var(--gl)}
+th{text-align:left;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;
+color:var(--tm);padding:8px 12px;background:var(--pg);border-bottom:1px solid var(--gl)}
+td{padding:5px 12px;border-bottom:1px solid var(--gl);color:var(--ts);vertical-align:top}
+td:first-child{font-weight:600;color:var(--tp);white-space:nowrap}
+tr:last-child td{border-bottom:0}
+footer{margin-top:44px;padding-top:14px;border-top:1px solid var(--gl);font-size:11.5px;color:var(--tm)}
+h3{font-size:14px;margin:28px 0 8px}h4{font-size:13px;margin:20px 0 6px}
+p{max-width:76ch}li{max-width:72ch;margin:3px 0}ul,ol{padding-left:24px;color:var(--ts)}
+pre{background:var(--s1);border:1px solid var(--bd);border-radius:8px;padding:12px 15px;overflow-x:auto}
+pre code{border:0;background:none;padding:0;font-size:12px;line-height:1.5}
+blockquote{margin:12px 0;padding:2px 16px;border-left:3px solid var(--bl);color:var(--ts)}
+.tbl{overflow-x:auto}table{border-collapse:collapse;min-width:50%}
+hr{border:0;border-top:1px solid var(--gl);margin:32px 0}
+a{color:inherit}
+</style></head><body><div class="wrap">
+<h1>docs/</h1>
+<p>Analysis and findings.</p>
+<div class=tbl><table><thead><tr><th>File</th><th>What it covers</th></tr></thead><tbody><tr><td><a href="00-multi-car-proposal.html"><code>00-multi-car-proposal.md</code></a></td><td><b>Proposed, not built.</b> One repo holding many cars, with parsers keyed to formats rather than cars. Supersedes the decision to keep <code>ravin-m3</code> and <code>ravin-z4</code> separate. Read before starting that refactor.</td></tr><tr><td><a href="01-model-provenance.html"><code>01-model-provenance.md</code></a></td><td><b>Proposed, not built.</b> The normalised model both pipelines emit into, carrying origin and confidence per field. Solves the design problem <code>00</code> raises.</td></tr><tr><td><a href="02-tuning-history.html"><code>02-tuning-history.md</code></a></td><td>What each of the twelve M800 tunes changed in the fuel and ignition tables — lineage, the freeze since <code>2_1_25</code>, and the Stroker404 discrepancy that needs a which-engine answer. Written the day the tables became readable.</td></tr><tr><td><a href="03-lambda-analysis.html"><code>03-lambda-analysis.md</code></a></td><td>What the logs say about the fuel table: the 2024 WOT lean has closed, and the part-throttle lean at 5000–6000 RPM is bank-asymmetric — a garage job, not a table edit.</td></tr><tr><td><a href="04-e35-inventory.html"><code>04-e35-inventory.md</code></a></td><td><b>Generated</b> by <code>tools/e35_inventory.py</code> from the file the car uses. Everything readable in the live calibration — identity, tables, fields, data sets, candidates — and the coverage figure saying how much of the file that is.</td></tr><tr><td><a href="05-e35-terrain.html"><code>05-e35-terrain.md</code></a></td><td><b>Generated</b> by <code>tools/e35_scan.py</code>. Every table-shaped structure in the unmapped 90% of the calibration — offsets, shapes, value smells, tuned-vs-factory — and which screenshot would settle each. The farming checklist.</td></tr><tr><td><a href="06-winemp-schema.html"><code>06-winemp-schema.md</code></a></td><td>ECU Manager&#x27;s own parameter table, mined out of WinEMP.exe and validated 12/12 against the repo&#x27;s anchors — 498 typed structures covering 55.6% of the calibration, named one screenshot at a time. <code>formats/e35_schema.json</code> is the data.</td></tr><tr><td><a href="M800_CHECKLIST.html"><code>M800_CHECKLIST.md</code></a></td><td><b>Generated</b> from <code>formats/e35_map.json</code>. The controlled edits left to make in ECU Manager to finish the M800 IO map. Edit the JSON, not this.</td></tr><tr><td><a href="C1212_CHECKLIST.html"><code>C1212_CHECKLIST.md</code></a></td><td><b>Generated</b> from <code>formats/c1212_map.json</code>. Same, for the dash. The dash&#x27;s IO and CAN are mapped; what remains is display paging, the template flag bits, and harvesting built-in channel ids. Only save 1 is worth a trip on its own.</td></tr></tbody></table></div>
+<p>Everything here also renders to <code>html/</code> — one styled page per doc, built by <code>tools/build_docs.py</code>, with <code>html/index.html</code> as the entry point. The <code>.md</code> files remain the source of truth.</p>
+<p>The pinout, the config audit and the offset maps currently all render into <code>schematic/z4_pinout_schematic.html</code>. Splitting the audit and the mapping method into separate numbered docs is the next structural step, once the dash pass lands.</p><footer>rendered from <code>README.md</code> — edit that, not this — <code>tools/build_docs.py</code></footer></div></body></html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The model — carrying provenance per field</title>
+<style>:root{color-scheme:light;--s1:#fcfcfb;--pg:#f9f9f7;--tp:#0b0b0b;--ts:#52514e;--tm:#898781;
+--gl:#e1e0d9;--bl:#c3c2b7;--bd:rgba(11,11,11,.10);--crit:#d03b3b;--warn:#fab219;--good:#0ca30c;}
+@media(prefers-color-scheme:dark){:root:where(:not([data-theme=light])){color-scheme:dark;
+--s1:#1a1a19;--pg:#0d0d0d;--tp:#fff;--ts:#c3c2b7;--tm:#898781;--gl:#2c2c2a;--bl:#383835;
+--bd:rgba(255,255,255,.10);}}
+:root[data-theme=dark]{color-scheme:dark;--s1:#1a1a19;--pg:#0d0d0d;--tp:#fff;--ts:#c3c2b7;
+--tm:#898781;--gl:#2c2c2a;--bl:#383835;--bd:rgba(255,255,255,.10);}
+*{box-sizing:border-box}
+body{margin:0;background:var(--pg);color:var(--tp);
+font:14px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1400px;margin:0 auto;padding:32px 24px 64px}
+h1{font-size:24px;margin:0 0 4px;letter-spacing:-.01em}
+.sub{color:var(--ts);margin:0 0 4px}
+.meta{color:var(--tm);font-size:12px;margin:0 0 24px}
+h2{font-size:16px;margin:40px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--gl)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;padding:12px 14px;background:var(--s1);
+border:1px solid var(--bd);border-radius:8px;margin-bottom:20px}
+.lg{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--ts);white-space:nowrap}
+.lg i{width:11px;height:11px;border-radius:3px;flex:none}
+.conn header{padding:11px 14px;border-bottom:1px solid var(--gl)}
+.conn h3{margin:0;font-size:14px}
+.conn header p{margin:2px 0 0;font-size:11.5px;color:var(--tm)}
+.grid{display:flex;flex-direction:column}
+.pin:last-child{border-bottom:0}
+.hd{font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--tm);
+background:var(--pg);padding-top:6px;padding-bottom:6px}
+.pn{font-variant-numeric:tabular-nums;color:var(--tm);text-align:right}
+.f-crit{background:color-mix(in srgb,var(--crit) 11%,transparent)}
+.f-warn{background:color-mix(in srgb,var(--warn) 13%,transparent)}
+.note{background:var(--s1);border:1px solid var(--bd);border-left:3px solid var(--crit);
+border-radius:8px;padding:12px 15px;margin:0 0 16px;font-size:13px;color:var(--ts)}
+.note b{color:var(--tp)}
+.note.w{border-left-color:var(--warn)}
+code{font:11.5px ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--pg);
+padding:1px 5px;border-radius:4px;border:1px solid var(--gl)}
+th{text-align:left;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;
+color:var(--tm);padding:8px 12px;background:var(--pg);border-bottom:1px solid var(--gl)}
+td{padding:5px 12px;border-bottom:1px solid var(--gl);color:var(--ts);vertical-align:top}
+td:first-child{font-weight:600;color:var(--tp);white-space:nowrap}
+tr:last-child td{border-bottom:0}
+footer{margin-top:44px;padding-top:14px;border-top:1px solid var(--gl);font-size:11.5px;color:var(--tm)}
+h3{font-size:14px;margin:28px 0 8px}h4{font-size:13px;margin:20px 0 6px}
+p{max-width:76ch}li{max-width:72ch;margin:3px 0}ul,ol{padding-left:24px;color:var(--ts)}
+pre{background:var(--s1);border:1px solid var(--bd);border-radius:8px;padding:12px 15px;overflow-x:auto}
+pre code{border:0;background:none;padding:0;font-size:12px;line-height:1.5}
+blockquote{margin:12px 0;padding:2px 16px;border-left:3px solid var(--bl);color:var(--ts)}
+.tbl{overflow-x:auto}table{border-collapse:collapse;min-width:50%}
+hr{border:0;border-top:1px solid var(--gl);margin:32px 0}
+a{color:inherit}
+</style></head><body><div class="wrap">
+<p class="meta"><a href="index.html">&larr; all docs</a></p><h1>The model — carrying provenance per field</h1>
+<p><b>Status:</b> proposed, not built. Written 4 Aug 2026. Solves the design problem raised in <code>00-multi-car-proposal.md</code>, which should be read first.</p>
+<p>The refactor needs one normalised model that both pipelines emit into: the M3&#x27;s hand-maintained JSON and the Z4&#x27;s parsed binaries. The proposal states the requirement — every field must say where it came from — and suggests generalising the Z4&#x27;s <code>confirmed</code> / <code>probable</code> / <code>candidate</code> markers to do it. That is the wrong generalisation, for a reason worth stating before the schema.</p>
+<h2>Provenance and confidence are two axes</h2>
+<p>The Z4&#x27;s markers do not describe values. Their own definitions, from <code>e35_map.json</code>:</p>
+<blockquote><code>confirmed</code> — located by a controlled edit with a known before/after value<br><code>probable</code> — location confirmed, but the field name or meaning is inferred<br><code>candidate</code> — moved during an edit but not yet attributed to a specific field</blockquote>
+<p>Every one of those qualifies <b>the offset</b>, not the datum at it. All values the Z4 emits share a single provenance — a parser read them out of a file — and differ in how well the rule that decoded them is understood. Collapse the two and a hand-typed wire colour from a printed harness sheet becomes indistinguishable from a byte read through a guessed offset, which is exactly the distinction the model exists to preserve.</p>
+<p>So each field carries two things:</p>
+<p><b>origin</b> — who produced the value.</p>
+<div class=tbl><table><thead><tr><th></th><th></th></tr></thead><tbody><tr><td><code>parsed</code></td><td>a parser read it from a source. Re-running the parser reproduces it.</td></tr><tr><td><code>entered</code></td><td>a human typed it from a document or off the car. Only that document can check it.</td></tr><tr><td><code>inferred</code></td><td>the pipeline computed it from other fields. Never authoritative; always recomputed.</td></tr></tbody></table></div>
+<p><b>confidence</b> — how much you would bet on it: <code>confirmed</code>, <code>probable</code>, <code>candidate</code>, keeping the definitions already in the format maps but applied to the value.</p>
+<p>They compose, and the composition is the payoff:</p>
+<ul><li>A <code>parsed</code> value&#x27;s confidence is <b>bounded above by the confidence of the offset that produced it</b>. The format maps already carry that number, so they do double duty — they describe the format <i>and</i> rate every value read through them. Improve an offset from <code>probable</code> to <code>confirmed</code> by controlled edit and every car using that format gains confidence in that field, for free.</li><li>An <code>entered</code> value&#x27;s confidence comes from its document. The RMod harness sheet at REV 01 is <code>confirmed</code>; something recalled at the car is <code>candidate</code>.</li><li>An <code>inferred</code> value takes the weakest confidence among its inputs.</li></ul>
+<p>Written as <code>origin/confidence</code>: <code>parsed/confirmed</code>, <code>entered/candidate</code>.</p>
+<h2>What origin is actually for</h2>
+<p>Rendering is the least of it. Origin answers three questions, and the second is the one that makes this non-optional:</p>
+<ol><li><b>How is it presented?</b> Confidence drives that, mostly — the Z4 renderer already colours by it.</li><li><b>What may a rebuild overwrite?</b> <code>parsed</code> and <code>inferred</code> fields are regenerated every build and hand-editing them is pointless — CONVENTIONS.md already warns that the next rebuild silently discards it. <code>entered</code> fields must survive re-parsing untouched. Without origin the builder cannot tell which is which, and merging the two pipelines means one file will hold both.</li><li><b>What does disagreement mean?</b> See below.</li></ol>
+<h2>Disagreement is a finding, not a resolution</h2>
+<p>When two sources claim the same field, the model records both and emits a finding. It must never silently pick one.</p>
+<p><code>ravin-m3/schematic/build.py:38</code> (<code>apply_ecu</code>) is already this, hard-wired for one case: it joins the calibration&#x27;s assignments onto harness pins and reports <code>unassigned</code> / <code>unwired</code> rather than choosing. Generalise <i>that</i> function, not the markers. A parser producing a value where an <code>entered</code> one already exists is the most valuable event the pipeline can produce — it is the harness PDF being checked against the device — and it should read as a finding, not a merge conflict.</p>
+<h2>Field identity</h2>
+<p>Findings and provenance both need to name a field. One path scheme, dotted:</p>
+<pre><code>&lt;car&gt;.&lt;device&gt;.&lt;group&gt;.&lt;item&gt;.&lt;attribute&gt;
+m3.m150.A.01.function
+z4.pdm.output.12.trigger</code></pre>
+<p>Findings then carry the paths they reconcile rather than a display string, which is what lets the renderer link a finding back to its row.</p>
+<h2>Where provenance is written</h2>
+<p>Not inline on every value. <code>{&quot;v&quot;: &quot;IAT plenum&quot;, &quot;origin&quot;: &quot;entered&quot;}</code> triples the size of <code>m150.json</code> and makes it unpleasant to hand-edit — and a human maintains that file by hand, every field, forever. That cost is not worth paying for information that is uniform across the whole file.</p>
+<p>Declare it at the source and default it down; override per field only where it differs:</p>
+<pre><code>{
+  &quot;source&quot;: &quot;harness-rev01&quot;,
+  &quot;provenance&quot;: &quot;entered/confirmed&quot;,
+  &quot;connectors&quot;: [{&quot;id&quot;: &quot;A&quot;, &quot;pins&quot;: [
+    {&quot;pin&quot;: 1, &quot;designation&quot;: &quot;AT5&quot;, &quot;function&quot;: &quot;IAT plenum&quot;,
+     &quot;wire&quot;: &quot;Blue/gray&quot;, &quot;resource&quot;: &quot;Analogue Temperature Input 5&quot;,
+     &quot;prov&quot;: {&quot;wire&quot;: &quot;entered/candidate&quot;}}
+  ]}]
+}</code></pre>
+<p><code>prov</code> is sparse and absent on most pins. Existing data files gain two top-level keys and keep working — <code>build.py</code> reads pins with <code>p.get(key)</code>, so an extra key is inert.</p>
+<p>Sources are declared once in the car manifest, and a source is a device state, not a file:</p>
+<pre><code>&quot;sources&quot;: {
+  &quot;harness-rev01&quot;: {&quot;kind&quot;: &quot;document&quot;, &quot;path&quot;: &quot;source/Ravin M3 harness pinout REV01 2026-01-18.pdf&quot;,
+                    &quot;obtained&quot;: &quot;2026-01-18&quot;, &quot;reflects&quot;: &quot;as-built harness&quot;},
+  &quot;m1-live&quot;:       {&quot;kind&quot;: &quot;device&quot;, &quot;device&quot;: &quot;m150&quot;, &quot;obtained&quot;: &quot;2026-09-14&quot;,
+                    &quot;how&quot;: &quot;M1 Tune, Ethernet&quot;, &quot;reflects&quot;: &quot;as-flashed&quot;}
+}</code></pre>
+<p><code>reflects</code> carries the as-file / as-flashed distinction that CONVENTIONS.md currently asks the commit message to carry. A config that exists in a file and a config that is on the car are different facts, and the model should hold that rather than leaving it in prose.</p>
+<h2>What this does not settle</h2>
+<ul><li><b>Editorial flags.</b> <code>flag: crit|warn</code> and the findings blocks are judgements, <code>inferred</code> by construction. Whether their confidence means anything, or whether they need a separate &quot;who decided this&quot; field, is unresolved.</li><li><b>Confidence on absence.</b> A pin with no function may be genuinely unused or merely untranscribed. The M3 tables show both as <code>—</code>. Nothing above fixes it.</li><li><b>Whether <code>parsed</code> needs splitting</b> by source kind — file versus live device read. Kept on the source rather than the field for now, on the argument that a parser does not care and a reader of the output will look at the source anyway. If that proves wrong it is an additive change.</li></ul><footer>rendered from <code>01-model-provenance.md</code> — edit that, not this — <code>tools/build_docs.py</code></footer></div></body></html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The schema was in the tool all along — mining WinEMP.exe</title>
+<style>:root{color-scheme:light;--s1:#fcfcfb;--pg:#f9f9f7;--tp:#0b0b0b;--ts:#52514e;--tm:#898781;
+--gl:#e1e0d9;--bl:#c3c2b7;--bd:rgba(11,11,11,.10);--crit:#d03b3b;--warn:#fab219;--good:#0ca30c;}
+@media(prefers-color-scheme:dark){:root:where(:not([data-theme=light])){color-scheme:dark;
+--s1:#1a1a19;--pg:#0d0d0d;--tp:#fff;--ts:#c3c2b7;--tm:#898781;--gl:#2c2c2a;--bl:#383835;
+--bd:rgba(255,255,255,.10);}}
+:root[data-theme=dark]{color-scheme:dark;--s1:#1a1a19;--pg:#0d0d0d;--tp:#fff;--ts:#c3c2b7;
+--tm:#898781;--gl:#2c2c2a;--bl:#383835;--bd:rgba(255,255,255,.10);}
+*{box-sizing:border-box}
+body{margin:0;background:var(--pg);color:var(--tp);
+font:14px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1400px;margin:0 auto;padding:32px 24px 64px}
+h1{font-size:24px;margin:0 0 4px;letter-spacing:-.01em}
+.sub{color:var(--ts);margin:0 0 4px}
+.meta{color:var(--tm);font-size:12px;margin:0 0 24px}
+h2{font-size:16px;margin:40px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--gl)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;padding:12px 14px;background:var(--s1);
+border:1px solid var(--bd);border-radius:8px;margin-bottom:20px}
+.lg{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--ts);white-space:nowrap}
+.lg i{width:11px;height:11px;border-radius:3px;flex:none}
+.conn header{padding:11px 14px;border-bottom:1px solid var(--gl)}
+.conn h3{margin:0;font-size:14px}
+.conn header p{margin:2px 0 0;font-size:11.5px;color:var(--tm)}
+.grid{display:flex;flex-direction:column}
+.pin:last-child{border-bottom:0}
+.hd{font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--tm);
+background:var(--pg);padding-top:6px;padding-bottom:6px}
+.pn{font-variant-numeric:tabular-nums;color:var(--tm);text-align:right}
+.f-crit{background:color-mix(in srgb,var(--crit) 11%,transparent)}
+.f-warn{background:color-mix(in srgb,var(--warn) 13%,transparent)}
+.note{background:var(--s1);border:1px solid var(--bd);border-left:3px solid var(--crit);
+border-radius:8px;padding:12px 15px;margin:0 0 16px;font-size:13px;color:var(--ts)}
+.note b{color:var(--tp)}
+.note.w{border-left-color:var(--warn)}
+code{font:11.5px ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--pg);
+padding:1px 5px;border-radius:4px;border:1px solid var(--gl)}
+th{text-align:left;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;
+color:var(--tm);padding:8px 12px;background:var(--pg);border-bottom:1px solid var(--gl)}
+td{padding:5px 12px;border-bottom:1px solid var(--gl);color:var(--ts);vertical-align:top}
+td:first-child{font-weight:600;color:var(--tp);white-space:nowrap}
+tr:last-child td{border-bottom:0}
+footer{margin-top:44px;padding-top:14px;border-top:1px solid var(--gl);font-size:11.5px;color:var(--tm)}
+h3{font-size:14px;margin:28px 0 8px}h4{font-size:13px;margin:20px 0 6px}
+p{max-width:76ch}li{max-width:72ch;margin:3px 0}ul,ol{padding-left:24px;color:var(--ts)}
+pre{background:var(--s1);border:1px solid var(--bd);border-radius:8px;padding:12px 15px;overflow-x:auto}
+pre code{border:0;background:none;padding:0;font-size:12px;line-height:1.5}
+blockquote{margin:12px 0;padding:2px 16px;border-left:3px solid var(--bl);color:var(--ts)}
+.tbl{overflow-x:auto}table{border-collapse:collapse;min-width:50%}
+hr{border:0;border-top:1px solid var(--gl);margin:32px 0}
+a{color:inherit}
+</style></head><body><div class="wrap">
+<p class="meta"><a href="index.html">&larr; all docs</a></p><h1>The schema was in the tool all along — mining WinEMP.exe</h1>
+<p>Written 2026-08-09, the day the map stopped growing one screenshot at a time. The full result is <code>formats/e35_schema.json</code>.</p>
+<h2>The idea</h2>
+<p>ECU Manager draws every table screen, so it must know every table&#x27;s offset, dimensions and encoding. The question was never whether WinEMP.exe contains the complete .e35 schema — it was whether the schema could be extracted <i>safely</i>. The repo got burned once by trusting documentation-shaped data (master.chl&#x27;s channel names), and the rule since has been: no anchor, no name.</p>
+<p>What changed is that this repo now holds <b>twelve anchors</b> — seven tables and five axes whose offsets, dimensions and encodings were proven from screenshots, logs and byte evidence. Twelve known answers are enough to <i>validate</i> an extracted schema instead of trusting it.</p>
+<h2>The find</h2>
+<p>Searching the binary for the twelve anchored offsets lit up a parameter table: 24-byte records, <code>offset, cols, rows, min, max, f1, f2</code>, at <code>0x34908C-0x34C3EC</code> (one of several copies — the others describe other ECU models and older firmware layouts). The encoding formula fell out of the anchors:</p>
+<p>scale     = (f1 &gt;&gt; 8) / 10^(f2 &amp; 0xFF) cell size = f2 &gt;&gt; 8 signed    = min &lt; 0</p>
+<p>Read off two anchors, it predicted the other ten — including the odd x0.5 and x0.2 encodings that had each been established cell-by-cell. <b>12/12 anchors validate on offset, columns, cell size and scale.</b></p>
+<h2>What it settles immediately</h2>
+<ul><li><b>Ign Main allocates 55x35</b>, ending exactly at Injection Timing — the 55-column stride found empirically was the allocation, confirmed.</li><li><b>Injection Timing is 20x11</b>, not 1-D: the long-mysterious 0x1FBA block (&quot;10 ascending rows, owner unknown&quot;) is its rows 1-10. The map&#x27;s oldest unowned structure, owned.</li><li><b>The comp tables allocate 26x11</b>: the two &quot;shadow&quot; 6-row blocks at 0x2E24 and 0x2F42 are the unused rows 5-10 of Fuel AT and Fuel ET Comp. Two more mysteries closed by allocation arithmetic.</li><li>~~Ign AT Comp lives at 0x2FDE~~ — <b>withdrawn 2026-08-09.</b> The schema typed a 26x11 ±10.0° region at 0x2FDE and this doc <i>named</i> it by plausibility — the exact move the anchors exist to prevent, and it was wrong: checklist save 7&#x27;s controlled edit put Ign AT Comp at <b>0x4461</b>. The 0x2FDE region stands typed and unnamed, like it should have all along.</li><li><b>Fuel Main allocates 40x24</b>, Lambda 20x11, Accel Clamp 20x11.</li></ul>
+<h2>What it deliberately does not do</h2>
+<p>The schema types 498 structures covering 55.6% of the file — shape, size, scale, limits — and names <b>none</b> of them. Names still come the way they always have: an ECU Manager screenshot of a named screen, matched to a typed region, one at a time — except now every screenshot lands on a prepared slot, and the min/max/scale come pre-validated.</p>
+<p>25 extracted records are flagged <code>conflicts_anchor</code>: they collide with anchor-proven spans and describe an older firmware&#x27;s layout of the same addresses (a 40x21 ignition table at 0x1072, for instance). The exe supports many ECU versions; the anchors say which records are this car&#x27;s.</p>
+<h2>What&#x27;s next for full coverage</h2>
+<ol><li>Teach the reader to serve any schema record by offset (typed, unnamed).</li><li>Walk the named screens against the typed regions — each screenshot now fills a slot instead of hunting for one.</li><li>The remaining ~44% of the file is mostly the IO/comms region the checklist saves cover, smaller record families the extraction window may have missed, and genuine padding. A second mining pass for the axis-to- table linkage (which axis record belongs to which table record — the exe must know that too) would retire the last &quot;which copy&quot; ambiguities.</li></ol><footer>rendered from <code>06-winemp-schema.md</code> — edit that, not this — <code>tools/build_docs.py</code></footer></div></body></html>

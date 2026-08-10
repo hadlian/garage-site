@@ -1,0 +1,71 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lambda vs aim — what the logs say about the fuel table</title>
+<style>:root{color-scheme:light;--s1:#fcfcfb;--pg:#f9f9f7;--tp:#0b0b0b;--ts:#52514e;--tm:#898781;
+--gl:#e1e0d9;--bl:#c3c2b7;--bd:rgba(11,11,11,.10);--crit:#d03b3b;--warn:#fab219;--good:#0ca30c;}
+@media(prefers-color-scheme:dark){:root:where(:not([data-theme=light])){color-scheme:dark;
+--s1:#1a1a19;--pg:#0d0d0d;--tp:#fff;--ts:#c3c2b7;--tm:#898781;--gl:#2c2c2a;--bl:#383835;
+--bd:rgba(255,255,255,.10);}}
+:root[data-theme=dark]{color-scheme:dark;--s1:#1a1a19;--pg:#0d0d0d;--tp:#fff;--ts:#c3c2b7;
+--tm:#898781;--gl:#2c2c2a;--bl:#383835;--bd:rgba(255,255,255,.10);}
+*{box-sizing:border-box}
+body{margin:0;background:var(--pg);color:var(--tp);
+font:14px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1400px;margin:0 auto;padding:32px 24px 64px}
+h1{font-size:24px;margin:0 0 4px;letter-spacing:-.01em}
+.sub{color:var(--ts);margin:0 0 4px}
+.meta{color:var(--tm);font-size:12px;margin:0 0 24px}
+h2{font-size:16px;margin:40px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--gl)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;padding:12px 14px;background:var(--s1);
+border:1px solid var(--bd);border-radius:8px;margin-bottom:20px}
+.lg{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--ts);white-space:nowrap}
+.lg i{width:11px;height:11px;border-radius:3px;flex:none}
+.conn header{padding:11px 14px;border-bottom:1px solid var(--gl)}
+.conn h3{margin:0;font-size:14px}
+.conn header p{margin:2px 0 0;font-size:11.5px;color:var(--tm)}
+.grid{display:flex;flex-direction:column}
+.pin:last-child{border-bottom:0}
+.hd{font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--tm);
+background:var(--pg);padding-top:6px;padding-bottom:6px}
+.pn{font-variant-numeric:tabular-nums;color:var(--tm);text-align:right}
+.f-crit{background:color-mix(in srgb,var(--crit) 11%,transparent)}
+.f-warn{background:color-mix(in srgb,var(--warn) 13%,transparent)}
+.note{background:var(--s1);border:1px solid var(--bd);border-left:3px solid var(--crit);
+border-radius:8px;padding:12px 15px;margin:0 0 16px;font-size:13px;color:var(--ts)}
+.note b{color:var(--tp)}
+.note.w{border-left-color:var(--warn)}
+code{font:11.5px ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--pg);
+padding:1px 5px;border-radius:4px;border:1px solid var(--gl)}
+th{text-align:left;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;
+color:var(--tm);padding:8px 12px;background:var(--pg);border-bottom:1px solid var(--gl)}
+td{padding:5px 12px;border-bottom:1px solid var(--gl);color:var(--ts);vertical-align:top}
+td:first-child{font-weight:600;color:var(--tp);white-space:nowrap}
+tr:last-child td{border-bottom:0}
+footer{margin-top:44px;padding-top:14px;border-top:1px solid var(--gl);font-size:11.5px;color:var(--tm)}
+h3{font-size:14px;margin:28px 0 8px}h4{font-size:13px;margin:20px 0 6px}
+p{max-width:76ch}li{max-width:72ch;margin:3px 0}ul,ol{padding-left:24px;color:var(--ts)}
+pre{background:var(--s1);border:1px solid var(--bd);border-radius:8px;padding:12px 15px;overflow-x:auto}
+pre code{border:0;background:none;padding:0;font-size:12px;line-height:1.5}
+blockquote{margin:12px 0;padding:2px 16px;border-left:3px solid var(--bl);color:var(--ts)}
+.tbl{overflow-x:auto}table{border-collapse:collapse;min-width:50%}
+hr{border:0;border-top:1px solid var(--gl);margin:32px 0}
+a{color:inherit}
+</style></head><body><div class="wrap">
+<p class="meta"><a href="index.html">&larr; all docs</a></p><h1>Lambda vs aim — what the logs say about the fuel table</h1>
+<p>Written 2026-08-09, from four logs read by <code>parsers/motec_ld.py</code> and binned by <code>tools/fuel_correction.py</code>. Correction per cell is <code>La1 Short Term Trim + (Lambda 1 / La1 Aim − 1) × 100</code> — fuel the closed loop was already adding, plus the error it had not closed — over samples filtered to warm engine, steady throttle, no cut, no accel pulse, believable lambda.</p>
+<div class=tbl><table><thead><tr><th>Log</th><th>Device</th><th>When</th><th>What</th></tr></thead><tbody><tr><td><code>20241001-2661000/1.ld</code></td><td>M800 ECU</td><td>Oct 2024</td><td>two 44-min road sessions, post-stroker</td></tr><tr><td><code>20260203-2014100.ld</code></td><td>M800 ECU</td><td>Feb 2026</td><td>Roebling Road track day, config &quot;800 Dec 2025&quot; — the current tune</td></tr><tr><td><code>20260203-1696700.ld</code></td><td>C1212 dash</td><td>Feb 2026</td><td>same day, 147 ch — per-cylinder EGTs, MAP</td></tr></tbody></table></div>
+<p>Load axis assumption: <b>Effcy % = Throttle Position.</b> Supported by the dash log — Manifold Pres sits at ~100 kPa even at 8–30% TP, which is a baro reading on an ITB engine; the fuel load is TP.</p>
+<h2>Finding 1 — the WOT lean of 2024 has largely closed</h2>
+<p>Oct 2024: +5 to +8% lean at wide-open throttle everywhere from 4000–6500 RPM, with the ±5% short-term trim railed. Feb 2026, same table cells: within ±3% (+3.1 at 5500, −2.8 at 8000). Different season (winter air, and Fuel BAP/AT comps active), different fuel, possibly injector service in between — the logs do not say why, only that at WOT the current table now nearly matches its aim. Nothing here is worth a table edit on its own.</p>
+<h2>Finding 2 — a part-throttle lean hole, and it is not symmetric</h2>
+<p>At Effcy 15–20, RPM 5000–6000 (trailing throttle / corner exit at speed):</p>
+<div class=tbl><table><thead><tr><th>Cell</th><th>2024 bank 1</th><th>2024 bank 2</th><th>2026 bank 1</th><th>2026 bank 2*</th></tr></thead><tbody><tr><td>20 / 5000</td><td>—</td><td>—</td><td>+14.6</td><td>+6.7</td></tr><tr><td>15 / 5500</td><td>—</td><td>—</td><td>+15.6</td><td>+10.1</td></tr><tr><td>20 / 4500</td><td>+7.4</td><td>+5.0</td><td>—</td><td>—</td></tr><tr><td>20 / 4000</td><td>+7.3</td><td>+4.6</td><td>—</td><td>—</td></tr></tbody></table></div>
+<p>*2026 bank 2 approximated with bank 1&#x27;s trim — La2&#x27;s own trim is not in that log&#x27;s setup.</p>
+<p>In 2024 the banks tracked each other ~2% apart. In 2026 they are 6–10% apart in this region — <b>and only in this region</b>; at WOT the banks still agree. A lean that grew over 16 months, is worst at small pulse widths, differs by bank, and vanishes at WOT reads as mechanical, not calibration: ITB sync/balance drift, a vacuum leak on one bank&#x27;s runners, or a lagging injector. <b>Do not fix this in the fuel table</b> — a +15% cell edit would feed the healthy bank 8% rich to mask the sick one.</p>
+<p><b>La1 reads the front bank, cylinders 1–3.</b> Established 2026-08-09 by Harry with a coil-pull test at idle — no document records it; the .e35 carries no pinout, the PDM only powers a single &quot;lambda heater&quot;, and no Z4 harness scan exists (the M3 has 20 pages of them; the Z4 has none). This is the repo&#x27;s only wiring fact for the lambda sensors, and it came from the engine, not a drawing.</p>
+<p>So the lean bank is the FRONT one: inspection order is front-bank ITB sync/balance, vacuum leaks on runners 1–3, then injectors 1–3. One wrinkle worth carrying into the garage: the TC1–TC6 channels are confirmed as EGT 1–6 on the E888&#x27;s pins A9–A14 (Input Pins Setup, 2026-08-09), so the channel chain is solid — but which physical cylinder each probe sits in is still only implied by the numbering, and the front bank&#x27;s EGTs average COOLER than the rear&#x27;s, where a lean bank should tend hotter. Either the probe-to-cylinder routing, probe depths, or the simple story is wrong; a post-fix log will say which.</p>
+<h2>Finding 3 — the EGT cross-check is inconclusive but interesting</h2>
+<p>The dash log&#x27;s TC1–TC6 show a large, load-stable spread: TC2 coldest, TC1 and TC4 hottest, ~150–180 °F apart at both part throttle and WOT. That is probe placement as much as mixture, and it neither confirms nor refutes the bank asymmetry. A same-probe before/after comparison (after an ITB balance, say) would be meaningful where absolute values are not.</p>
+<h2>Status</h2>
+<p>No suggested tune file was produced from this analysis, deliberately. The 2024-era findings that motivated one are superseded by finding 1, and finding 2 is a garage job first. The stroker merge (<code>02-tuning-history.md</code>) is unaffected and still pending its ECU Manager review.</p>
+<p>Closed loop was active only ~9% of the Feb 2026 session, and La1 Long Term Trim is flat zero in every log — the corrections above are mostly raw lambda error, not trim-laundered.</p><footer>rendered from <code>03-lambda-analysis.md</code> — edit that, not this — <code>tools/build_docs.py</code></footer></div></body></html>

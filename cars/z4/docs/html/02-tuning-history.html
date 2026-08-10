@@ -1,0 +1,78 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Z4 tuning history — what the twelve tunes actually changed</title>
+<style>:root{color-scheme:light;--s1:#fcfcfb;--pg:#f9f9f7;--tp:#0b0b0b;--ts:#52514e;--tm:#898781;
+--gl:#e1e0d9;--bl:#c3c2b7;--bd:rgba(11,11,11,.10);--crit:#d03b3b;--warn:#fab219;--good:#0ca30c;}
+@media(prefers-color-scheme:dark){:root:where(:not([data-theme=light])){color-scheme:dark;
+--s1:#1a1a19;--pg:#0d0d0d;--tp:#fff;--ts:#c3c2b7;--tm:#898781;--gl:#2c2c2a;--bl:#383835;
+--bd:rgba(255,255,255,.10);}}
+:root[data-theme=dark]{color-scheme:dark;--s1:#1a1a19;--pg:#0d0d0d;--tp:#fff;--ts:#c3c2b7;
+--tm:#898781;--gl:#2c2c2a;--bl:#383835;--bd:rgba(255,255,255,.10);}
+*{box-sizing:border-box}
+body{margin:0;background:var(--pg);color:var(--tp);
+font:14px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1400px;margin:0 auto;padding:32px 24px 64px}
+h1{font-size:24px;margin:0 0 4px;letter-spacing:-.01em}
+.sub{color:var(--ts);margin:0 0 4px}
+.meta{color:var(--tm);font-size:12px;margin:0 0 24px}
+h2{font-size:16px;margin:40px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--gl)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;padding:12px 14px;background:var(--s1);
+border:1px solid var(--bd);border-radius:8px;margin-bottom:20px}
+.lg{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--ts);white-space:nowrap}
+.lg i{width:11px;height:11px;border-radius:3px;flex:none}
+.conn header{padding:11px 14px;border-bottom:1px solid var(--gl)}
+.conn h3{margin:0;font-size:14px}
+.conn header p{margin:2px 0 0;font-size:11.5px;color:var(--tm)}
+.grid{display:flex;flex-direction:column}
+.pin:last-child{border-bottom:0}
+.hd{font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--tm);
+background:var(--pg);padding-top:6px;padding-bottom:6px}
+.pn{font-variant-numeric:tabular-nums;color:var(--tm);text-align:right}
+.f-crit{background:color-mix(in srgb,var(--crit) 11%,transparent)}
+.f-warn{background:color-mix(in srgb,var(--warn) 13%,transparent)}
+.note{background:var(--s1);border:1px solid var(--bd);border-left:3px solid var(--crit);
+border-radius:8px;padding:12px 15px;margin:0 0 16px;font-size:13px;color:var(--ts)}
+.note b{color:var(--tp)}
+.note.w{border-left-color:var(--warn)}
+code{font:11.5px ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--pg);
+padding:1px 5px;border-radius:4px;border:1px solid var(--gl)}
+th{text-align:left;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;
+color:var(--tm);padding:8px 12px;background:var(--pg);border-bottom:1px solid var(--gl)}
+td{padding:5px 12px;border-bottom:1px solid var(--gl);color:var(--ts);vertical-align:top}
+td:first-child{font-weight:600;color:var(--tp);white-space:nowrap}
+tr:last-child td{border-bottom:0}
+footer{margin-top:44px;padding-top:14px;border-top:1px solid var(--gl);font-size:11.5px;color:var(--tm)}
+h3{font-size:14px;margin:28px 0 8px}h4{font-size:13px;margin:20px 0 6px}
+p{max-width:76ch}li{max-width:72ch;margin:3px 0}ul,ol{padding-left:24px;color:var(--ts)}
+pre{background:var(--s1);border:1px solid var(--bd);border-radius:8px;padding:12px 15px;overflow-x:auto}
+pre code{border:0;background:none;padding:0;font-size:12px;line-height:1.5}
+blockquote{margin:12px 0;padding:2px 16px;border-left:3px solid var(--bl);color:var(--ts)}
+.tbl{overflow-x:auto}table{border-collapse:collapse;min-width:50%}
+hr{border:0;border-top:1px solid var(--gl);margin:32px 0}
+a{color:inherit}
+</style></head><body><div class="wrap">
+<p class="meta"><a href="index.html">&larr; all docs</a></p><h1>Z4 tuning history — what the twelve tunes actually changed</h1>
+<p>Written 2026-08-07, the day the fuel and ignition tables became readable (<code>formats/e35_map.json</code>, <code>calibration_tables</code>). Everything below comes from <code>parsers.motec_e35.read_tables</code> over <code>source/m800-tunes/</code>; reproduce any diff with <code>tools/diff_e35.py</code>, which decodes table runs to cells. File timestamps are useless (everything was copied into the repo on one day), so ordering rests on names and whole-file byte distance — stated where it matters.</p>
+<h2>Lineage</h2>
+<p>Two eras, joined in the middle, plus two files that are not this car&#x27;s:</p>
+<pre><code>2016-dyno ──&gt; QRWTune (= Frank, same bytes renamed) ──&gt; QRW23 ──&gt; QRW23-after
+                                                                      │
+                                                        ~424 bytes    ▼
+              Stroker404 &lt;── 2_1_25 ──&gt; 2_1_25test ──&gt; LambdaChange &lt;──&gt; 12_19_25test
+                 (branch)                                            (21 bytes apart)</code></pre>
+<p>Foreign: <code>Mike Behrman...4.0</code> (different engine, different axes) and factory <code>Start.e35</code>. Frank is the owner, not a car — <code>Frank.e35</code> is <code>Z4QRWTune.e35</code> with nine bytes of name changed.</p>
+<h2>The one-line history</h2>
+<p><b>The tuning has been frozen since <code>2_1_25</code>.</b> Fuel and ignition in the current tune (<code>12_19_25test</code>) are byte-identical to <code>Z4 config 2_1_25.e35</code>; every save since — <code>2_1_25test</code>, <code>LambdaChange</code>, <code>12_19_25test</code> — changed IO, logging and sensor setup, never a table cell. Ignition has been touched <b>once in the car&#x27;s recorded life</b>.</p>
+<h2>Fuel Main, transition by transition</h2>
+<div class=tbl><table><thead><tr><th>Transition</th><th>Cells</th><th>Where</th><th>What</th></tr></thead><tbody><tr><td>2016-dyno → QRWTune</td><td>95</td><td>everywhere, worst 2000–3500 RPM mid/high load</td><td>the big rich-up: +10 to +12.6 %IJPU around 2000–2500 RPM, mean +3.6</td></tr><tr><td>QRWTune → QRW23</td><td>37</td><td>2000–7500 RPM, load 30+</td><td>refinement pass, everything within ±2</td></tr><tr><td>QRW23 → 2_1_25</td><td>71</td><td>mostly 3500–5000 RPM high load</td><td>power-band enrichment, +3 to +6 at load 80–100</td></tr><tr><td>2_1_25 → current</td><td>0</td><td>—</td><td>identical</td></tr><tr><td>2_1_25 → Stroker404</td><td>6</td><td>1500–2500 RPM, Effcy 0–5</td><td>see below</td></tr></tbody></table></div>
+<h2>Ign Main</h2>
+<p>Identical from <code>2016-dyno</code> all the way through <code>QRW23-after</code>. One 23-cell pass entering <code>2_1_25</code>: ±1° shuffling at load 50–100 between 5500 and 9000 RPM (28↔29 territory). Nothing since, including the Stroker file.</p>
+<h2>The Stroker404 discrepancy — worth a decision</h2>
+<p><code>Z4-3.4Stroker404whp</code> is not a different calibration: it is <code>2_1_25</code> with <b>six fuel cells raised</b> in the low-load 1500–2500 RPM region, and its centerpiece is (Effcy 5, RPM 2000): <b>12.5 → 16.2 %IJPU (+3.7)</b>.</p>
+<p>That cell is a pothole in the current tune: its neighbours read 16.9 (at 1500 RPM) and 13.5 (at 2500 RPM), and 12.5 sits below both — the current table&#x27;s sharpest low-load kink (2nd difference +5.4). The Stroker edit fills exactly that hole.</p>
+<p><b>Answered 2026-08-07: the car has the 3.4 stroker.</b> So the current tune really was running pre-stroker fuel in that region — the stroker branch never made it back into the <code>2_1_25</code>-descended line. The stroker branch changed three calibration regions in total, not one: the six fuel cells, a descending u8 curve at <code>0x057B4</code> (60→250 at its head — shaped like cranking/initial fuel enrichment, which a bigger motor needs more of), and an 11-site axis at <code>0x0BD8E</code> slid from 900–1800 down to 500–1500 (idle-region RPM sites, if RPM). Both are recorded as candidates in the map.</p>
+<p><b>The fix exists:</b> <code>Z4\Z4 config 8_7_26 stroker merge.e35</code> is the current tune with all three stroker regions copied in verbatim — the stroker&#x27;s calibration on top of the current IO and logging, built after verifying the current tune still matched <code>2_1_25</code> byte-for-byte in every merge region. All three regions went in together deliberately: merging only the fuel cells would have produced a fuel/cranking combination no engine ever ran. Reviewed-in-ECU-Manager and sent-to-ECU status: pending.</p>
+<h2>Current-table quality notes</h2>
+<ul><li><b>Fuel, 4000–4500 RPM, load 70–100:</b> an abrupt +7 to +8 ridge at 4500 RPM followed by a drop (2nd diff −10 at load 90). This region is exactly what the QRW23 → 2_1_25 dyno pass shaped, so it is probably deliberate (S54 airflow dip), but it is the roughest part of the table.</li><li><b>Fuel, mild non-monotonicity:</b> at 1500 RPM fuel <i>falls</i> as Effcy rises, 50→60→70 reads 42.0 → 41.4 → 40.6; same at 2500 RPM for 90→100 (49.0 → 48.8). Under 1.5 %IJPU each — noted, not alarming.</li><li><b>Ignition shape:</b> the 11→15 step off the 0-RPM column is cranking vs running timing, and the 12→19→31 sweep at 2000–3000 RPM low load is the idle-to-midrange transition — normal M800 furniture, listed here so nobody &quot;smooths&quot; it by accident.</li><li><b>Ignition, load 110–200:</b> flat 20/22° defaults, never tuned. The engine never sees those loads naturally; only relevant if boost ever happens.</li></ul>
+<h2>What this sets up</h2>
+<p>The first suggestion of the suggestions layer is delivered: the stroker merge above, awaiting review in ECU Manager. Next candidates: naming the two stroker-branch regions from the ECU Manager screens (they are candidates in the map with hypotheses), and log-driven lambda-vs-aim corrections once MoTeC log files are available.</p><footer>rendered from <code>02-tuning-history.md</code> — edit that, not this — <code>tools/build_docs.py</code></footer></div></body></html>

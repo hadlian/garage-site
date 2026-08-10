@@ -1,0 +1,61 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The garage</title>
+<style>:root{color-scheme:light;--s1:#fcfcfb;--pg:#f9f9f7;--tp:#0b0b0b;--ts:#52514e;--tm:#898781;
+--gl:#e1e0d9;--bl:#c3c2b7;--bd:rgba(11,11,11,.10);--crit:#d03b3b;--warn:#fab219;--good:#0ca30c;}
+@media(prefers-color-scheme:dark){:root:where(:not([data-theme=light])){color-scheme:dark;
+--s1:#1a1a19;--pg:#0d0d0d;--tp:#fff;--ts:#c3c2b7;--tm:#898781;--gl:#2c2c2a;--bl:#383835;
+--bd:rgba(255,255,255,.10);}}
+:root[data-theme=dark]{color-scheme:dark;--s1:#1a1a19;--pg:#0d0d0d;--tp:#fff;--ts:#c3c2b7;
+--tm:#898781;--gl:#2c2c2a;--bl:#383835;--bd:rgba(255,255,255,.10);}
+*{box-sizing:border-box}
+body{margin:0;background:var(--pg);color:var(--tp);
+font:14px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1400px;margin:0 auto;padding:32px 24px 64px}
+h1{font-size:24px;margin:0 0 4px;letter-spacing:-.01em}
+.sub{color:var(--ts);margin:0 0 4px}
+.meta{color:var(--tm);font-size:12px;margin:0 0 24px}
+h2{font-size:16px;margin:40px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--gl)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;padding:12px 14px;background:var(--s1);
+border:1px solid var(--bd);border-radius:8px;margin-bottom:20px}
+.lg{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--ts);white-space:nowrap}
+.lg i{width:11px;height:11px;border-radius:3px;flex:none}
+.conn header{padding:11px 14px;border-bottom:1px solid var(--gl)}
+.conn h3{margin:0;font-size:14px}
+.conn header p{margin:2px 0 0;font-size:11.5px;color:var(--tm)}
+.grid{display:flex;flex-direction:column}
+.pin:last-child{border-bottom:0}
+.hd{font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--tm);
+background:var(--pg);padding-top:6px;padding-bottom:6px}
+.pn{font-variant-numeric:tabular-nums;color:var(--tm);text-align:right}
+.f-crit{background:color-mix(in srgb,var(--crit) 11%,transparent)}
+.f-warn{background:color-mix(in srgb,var(--warn) 13%,transparent)}
+.note{background:var(--s1);border:1px solid var(--bd);border-left:3px solid var(--crit);
+border-radius:8px;padding:12px 15px;margin:0 0 16px;font-size:13px;color:var(--ts)}
+.note b{color:var(--tp)}
+.note.w{border-left-color:var(--warn)}
+code{font:11.5px ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--pg);
+padding:1px 5px;border-radius:4px;border:1px solid var(--gl)}
+th{text-align:left;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;
+color:var(--tm);padding:8px 12px;background:var(--pg);border-bottom:1px solid var(--gl)}
+td{padding:5px 12px;border-bottom:1px solid var(--gl);color:var(--ts);vertical-align:top}
+td:first-child{font-weight:600;color:var(--tp);white-space:nowrap}
+tr:last-child td{border-bottom:0}
+footer{margin-top:44px;padding-top:14px;border-top:1px solid var(--gl);font-size:11.5px;color:var(--tm)}
+
+table{width:100%;border-collapse:collapse;background:var(--s1);border:1px solid var(--bd);
+border-radius:8px;overflow:hidden;font-size:12.5px;margin:0 0 12px}
+.car{background:var(--s1);border:1px solid var(--bd);border-radius:8px;padding:16px 18px;margin:0 0 20px}
+.car h2{margin:0 0 2px;border:0;padding:0;font-size:17px}
+.links{margin:10px 0 12px;display:flex;flex-wrap:wrap;gap:8px}
+.links a{display:inline-block;background:var(--pg);border:1px solid var(--bd);border-radius:6px;
+padding:5px 11px;font-size:12.5px;text-decoration:none;color:var(--tp);font-weight:600}
+.links a:hover{border-color:var(--tm)}
+.state{color:var(--tm);font-size:12px;margin:0}
+</style></head><body><div class="wrap">
+<h1>The garage</h1>
+<p class="sub">2 cars, documented by reading the devices in them</p>
+<p class="meta">Everything below is read from the repo at build time — car.json, the tracked log catalogs, the pages on disk, the flash tags. Generated 10 Aug 2026</p>
+<div class="car"><h2>BMW E46 M3</h2><p class="state">cars/m3</p><div class="links"><a href="cars/m3/schematic/ravin_m3_pinout_schematic.html">schematic</a><a href="cars/m3/ecu/resources.html">ECU resources</a><a href="cars/m3/docs/04-config-audit.html">04-config-audit</a></div><table><thead><tr><th>Role</th><th>Device</th><th>Format</th><th>File</th><th>Reflects</th></tr></thead><tbody><tr><td>harness</td><td>RMod Wiring &amp; Fabrication engine harness, REV 01</td><td>not parseable — hand-entered facts</td><td><code>Ravin M3 harness pinout REV01 2026-01-18.pdf</code></td><td>as-built</td></tr><tr><td>pdm</td><td>AiM PDM32</td><td>AiM RaceStudio 3 archive</td><td><code>M3 PDM32.zconf2</code></td><td>as-exported</td></tr><tr><td>ecu</td><td>MoTeC M150</td><td>MoTeC M1 package</td><td><code>GPRP Pro (M150) [01.06.0552, July 2022] T1 , FRANK M3 S54.m1pkg-archive</code></td><td>as-exported</td></tr></tbody></table><p class="state">run data: no run data cataloged · flashed: nothing recorded — no m3-* tag</p></div>
+<div class="car"><h2>BMW Z4</h2><p class="state">cars/z4</p><div class="links"><a href="cars/z4/schematic/z4_pinout_schematic.html">schematic</a><a href="cars/z4/ecu/resources.html">ECU resources</a><a href="cars/z4/docs/html/index.html">docs</a></div><table><thead><tr><th>Role</th><th>Device</th><th>Format</th><th>File</th><th>Reflects</th></tr></thead><tbody><tr><td>pdm</td><td>MoTeC PDM</td><td>MoTeC PDM configuration</td><td><code>BMW_Z4_18_2026_01_01_diff-pump_reverse.pdm</code></td><td>as-exported</td></tr><tr><td>dash</td><td>MoTeC C1212 dash logger + E888 expander</td><td>MoTeC C1212 dash</td><td><code>C1212 Alsense.c1212v64</code></td><td>as-exported</td></tr><tr><td>ecu</td><td>MoTeC M800</td><td>MoTeC M800 calibration</td><td><code>Z4 config 12_19_25test.e35</code></td><td>as-exported</td></tr></tbody></table><p class="state">run data: no run data cataloged · flashed: nothing recorded — no z4-* tag</p></div>
+<footer>Built by <code>render/index.py</code>, rerun by every <code>garage.py build</code>. Run data stays local; these pages and the catalogs are what travel.</footer></div></body></html>

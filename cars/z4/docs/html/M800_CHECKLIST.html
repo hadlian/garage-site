@@ -1,0 +1,122 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>M800 mapping checklist — IO and communications</title>
+<style>:root{color-scheme:light;--s1:#fcfcfb;--pg:#f9f9f7;--tp:#0b0b0b;--ts:#52514e;--tm:#898781;
+--gl:#e1e0d9;--bl:#c3c2b7;--bd:rgba(11,11,11,.10);--crit:#d03b3b;--warn:#fab219;--good:#0ca30c;}
+@media(prefers-color-scheme:dark){:root:where(:not([data-theme=light])){color-scheme:dark;
+--s1:#1a1a19;--pg:#0d0d0d;--tp:#fff;--ts:#c3c2b7;--tm:#898781;--gl:#2c2c2a;--bl:#383835;
+--bd:rgba(255,255,255,.10);}}
+:root[data-theme=dark]{color-scheme:dark;--s1:#1a1a19;--pg:#0d0d0d;--tp:#fff;--ts:#c3c2b7;
+--tm:#898781;--gl:#2c2c2a;--bl:#383835;--bd:rgba(255,255,255,.10);}
+*{box-sizing:border-box}
+body{margin:0;background:var(--pg);color:var(--tp);
+font:14px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1400px;margin:0 auto;padding:32px 24px 64px}
+h1{font-size:24px;margin:0 0 4px;letter-spacing:-.01em}
+.sub{color:var(--ts);margin:0 0 4px}
+.meta{color:var(--tm);font-size:12px;margin:0 0 24px}
+h2{font-size:16px;margin:40px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--gl)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;padding:12px 14px;background:var(--s1);
+border:1px solid var(--bd);border-radius:8px;margin-bottom:20px}
+.lg{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--ts);white-space:nowrap}
+.lg i{width:11px;height:11px;border-radius:3px;flex:none}
+.conn header{padding:11px 14px;border-bottom:1px solid var(--gl)}
+.conn h3{margin:0;font-size:14px}
+.conn header p{margin:2px 0 0;font-size:11.5px;color:var(--tm)}
+.grid{display:flex;flex-direction:column}
+.pin:last-child{border-bottom:0}
+.hd{font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--tm);
+background:var(--pg);padding-top:6px;padding-bottom:6px}
+.pn{font-variant-numeric:tabular-nums;color:var(--tm);text-align:right}
+.f-crit{background:color-mix(in srgb,var(--crit) 11%,transparent)}
+.f-warn{background:color-mix(in srgb,var(--warn) 13%,transparent)}
+.note{background:var(--s1);border:1px solid var(--bd);border-left:3px solid var(--crit);
+border-radius:8px;padding:12px 15px;margin:0 0 16px;font-size:13px;color:var(--ts)}
+.note b{color:var(--tp)}
+.note.w{border-left-color:var(--warn)}
+code{font:11.5px ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--pg);
+padding:1px 5px;border-radius:4px;border:1px solid var(--gl)}
+th{text-align:left;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;
+color:var(--tm);padding:8px 12px;background:var(--pg);border-bottom:1px solid var(--gl)}
+td{padding:5px 12px;border-bottom:1px solid var(--gl);color:var(--ts);vertical-align:top}
+td:first-child{font-weight:600;color:var(--tp);white-space:nowrap}
+tr:last-child td{border-bottom:0}
+footer{margin-top:44px;padding-top:14px;border-top:1px solid var(--gl);font-size:11.5px;color:var(--tm)}
+h3{font-size:14px;margin:28px 0 8px}h4{font-size:13px;margin:20px 0 6px}
+p{max-width:76ch}li{max-width:72ch;margin:3px 0}ul,ol{padding-left:24px;color:var(--ts)}
+pre{background:var(--s1);border:1px solid var(--bd);border-radius:8px;padding:12px 15px;overflow-x:auto}
+pre code{border:0;background:none;padding:0;font-size:12px;line-height:1.5}
+blockquote{margin:12px 0;padding:2px 16px;border-left:3px solid var(--bl);color:var(--ts)}
+.tbl{overflow-x:auto}table{border-collapse:collapse;min-width:50%}
+hr{border:0;border-top:1px solid var(--gl);margin:32px 0}
+a{color:inherit}
+</style></head><body><div class="wrap">
+<p class="meta"><a href="index.html">&larr; all docs</a></p><h1>M800 mapping checklist — IO and communications</h1>
+<p>Six items in ECU Manager. The first needs no save at all and is the cheapest thing on this list — do it while the tune is open for anything else.</p>
+<p>Nothing here touches the fuel or ignition tables except item 6, which touches exactly one cell of one on purpose.</p>
+<h2>Protocol</h2>
+<ol><li>Always start from the same baseline — source/Z4 config 12_19_25test.e35. Never chain edits off a previous test file. Z4 LambdaChange.e35 already holds two edits, which is why its diff shows four runs instead of one. Save new tunes into source/m800-tunes/.</li><li>Give every field in a save a DIFFERENT value. The diff shows one run per field; you match run to field by the value you typed. Same value twice and the two runs become indistinguishable.</li><li>Write down what each field read BEFORE you change it. The before/after pair is what pins the encoding — that is how 101 to 0 proved the aux byte is a list position rather than a function number.</li><li>Save As a new filename. Do not overwrite, do not send to the ECU.</li><li>One save per section, then run the diff before moving on.</li></ol>
+<p>After each save:</p>
+<pre><code>python cars/z4/tools/diff_e35.py &quot;cars/z4/source/Z4 config 12_19_25test.e35&quot; &quot;cars/z4/source/m800-tunes/&lt;newfile&gt;.e35&quot; --survey cars/z4/source/m800-tunes --map formats/e35_map.json --record &quot;save 1 - digital inputs&quot;</code></pre>
+<hr>
+<h2>Save 1 — Digital and switch inputs</h2>
+<p><b>Screens:</b> Input Setup &gt; digital inputs</p>
+<p>Ten fields sharing one function list (Gear Shift Up, Gear Shift Down, Monitor, Pulse Measure (Scaled), Start/Stop Switch, ...). Pick ten different functions; if the list is shorter, use each once and leave the rest.</p>
+<div class=tbl><table><thead><tr><th>Field</th><th>Reads now</th><th>Set to</th></tr></thead><tbody><tr><td>Dig In 1</td><td></td><td></td></tr><tr><td>Dig In 2</td><td></td><td></td></tr><tr><td>Dig In 3</td><td></td><td></td></tr><tr><td>Dig In 4</td><td></td><td></td></tr><tr><td>Sw In 1</td><td></td><td></td></tr><tr><td>Sw In 2</td><td></td><td></td></tr><tr><td>Sw In 3</td><td></td><td></td></tr><tr><td>Sw In 4</td><td></td><td></td></tr><tr><td>Sw In 5</td><td></td><td></td></tr><tr><td>Sw In 6</td><td></td><td></td></tr></tbody></table></div>
+<p>Save as <code>Z4 DigTest.e35</code>.</p>
+<hr>
+<h2>Save 2 — Analog inputs and sensors</h2>
+<p><b>Screens:</b> Sensor Setup · Input Setup · Wide Band Lambda Setup</p>
+<p>This is the save that produces the actual pinout — which analog pin carries which sensor. Change as many analog inputs as the screen exposes, each to a different sensor.</p>
+<div class=tbl><table><thead><tr><th>Field</th><th>Reads now</th><th>Set to</th></tr></thead><tbody><tr><td>AV1 – AV8 function</td><td></td><td></td></tr><tr><td>AT1, AT2 function</td><td></td><td></td></tr><tr><td>Throttle Position Hi/Lo</td><td></td><td></td></tr><tr><td>Wide Band Lambda — Sensor Type (LA1)</td><td></td><td></td></tr><tr><td>Wide Band Lambda — Calibration Number (LA1)</td><td></td><td></td></tr></tbody></table></div>
+<p>Save as <code>Z4 SensorTest.e35</code>.</p>
+<p>→ If LA1 Sensor Type moves 0x0603E, that field is confirmed as Sensor Type rather than merely &#x27;a lambda setting&#x27;.</p>
+<p>→ If LA1 Calibration Number moves 0x06046, the 0x64 0x64 pair is confirmed too.</p>
+<hr>
+<h2>Save 3 — Auxiliary outputs 1, 2, 3, 4, 6 — do this one first</h2>
+<p><b>Screens:</b> Aux Output Setup</p>
+<p>The table at 0x06F8E is located and aux 5 is confirmed. This save settles whether the run really starts at aux 1, and decodes the rest. The expected bytes assume the position+1 rule holds.</p>
+<div class=tbl><table><thead><tr><th>Aux</th><th>Reads now</th><th>Set to</th><th>Expected byte</th></tr></thead><tbody><tr><td>1</td><td></td><td>Spray Bars (114)</td><td>0x17</td></tr><tr><td>2</td><td></td><td>Slip Warning (112)</td><td>0x15</td></tr><tr><td>3</td><td></td><td>Gear Change Light (107)</td><td>0x11</td></tr><tr><td>4</td><td></td><td>A/C Clutch (104)</td><td>0x0E</td></tr><tr><td>6</td><td></td><td>Power Hold (118)</td><td>0x1B</td></tr></tbody></table></div>
+<p>Save as <code>Z4 AuxTest.e35</code>.</p>
+<p>→ If they land as predicted, the encoding is proven across the whole table and every aux decodes.</p>
+<p>→ If they land shifted by one position, the run starts somewhere other than aux 1 and the map gets corrected.</p>
+<p>→ The &#x27;reads now&#x27; column matters most here — it directly answers whether aux 2 is really Drive by Wire, which ECU Manager says is Aux1-only.</p>
+<hr>
+<h2>Save 4 — Communications</h2>
+<p><b>Screens:</b> Communications &gt; CAN Setup · RS232 Telemetry Setup · Setup Custom Data Sets · MDD Setup</p>
+<p>The custom data set is very likely the 77-entry list already mapped at 0x0003A — adding one channel there confirms it and tells us which screen owns it.</p>
+<div class=tbl><table><thead><tr><th>Field</th><th>Reads now</th><th>Set to</th></tr></thead><tbody><tr><td>CAN address / base ID</td><td></td><td>something distinctive, e.g. 0x7A0</td></tr><tr><td>CAN baud rate</td><td></td><td>any other rate</td></tr><tr><td>CAN mode / data set</td><td></td><td></td></tr><tr><td>RS232 telemetry enable or rate</td><td></td><td></td></tr></tbody></table></div>
+<p>Save as <code>Z4 CommsTest.e35</code>.</p>
+<hr>
+<h2>Item 5 — Read two things off the logging setup — no save needed</h2>
+<p><b>Screens:</b> Communications &gt; Setup Custom Data Sets, or the logging setup list</p>
+<p>This settles 392 channel names for the price of looking at a screen. ECU Manager&#x27;s own channel list has been extracted from WinEMP.exe and the .e35&#x27;s selection ids demonstrably index into it — 51 of 51 consecutive id pairs land on consecutive names. What is not known is whether id N is the Nth name or the N+1th, and the car&#x27;s own data argues both ways. Either answer below fixes it.</p>
+<div class=tbl><table><thead><tr><th>Question</th><th>Answer</th></tr></thead><tbody><tr><td>What is the FIRST channel in the selected list?</td><td>if RPM, ids are 0-based; if something else, note what</td></tr><tr><td>Is &#x27;Aux Out1 Duty Cycle&#x27; among the selected channels?</td><td>yes means 1-based, no means 0-based</td></tr></tbody></table></div>
+<p>→ Those two answers disagree only if something else is going on, in which case write down both and stop — that is a finding in itself.</p>
+<p>→ With the offset fixed, the 60 channels the schematic currently prints as bare ids all resolve, and the leading 0 in the selection list stops being a mystery.</p>
+<hr>
+<h2>Save 6 — Identify one table — the only way in</h2>
+<p><b>Screens:</b> any table you can name that is NOT already in calibration_tables.tables</p>
+<p><b>Partly done.</b> Largely superseded 2026-08-09: seven tables were anchored by screenshots, and formats/e35_schema.json (mined from WinEMP.exe) now types every remaining table — a screenshot of any named screen lands in a prepared slot. This item remains only as the method note for naming those slots.</p>
+<p>The tuning tables ARE in the file, unencrypted and table-shaped: 173 ascending u16 runs, an axis at 0x01004 reading 0, 500, 550, 600 on this car against 0, 673, 704, 753 on the factory file, and a block at 0x01FBA of ten rows of twenty at a 0x28 stride. Change ONE cell, in a table you can name, to a distinctive value — and write down what it read before, because the before/after pair is what decodes it rather than merely locating it.</p>
+<div class=tbl><table><thead><tr><th>Field</th><th>Reads now</th><th>Set to</th></tr></thead><tbody><tr><td>Table name (write it down exactly)</td><td></td><td></td></tr><tr><td>Which cell — its RPM site and its load site</td><td></td><td></td></tr><tr><td>The value in that cell</td><td></td><td>something unmistakable</td></tr></tbody></table></div>
+<p>Save as <code>Z4 TableTest.e35</code>.</p>
+<p>→ One changed u16 in a 73,728-byte file is unmissable in the diff, and it gives the table, its stride and both its axes at once — the same way one aux edit gave the whole aux table.</p>
+<p>→ Repeat per table. Each is cheap once the first has shown you the shape.</p>
+<hr>
+<h2>Save 7 — Locate the zero tables — the ignition comps</h2>
+<p><b>Screens:</b> Adjust &gt; Ignition &gt; Compensations &gt; Air Temp · Eng Temp · MAP · Comp 1 · Comp 2</p>
+<p>All five read zero everywhere (verified by screenshot 2026-08-09), which makes them invisible to value-search — the one table class only an edit can locate. Set ONE cell in EACH to the DISTINCT value below, all five in one save. The diff pins all five tables at once, and their positions against the four temp-axis copies settle the axis attribution the comp tables carry as candidate.</p>
+<div class=tbl><table><thead><tr><th>Table</th><th>Cell</th><th>Set to</th></tr></thead><tbody><tr><td>Ign AT Comp</td><td>Load 0, AT -50</td><td>2.5</td></tr><tr><td>Ign ET Comp</td><td>Load 0, ET -50</td><td>3.5</td></tr><tr><td>Ign MAP Comp</td><td>first cell</td><td>1.5</td></tr><tr><td>Comp 1</td><td>first cell</td><td>0.5</td></tr><tr><td>Comp 2</td><td>first cell</td><td>1.0</td></tr></tbody></table></div>
+<p>Save as <code>Z4 IgnComps.e35</code>.</p>
+<p>→ Five tables located in one diff, and the exe schema&#x27;s typed-but-unnamed records in the zero field get their names.</p>
+<p>→ Set the cells back to 0.0 afterwards (or simply do not save again) — the working file is untouched either way.</p>
+<hr>
+<h2>Save 8 — Locate the axis site-count fields</h2>
+<p><b>Screens:</b> Fuel Main&#x27;s RPM axis editor</p>
+<p>Every axis reads correctly by the ascending-run heuristic, but the ECU must store site COUNTS somewhere and no read has found them. Removing one site moves the count field in the diff — and probably reveals the whole count array for every axis at once. TEST FILE ONLY: an axis change re-shapes the table&#x27;s interpolation; never send this save to the ECU.</p>
+<div class=tbl><table><thead><tr><th>Field</th><th>Reads now</th><th>Set to</th></tr></thead><tbody><tr><td>Number of RPM sites (or delete the 9000 site)</td><td>19 sites, 0-9000</td><td>18 sites</td></tr></tbody></table></div>
+<p>Save as <code>Z4 AxisCount.e35</code>.</p>
+<hr>
+<p><b>Note.</b> Alarms are barely an M800 feature and maths channels are not a feature of either box. The M800 has User Channel 1-8, engine-protection limits, Aux Tables and the Driver Warning Alarm aux function; the C1212 has real alarms but no user-programmable arithmetic. A computed value that needs to reach the dash must be built in the ECU and sent over CAN. <b>Note.</b> Item 5 is free and item 6 costs one save. Between them they are worth more than the other four combined: one resolves every unnamed channel on the schematic, the other opens the part of the file nothing has read.</p>
+<p>&lt;!-- generated from e35_map.json — edit that, not this --&gt;</p><footer>rendered from <code>M800_CHECKLIST.md</code> — edit that, not this — <code>tools/build_docs.py</code></footer></div></body></html>

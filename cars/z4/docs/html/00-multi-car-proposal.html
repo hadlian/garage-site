@@ -1,0 +1,89 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Proposal — one repo, many cars</title>
+<style>:root{color-scheme:light;--s1:#fcfcfb;--pg:#f9f9f7;--tp:#0b0b0b;--ts:#52514e;--tm:#898781;
+--gl:#e1e0d9;--bl:#c3c2b7;--bd:rgba(11,11,11,.10);--crit:#d03b3b;--warn:#fab219;--good:#0ca30c;}
+@media(prefers-color-scheme:dark){:root:where(:not([data-theme=light])){color-scheme:dark;
+--s1:#1a1a19;--pg:#0d0d0d;--tp:#fff;--ts:#c3c2b7;--tm:#898781;--gl:#2c2c2a;--bl:#383835;
+--bd:rgba(255,255,255,.10);}}
+:root[data-theme=dark]{color-scheme:dark;--s1:#1a1a19;--pg:#0d0d0d;--tp:#fff;--ts:#c3c2b7;
+--tm:#898781;--gl:#2c2c2a;--bl:#383835;--bd:rgba(255,255,255,.10);}
+*{box-sizing:border-box}
+body{margin:0;background:var(--pg);color:var(--tp);
+font:14px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1400px;margin:0 auto;padding:32px 24px 64px}
+h1{font-size:24px;margin:0 0 4px;letter-spacing:-.01em}
+.sub{color:var(--ts);margin:0 0 4px}
+.meta{color:var(--tm);font-size:12px;margin:0 0 24px}
+h2{font-size:16px;margin:40px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--gl)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;padding:12px 14px;background:var(--s1);
+border:1px solid var(--bd);border-radius:8px;margin-bottom:20px}
+.lg{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--ts);white-space:nowrap}
+.lg i{width:11px;height:11px;border-radius:3px;flex:none}
+.conn header{padding:11px 14px;border-bottom:1px solid var(--gl)}
+.conn h3{margin:0;font-size:14px}
+.conn header p{margin:2px 0 0;font-size:11.5px;color:var(--tm)}
+.grid{display:flex;flex-direction:column}
+.pin:last-child{border-bottom:0}
+.hd{font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--tm);
+background:var(--pg);padding-top:6px;padding-bottom:6px}
+.pn{font-variant-numeric:tabular-nums;color:var(--tm);text-align:right}
+.f-crit{background:color-mix(in srgb,var(--crit) 11%,transparent)}
+.f-warn{background:color-mix(in srgb,var(--warn) 13%,transparent)}
+.note{background:var(--s1);border:1px solid var(--bd);border-left:3px solid var(--crit);
+border-radius:8px;padding:12px 15px;margin:0 0 16px;font-size:13px;color:var(--ts)}
+.note b{color:var(--tp)}
+.note.w{border-left-color:var(--warn)}
+code{font:11.5px ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--pg);
+padding:1px 5px;border-radius:4px;border:1px solid var(--gl)}
+th{text-align:left;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;
+color:var(--tm);padding:8px 12px;background:var(--pg);border-bottom:1px solid var(--gl)}
+td{padding:5px 12px;border-bottom:1px solid var(--gl);color:var(--ts);vertical-align:top}
+td:first-child{font-weight:600;color:var(--tp);white-space:nowrap}
+tr:last-child td{border-bottom:0}
+footer{margin-top:44px;padding-top:14px;border-top:1px solid var(--gl);font-size:11.5px;color:var(--tm)}
+h3{font-size:14px;margin:28px 0 8px}h4{font-size:13px;margin:20px 0 6px}
+p{max-width:76ch}li{max-width:72ch;margin:3px 0}ul,ol{padding-left:24px;color:var(--ts)}
+pre{background:var(--s1);border:1px solid var(--bd);border-radius:8px;padding:12px 15px;overflow-x:auto}
+pre code{border:0;background:none;padding:0;font-size:12px;line-height:1.5}
+blockquote{margin:12px 0;padding:2px 16px;border-left:3px solid var(--bl);color:var(--ts)}
+.tbl{overflow-x:auto}table{border-collapse:collapse;min-width:50%}
+hr{border:0;border-top:1px solid var(--gl);margin:32px 0}
+a{color:inherit}
+</style></head><body><div class="wrap">
+<p class="meta"><a href="index.html">&larr; all docs</a></p><h1>Proposal — one repo, many cars</h1>
+<p><b>Status:</b> proposed, not built. Written 3 Aug 2026 at the end of the session that produced <code>ravin-z4</code>. Read this before starting the refactor.</p>
+<h2>What changed</h2>
+<p><code>ravin-m3</code> and <code>ravin-z4</code> were built as separate repos. That was the right call for two cars with no shared tooling, and it is the wrong call for the actual requirement, which is: <b>one repo you can add cars to, carrying the parsers to read whatever equipment each car has.</b></p>
+<p>The decision to separate was made explicitly conditional on there being no third car. There will be more cars. This supersedes it.</p>
+<h2>The argument that settled it</h2>
+<p>The offset maps in <code>schematic/data/</code> describe <b>formats, not cars</b>. <code>e35_map.json</code> is the layout of ECU Manager 3.5&#x27;s file — it applies to any M800 in any car. <code>c1212_map.json</code> likewise. Kept in per-car repos they get copied and drift. Kept once, the second M800 car inherits the whole map for free, including every controlled edit already paid for.</p>
+<p>Same for the renderer. The house style — the pin grid, the findings blocks, the confidence markers, the CSS — is currently duplicated between two <code>build.py</code> files that have already diverged.</p>
+<h2>Shape</h2>
+<pre><code>garage/
+  cars/&lt;car&gt;/car.json     manifest: which devices, which files, which overrides
+             source/      exported configs, read-only
+             data/        hand-entered facts no file contains
+             docs/  schematic.html
+  parsers/                one per FORMAT, never per car
+    aim_zconf2.py  motec_pdm_xml.py  motec_c1212.py  motec_e35.py  motec_m1.py
+  formats/                offset maps — shared format knowledge
+  model.py                normalised: pins, channels, conditions, CAN, findings
+  render/                 house style, written once
+  tools/                  diff, audit, app
+  build.py &lt;car&gt; | --all</code></pre>
+<p>The join is <code>model.py</code>. Parsers emit the normalised model; the renderer knows only the model and nothing about any car. Adding a car is then a manifest, plus one parser only if it brings a format nothing else has read.</p>
+<h2>The real design problem</h2>
+<p>The two existing pipelines are <b>different shapes</b>, and the refactor has to reconcile them rather than pick one.</p>
+<p><code>ravin-m3/schematic/build.py</code> renders from hand-maintained JSON. That is not laziness — the harness data comes from a PDF. No config file on that car contains wire colours or bulkhead routing, so a human types them in.</p>
+<p><code>ravin-z4/schematic/build.py</code> parses the source binaries directly and derives everything.</p>
+<p>A car needs both: parsed facts <i>and</i> hand-entered facts, merged. The model must carry <b>provenance per field</b> — parsed, hand-entered, or inferred — because only the first is verifiable and the three deserve different treatment in the output. The Z4 schematic already does a weaker version of this with its <code>confirmed</code> / <code>probable</code> / <code>candidate</code> markers; generalise that.</p>
+<h2>A second source type to allow for</h2>
+<p>Sources here are files, but they need not be. MoTeC M1 Tune can read a resource map out of a live ECU over Ethernet, and that is the intended route for the M3&#x27;s <code>ecu_resources.json</code>. Do not bake &quot;a source is a file&quot; into the model — a source is <i>a device state</i>, however it was obtained, and it should carry when and how.</p>
+<h2>What not to promise</h2>
+<p>&quot;Add a car and the pipeline documents it&quot; holds for formats already parsed. It does not hold for a new opaque one.</p>
+<p>The axis that governs effort is <b>structured vs opaque</b>, not vendor. MoTeC <code>.pdm</code> is XML and took an afternoon. AiM <code>.zconf2</code> parses. MoTeC <code>.c1212v64</code> and <code>.e35</code> are undocumented binaries that carry no field names at all, and everything known about them was won by controlled edit — change one setting in the vendor tool, save under a new name, diff. A new car with a new opaque format costs that again, whoever made it.</p>
+<h2>Why parse rather than read documentation</h2>
+<p>Three results from the session that produced this repo, all of which argue the same way:</p>
+<ul><li><b>The PDM operator codes</b> are documented nowhere. They were recovered from the vendor&#x27;s own sample configurations, which is a stronger source than a manual — those files were written by the software itself.</li><li><b><code>master.chl</code></b>, the documentation-shaped route, gave confident wrong answers: per-cylinder lambda channels 3, 4 and 5 on a six-cylinder engine with two sensors. Parsing the file and anchoring to the car&#x27;s own layout caught it.</li><li><b>The aux output encoding</b> is a case where the documentation actively misleads. ECU Manager numbers the functions 0–9 then 101–129; the file stores the <i>list position</i>. Reading the manual and then the bytes maps every auxiliary output wrong. Only a known before/after from a real config revealed it.</li></ul>
+<p>Parse the device. Anchor to something car-specific. State the confidence.</p><footer>rendered from <code>00-multi-car-proposal.md</code> — edit that, not this — <code>tools/build_docs.py</code></footer></div></body></html>
