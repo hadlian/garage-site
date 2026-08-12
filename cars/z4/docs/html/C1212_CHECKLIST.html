@@ -68,6 +68,7 @@ a{color:inherit}
 <hr>
 <h2>Save 1 — Display page assignment — the only real gap left</h2>
 <p><b>Screens:</b> Display / screen setup</p>
+<p><b>Done.</b> DONE 2026-08-12 as Alsense PageTest.c1212v64. Moving Gear onto PRACTICE&#x27;s Number 4 wrote GEAR at 0x1154C6+0x42 and took that slot&#x27;s entry count at +0x9E from 1 to 2, with nothing else in the region moving. That gave the whole DISPLAY_FIELD_SLOT layout - 0xCC stride, label at +0x00, second entry at +0x42, count u16 at +0x9E - and established there are TWO display pages, not the four the gap-threshold guess produced. Status confirmed.</p>
 <p>The 46 field labels are located but their grouping into screens is inferred from a gap threshold, and nothing in the file marks a page boundary. Move ONE field from one page to another and the run that changes is the page reference.</p>
 <div class=tbl><table><thead><tr><th>Field</th><th>Reads now</th><th>Set to</th></tr></thead><tbody><tr><td>A display field (note which, and which page it is on)</td><td></td><td>move it to another page</td></tr></tbody></table></div>
 <p>Save as <code>Alsense PageTest.c1212v64</code>.</p>
@@ -84,6 +85,7 @@ a{color:inherit}
 <hr>
 <h2>Save 3 — Harvest a built-in channel id</h2>
 <p><b>Screens:</b> CAN / communications — a transmit template</p>
+<p><b>Done.</b> DONE 2026-08-12 as Alsense IdTest.c1212v64, and it paid far beyond the two ids it was asked for. The two channels landed at 0x0F736 and 0x0F754 - slots 0 and 1 of the FIFTH 16-record sub-array of the compound at 0xEECC - which established the sub-array geometry, and with it the channel ordering that has since named thirteen built-in ids. IT ALSO SURVIVED A SCARE: for an hour on 12 Aug this save appeared to have changed nothing, because the reader deduped templates by name and this config has two both called VCS TransmitCompound full, so the comparison ran against the wrong block. The save was sound; the reader was not.</p>
 <p>Now that word 9 of a +0x00EA record is known to be the source channel id, any built-in channel&#x27;s id can be read off by putting it in a CAN message. This converts &#x27;the id table is inside Dash Manager&#x27; into something answerable one channel at a time. Bind two built-ins whose ids are unknown to two free bytes of an existing transmit template.</p>
 <div class=tbl><table><thead><tr><th>Field</th><th>Reads now</th><th>Set to</th></tr></thead><tbody><tr><td>A free byte of a transmit template</td><td>unbound</td><td>a built-in, e.g. Dig In 1 Speed</td></tr><tr><td>Another free byte</td><td>unbound</td><td>a different built-in</td></tr></tbody></table></div>
 <p>Save as <code>Alsense IdTest.c1212v64</code>.</p>
