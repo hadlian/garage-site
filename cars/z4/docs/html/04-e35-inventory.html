@@ -56,7 +56,8 @@ a{color:inherit}
 <h2>Identity</h2>
 <ul><li>file: <code>Z4 config 12_19_25test.e35</code>, 73728 bytes, md5 <code>8d211c51fef803faf3e100299d71e265</code></li><li>internal config name: <b>Z4 config 12_19_25test</b></li><li>vs <code>Z4 config 12_19_25test.e35</code>: identical</li><li>vs <code>Z4 LambdaChange.e35</code>: 21 bytes differ</li><li>vs <code>save4.e35</code>: 26 bytes differ</li><li>vs <code>DigTest.e35</code>: 39 bytes differ</li><li>rev limit: <b>8500 RPM</b> <i>(status: probable)</i></li></ul>
 <h2>Fuel Main</h2>
-<p><i>status: confirmed; axes as recorded in the map — see calibration_tables</i></p>
+<p><i>status: confirmed</i></p>
+<ul><li>x axis <b>RPM</b> at <code>0x0AC74</code>, 19 sites, source <i>stored</i> — attribution <i>confirmed</i></li><li>y axis <b>Effcy %</b> at <code>0x0ACC4</code>, 14 sites, source <i>stored</i> — attribution <i>confirmed</i></li></ul>
 <pre><code>Fuel Main (% IJPU)  —  14 x 19 sites
              RPM
  Effcy %       0    500   1000   1500   2000   2500   3000   3500   4000   4500   5000   5500   6000   6500   7000   7500   8000   8500   9000
@@ -75,7 +76,8 @@ a{color:inherit}
        2    19.3   17.1   16.9   14.7   10.6    9.0    8.0    8.0    8.0    8.0    8.0    8.0    8.0    8.0    8.0    8.0    8.0    8.0    8.0
        0    16.5   14.0   11.9   10.6    7.7    6.0    5.0    5.0    5.0    5.0    5.0    5.0    5.0    5.0    5.0    5.0    5.0    5.0    5.0</code></pre>
 <h2>Lambda Table</h2>
-<p><i>status: confirmed; axes as recorded in the map — see calibration_tables</i></p>
+<p><i>status: confirmed</i></p>
+<ul><li>x axis <b>RPM</b> at <code>0x0C398</code>, 10 sites, source <i>stored</i> — attribution <i>probable</i></li><li>y axis <b>Load %</b> at <code>0x0C3C0</code>, 11 sites, source <i>stored</i> — attribution <i>probable</i></li></ul>
 <pre><code>Lambda Table (lambda)  —  11 x 10 sites
              RPM
   Load %     500   1000   2000   3000   4000   5000   6000   7000   8000   9000
@@ -91,7 +93,8 @@ a{color:inherit}
        5    1.00   1.00   1.00   1.00   0.96   0.93   0.93   0.93   0.93   0.93
        0    1.00   1.00   1.00   1.00   0.96   0.93   0.93   0.93   0.93   0.93</code></pre>
 <h2>Fuel AT Comp</h2>
-<p><i>status: confirmed; axes as recorded in the map — see calibration_tables</i></p>
+<p><i>status: confirmed</i></p>
+<ul><li>x axis <b>AT C</b> at <code>0x0AFD8</code>, 26 sites, source <i>stored</i> — attribution <i>candidate</i></li><li>y axis <b>Effcy %</b> at <code>0x0B00C</code>, 5 sites, source <i>stored</i> — attribution <i>candidate</i></li></ul>
 <pre><code>Fuel AT Comp (% trim)  —  5 x 26 sites
             AT C
  Effcy %     -50    -40    -30    -20    -10      0     10     20     30     40     50     60     70     80     90    100    110    120    130    140    150    160    170    180    190    200
@@ -101,7 +104,8 @@ a{color:inherit}
       25    17.0   14.0   10.5    7.5    5.5    4.0    2.0    0.0   -2.0   -4.0   -6.0   -8.0   -9.5  -11.0  -11.5  -12.0  -12.0  -12.0  -12.0  -12.0  -12.0  -12.0  -12.0  -12.0  -12.0  -12.0
        0    17.0   14.0   10.5    7.5    5.5    4.0    2.0    0.0   -2.0   -4.0   -6.0   -8.0   -9.5  -11.0  -11.5  -12.0  -12.0  -12.0  -12.0  -12.0  -12.0  -12.0  -12.0  -12.0  -12.0  -12.0</code></pre>
 <h2>Fuel ET Comp</h2>
-<p><i>status: confirmed; axes as recorded in the map — see calibration_tables</i></p>
+<p><i>status: confirmed</i></p>
+<ul><li>x axis <b>ET C</b> at <code>0x0B022</code>, 26 sites, source <i>stored</i> — attribution <i>candidate</i></li><li>y axis <b>Effcy %</b> at <code>0x0B056</code>, 5 sites, source <i>stored</i> — attribution <i>candidate</i></li></ul>
 <pre><code>Fuel ET Comp (% trim)  —  5 x 26 sites
             ET C
  Effcy %     -50    -40    -30    -20    -10      0     10     20     30     40     50     60     70     80     90    100    110    120    130    140    150    160    170    180    190    200
@@ -111,7 +115,8 @@ a{color:inherit}
       25    80.0   72.0   63.0   55.0   45.0   35.0   22.0   14.0   10.0    6.0    4.0    2.0    0.0    0.0    0.0    0.0    5.0    5.0    5.0    5.0    5.0    5.0    5.0    5.0    5.0    5.0
        0    80.0   72.0   63.0   55.0   45.0   35.0   22.0   14.0   10.0    6.0    4.0    2.0    0.0    0.0    0.0    0.0    5.0    5.0    5.0    5.0    5.0    5.0    5.0    5.0    5.0    5.0</code></pre>
 <h2>Ign AT Comp</h2>
-<p><i>status: confirmed; axes as recorded in the map — see calibration_tables</i></p>
+<p><i>status: confirmed</i></p>
+<ul><li>x axis <b>AT C</b> at <code>0x0B92C</code>, 18 sites, source <i>stored</i> — attribution <i>probable</i></li><li>y axis <b>Load %</b> at <code>0x0B960</code>, 5 sites, source <i>stored</i> — attribution <i>candidate</i></li></ul>
 <pre><code>Ign AT Comp (deg)  —  5 x 18 sites
             AT C
   Load %     -50    -40    -30    -20    -10      0     10     20     30     40     50     60     70     80     90    100    110    120
@@ -121,7 +126,8 @@ a{color:inherit}
       25     0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0
        0     0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0</code></pre>
 <h2>Ign ET Comp</h2>
-<p><i>status: confirmed; axes as recorded in the map — see calibration_tables</i></p>
+<p><i>status: confirmed</i></p>
+<ul><li>x axis <b>ET C</b> at <code>0x0B976</code>, 20 sites, source <i>stored</i> — attribution <i>probable</i></li><li>y axis <b>Load %</b> at <code>0x0B9AA</code>, 5 sites, source <i>stored</i> — attribution <i>candidate</i></li></ul>
 <pre><code>Ign ET Comp (deg)  —  5 x 20 sites
             ET C
   Load %     -50    -40    -30    -20    -10      0     10     20     30     40     50     60     70     80     90    100    110    120    130    140
@@ -131,7 +137,8 @@ a{color:inherit}
       25     0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0
        0     0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0</code></pre>
 <h2>Ign MAP Comp</h2>
-<p><i>status: confirmed; axes as recorded in the map — see calibration_tables</i></p>
+<p><i>status: confirmed</i></p>
+<ul><li>x axis <b>MAP kPa?</b> at <code>0x0AFD8</code>, 26 sites, source <i>stored</i> — attribution <i>candidate</i></li><li>y axis <b>Load %</b> at <code>0x0B00C</code>, 5 sites, source <i>stored</i> — attribution <i>candidate</i></li></ul>
 <pre><code>Ign MAP Comp (deg)  —  5 x 26 sites
          MAP kPa?
   Load %     -50    -40    -30    -20    -10      0     10     20     30     40     50     60     70     80     90    100    110    120    130    140    150    160    170    180    190    200
@@ -141,7 +148,8 @@ a{color:inherit}
       25     0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0
        0     0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0    0.0</code></pre>
 <h2>Ign Main</h2>
-<p><i>status: confirmed; axes as recorded in the map — see calibration_tables</i></p>
+<p><i>status: confirmed</i></p>
+<ul><li>x axis <b>RPM</b> at <code>0x0AF5C</code>, 20 sites, source <i>stored</i> — attribution <i>probable</i></li><li>y axis <b>Load %</b> at <code>0x0AF84</code>, 11 sites, source <i>default</i> — attribution <i>confirmed</i></li></ul>
 <pre><code>Ign Main (deg BTDC)  —  11 x 20 sites
              RPM
   Load %       0    500   1000   1500   2000   2500   3000   3500   4000   4500   5000   5500   6000   6500   7000   7500   8000   8500   9000   9500
