@@ -2,12 +2,12 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Ravin M3 — MoTeC M150 &amp; AiM PDM32 pinout schematic</title>
 <style>:root{color-scheme:light;--s1:#fcfcfb;--pg:#f9f9f7;--tp:#0b0b0b;--ts:#52514e;--tm:#898781;
---gl:#e1e0d9;--bl:#c3c2b7;--bd:rgba(11,11,11,.10);--crit:#d03b3b;--warn:#fab219;--good:#0ca30c;--c-ai:#2a78d6;--c-inj:#eb6834;--c-di:#1baf7a;--c-ign:#eda100;--c-sup:#e87ba4;--c-hb:#008300;--c-can:#4a3aa7;--c-pwr:#e34948;--c-gnd:#898781;--c-nc:#c3c2b7;--c-hpo:#e34948;--c-mpo:#eb6834;--c-lpo:#eda100;--c-hbpo:#008300;--c-in:#2a78d6;}
+--gl:#e1e0d9;--bl:#c3c2b7;--bd:rgba(11,11,11,.10);--crit:#d03b3b;--warn:#fab219;--good:#0ca30c;--c-ai:#2a78d6;--c-inj:#eb6834;--c-di:#1baf7a;--c-ign:#eda100;--c-sup:#e87ba4;--c-hb:#008300;--c-can:#4a3aa7;--c-pwr:#571a3f;--c-gnd:#898781;--c-nc:#c3c2b7;--c-hpo:#e34948;--c-mpo:#eb6834;--c-lpo:#eda100;--c-hbpo:#008300;--c-in:#2a78d6;}
 @media(prefers-color-scheme:dark){:root:where(:not([data-theme=light])){color-scheme:dark;
 --s1:#1a1a19;--pg:#0d0d0d;--tp:#fff;--ts:#c3c2b7;--tm:#898781;--gl:#2c2c2a;--bl:#383835;
---bd:rgba(255,255,255,.10);--c-ai:#3987e5;--c-inj:#d95926;--c-di:#199e70;--c-ign:#c98500;--c-sup:#d55181;--c-hb:#008300;--c-can:#9085e9;--c-pwr:#e66767;--c-gnd:#898781;--c-nc:#4a4a46;--c-hpo:#e66767;--c-mpo:#d95926;--c-lpo:#c98500;--c-hbpo:#008300;--c-in:#3987e5;}}
+--bd:rgba(255,255,255,.10);--c-ai:#3987e5;--c-inj:#d95926;--c-di:#199e70;--c-ign:#c98500;--c-sup:#d55181;--c-hb:#008300;--c-can:#9085e9;--c-pwr:#8f286d;--c-gnd:#898781;--c-nc:#4a4a46;--c-hpo:#e66767;--c-mpo:#d95926;--c-lpo:#c98500;--c-hbpo:#008300;--c-in:#3987e5;}}
 :root[data-theme=dark]{color-scheme:dark;--s1:#1a1a19;--pg:#0d0d0d;--tp:#fff;--ts:#c3c2b7;
---tm:#898781;--gl:#2c2c2a;--bl:#383835;--bd:rgba(255,255,255,.10);--c-ai:#3987e5;--c-inj:#d95926;--c-di:#199e70;--c-ign:#c98500;--c-sup:#d55181;--c-hb:#008300;--c-can:#9085e9;--c-pwr:#e66767;--c-gnd:#898781;--c-nc:#4a4a46;--c-hpo:#e66767;--c-mpo:#d95926;--c-lpo:#c98500;--c-hbpo:#008300;--c-in:#3987e5;}
+--tm:#898781;--gl:#2c2c2a;--bl:#383835;--bd:rgba(255,255,255,.10);--c-ai:#3987e5;--c-inj:#d95926;--c-di:#199e70;--c-ign:#c98500;--c-sup:#d55181;--c-hb:#008300;--c-can:#9085e9;--c-pwr:#8f286d;--c-gnd:#898781;--c-nc:#4a4a46;--c-hpo:#e66767;--c-mpo:#d95926;--c-lpo:#c98500;--c-hbpo:#008300;--c-in:#3987e5;}
 *{box-sizing:border-box}
 body{margin:0;background:var(--pg);color:var(--tp);
 font:14px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
@@ -101,7 +101,6 @@ layout sheet · keypad K11 “Compressor power” is not referenced by any outpu
 <div class="kp"><div class="k"><b>K1</b>Ignition</div><div class="k"><b>K2</b>Start</div><div class="k"><b>K3</b>Power steering</div><div class="k"><b>K4</b>Wiper (3-position)</div><div class="k"><b>K5</b>— unused —</div><div class="k"><b>K6</b>Fuel pump</div><div class="k"><b>K7</b>Rad fan</div><div class="k"><b>K8</b>Cabin air</div><div class="k"><b>K9</b>Defroster</div><div class="k"><b>K10</b>— unused —</div><div class="k"><b>K11</b>Compressor power — not referenced by any output</div><div class="k"><b>K12</b>Next display page</div></div>
 
 <footer>Colour marks the signal class and is a scanning aid only — every pin carries its
-designation and function in text, so nothing depends on colour alone. Palette validated for
-colour-vision deficiency (worst adjacent ΔE 9.1 protan, normal-vision floor 19.6).
+designation and function in text, so nothing depends on colour alone. Legend colours are checked pairwise for colour-vision deficiency at build time (CIEDE2000 over a Viénot 1999 dichromacy simulation); the weakest pairs are the ones to read by text rather than colour — on the M150 legend “Injector driver” and “Sensor supply” are only ΔE 0.8 apart under tritanopia, and on the PDM32 legend “Mid power out · 15 A” and “Reference / supply” are only ΔE 0.8 apart under tritanopia.
 Prints to A4/Letter in two columns. Built by <code>build.py</code> from <code>data/*.json</code>.</footer>
 </div></body></html>
