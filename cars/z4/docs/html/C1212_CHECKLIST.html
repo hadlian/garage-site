@@ -76,6 +76,7 @@ a{color:inherit}
 <hr>
 <h2>Save 2 — CAN template flag bits</h2>
 <p><b>Screens:</b> CAN / communications</p>
+<p><b>Partly done.</b> ATTEMPTED 2026-08-12 as Alsense FlagTest.c1212v64, and it did NOT hit the flag bits. Zero bytes changed in the CAN template region; the whole save is one u16 at 0x111FCA going 1 -&gt; 2, recorded under unattributed_runs. It was also chained off Alsense PageTest.c1212v64 rather than the baseline - harmless here because it is a single byte, but the third chained save of the session. Repeat from the baseline, on the CAN Setup screen, with one template&#x27;s transfer rate changed and nothing else.</p>
 <p>+0x1FB4 upper bits and +0x1FB8 are undecoded. Direction no longer needs them — it falls out of which channel word is populated — so this is for rate and frame format only. Change a transmit rate on one template and the frame format on another.</p>
 <div class=tbl><table><thead><tr><th>Field</th><th>Reads now</th><th>Set to</th></tr></thead><tbody><tr><td>One template&#x27;s transmit rate</td><td></td><td>any other rate</td></tr><tr><td>One template&#x27;s standard/extended setting</td><td></td><td>the other one</td></tr></tbody></table></div>
 <p>Save as <code>Alsense FlagTest.c1212v64</code>.</p>
