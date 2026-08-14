@@ -1,0 +1,86 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ravin M3 — Wiring Cross-Check Report</title>
+<style>:root{color-scheme:light;--s1:#fcfcfb;--pg:#f9f9f7;--tp:#0b0b0b;--ts:#52514e;--tm:#898781;
+--gl:#e1e0d9;--bl:#c3c2b7;--bd:rgba(11,11,11,.10);--crit:#d03b3b;--warn:#fab219;--good:#0ca30c;}
+@media(prefers-color-scheme:dark){:root:where(:not([data-theme=light])){color-scheme:dark;
+--s1:#1a1a19;--pg:#0d0d0d;--tp:#fff;--ts:#c3c2b7;--tm:#898781;--gl:#2c2c2a;--bl:#383835;
+--bd:rgba(255,255,255,.10);}}
+:root[data-theme=dark]{color-scheme:dark;--s1:#1a1a19;--pg:#0d0d0d;--tp:#fff;--ts:#c3c2b7;
+--tm:#898781;--gl:#2c2c2a;--bl:#383835;--bd:rgba(255,255,255,.10);}
+*{box-sizing:border-box}
+body{margin:0;background:var(--pg);color:var(--tp);
+font:14px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1400px;margin:0 auto;padding:32px 24px 64px}
+h1{font-size:24px;margin:0 0 4px;letter-spacing:-.01em}
+.sub{color:var(--ts);margin:0 0 4px}
+.meta{color:var(--tm);font-size:12px;margin:0 0 24px}
+h2{font-size:16px;margin:40px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--gl)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;padding:12px 14px;background:var(--s1);
+border:1px solid var(--bd);border-radius:8px;margin-bottom:20px}
+.lg{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--ts);white-space:nowrap}
+.lg i{width:11px;height:11px;border-radius:3px;flex:none}
+.conn header{padding:11px 14px;border-bottom:1px solid var(--gl)}
+.conn h3{margin:0;font-size:14px}
+.conn header p{margin:2px 0 0;font-size:11.5px;color:var(--tm)}
+.grid{display:flex;flex-direction:column}
+.pin:last-child{border-bottom:0}
+.hd{font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--tm);
+background:var(--pg);padding-top:6px;padding-bottom:6px}
+.pn{font-variant-numeric:tabular-nums;color:var(--tm);text-align:right}
+.f-crit{background:color-mix(in srgb,var(--crit) 11%,transparent)}
+.f-warn{background:color-mix(in srgb,var(--warn) 13%,transparent)}
+.note{background:var(--s1);border:1px solid var(--bd);border-left:3px solid var(--crit);
+border-radius:8px;padding:12px 15px;margin:0 0 16px;font-size:13px;color:var(--ts)}
+.note b{color:var(--tp)}
+.note.w{border-left-color:var(--warn)}
+code{font:11.5px ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--pg);
+padding:1px 5px;border-radius:4px;border:1px solid var(--gl)}
+th{text-align:left;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;
+color:var(--tm);padding:8px 12px;background:var(--pg);border-bottom:1px solid var(--gl)}
+td{padding:5px 12px;border-bottom:1px solid var(--gl);color:var(--ts);vertical-align:top}
+td:first-child{font-weight:600;color:var(--tp);white-space:nowrap}
+tr:last-child td{border-bottom:0}
+footer{margin-top:44px;padding-top:14px;border-top:1px solid var(--gl);font-size:11.5px;color:var(--tm)}
+h3{font-size:14px;margin:28px 0 8px}h4{font-size:13px;margin:20px 0 6px}
+p{max-width:76ch}li{max-width:72ch;margin:3px 0}ul,ol{padding-left:24px;color:var(--ts)}
+pre{background:var(--s1);border:1px solid var(--bd);border-radius:8px;padding:12px 15px;overflow-x:auto}
+pre code{border:0;background:none;padding:0;font-size:12px;line-height:1.5}
+blockquote{margin:12px 0;padding:2px 16px;border-left:3px solid var(--bl);color:var(--ts)}
+.tbl{overflow-x:auto}table{border-collapse:collapse;min-width:50%}
+hr{border:0;border-top:1px solid var(--gl);margin:32px 0}
+a{color:inherit}
+</style></head><body><div class="wrap">
+<p class="meta"><a href="index.html">&larr; all docs</a></p><h1>Ravin M3 — Wiring Cross-Check Report</h1>
+<p><b>Date:</b> 2026-08-01</p>
+<blockquote>## ⚠️ STATUS: PARTLY SUPERSEDED BY REV 01 — read this first<br>This pass was written <b>before</b> the RMod harness pinout (REV 01, 18 Jan 2026)<br>arrived. Its ECU-side statements come from the old <b>&quot;M150 M3&quot;</b> sheet, which<br>REV 01 supersedes, and at least one of them is now known to be wrong:<br>- <b>CAN1 does not go to the PDM.</b> The row in §1 reading<br><code>B30/31 | CAN1 | to ECU (M150 CAN1 = D17/D18) ✓</code> is wrong. REV 01 puts the<br><b>Racespec wideband</b> on M150 CAN1 (D17/D18) and the <b>PDM on CAN3</b><br>(A28/A29). <code>data/m150.json</code> carries the corrected bus map; the schematic<br>renders it.<br><b>The PDM32 findings in this document are unaffected</b> — they were decoded from<br><code>M3 PDM32.zconf2</code> and cross-checked against the AiM pinout, neither of which<br>REV 01 touches. Both confirmed faults were first found here.<br>Start from <code>02-full-wiring-analysis.md</code>, which was written against REV 01. This<br>file is kept for the PDM decode and for the reasoning trail. Annotated<br>12 Aug 2026.</blockquote>
+<p><b>Sources compared:</b></p>
+<ul><li><code>M3 PDM32.zconf2</code> — AiM PDM32 config (RaceStudio, extracted XML/CFF)</li><li><code>Ravin M3 PDM32 layout.xlsx</code> — pin layout spreadsheet (Google Drive)</li><li><code>E46 M3 Ravin.pdf</code> — 4-sheet schematic (PDM32 pinout, channels, keypad, SmartyCam)</li><li><code>GPRP Pro M150 ... FRANK M3 S54.m1pkgarchive</code> — MoTeC M1 package (metadata only; calibration is encrypted, per-pin ECU assignments not extractable)</li></ul>
+<p>The PDM32 config&#x27;s internal hardware tags (HP/MP/LP/HBP short names) were decoded, so every enabled output below is matched to its physical pin using the official pinout on sheet 2 of the PDF. B = Black 35-pin, G = Grey 35-pin.</p>
+<hr>
+<h2>1. Confirmed matches (config ↔ spreadsheet agree)</h2>
+<div class=tbl><table><thead><tr><th>Pin(s)</th><th>Output</th><th>Config channel</th><th>Trigger logic in config</th></tr></thead><tbody><tr><td>B1+13</td><td>HighPO1 20A</td><td>Starter</td><td>Start key ON</td></tr><tr><td>B2 / B3</td><td>MidPO1/2 15A</td><td>Fuel Pump1 / Fuel Pump2</td><td>(RPM sig &gt; 50) OR Fuel_Pump key</td></tr><tr><td>B4 / B5</td><td>MidPO3/4 15A</td><td>Rad Fan1 / Rad Fan2</td><td>Coolant &gt;90.6 °C on / &lt;85 °C off, OR Rad_Fan key</td></tr><tr><td>B6 / B7</td><td>MidPO5/6 15A</td><td>Ign On 1 / Ign On2</td><td>IGNITION key ON</td></tr><tr><td>B8</td><td>MidPO7 15A</td><td>Bk Tail</td><td><b>always ON</b> (see issue 6)</td></tr><tr><td>B9</td><td>MidPO8 15A</td><td>Cabin Fan</td><td>Cabin_Air key</td></tr><tr><td>B12+23</td><td>HighPO2 20A</td><td>Headlights</td><td><b>constant OFF — bug</b> (see issue 1)</td></tr><tr><td>B14 / B15</td><td>LowPO1/2 10A</td><td>Wiper HS / LS</td><td>Wiper key pos 2 / pos 1</td></tr><tr><td>B16</td><td>LowPO3 10A</td><td>Defrost</td><td>Defroster key</td></tr><tr><td>B20</td><td>LowPO7 10A</td><td>Can2 AccPo</td><td>always ON</td></tr><tr><td>B21</td><td>LowPO8 10A</td><td>WiperPark</td><td>Wiper key OFF</td></tr><tr><td>B24+25</td><td>HighPO3 20A</td><td>EPS1</td><td>Power_Steering key</td></tr><tr><td>B34+35</td><td>HighPO4 20A</td><td>EPS2</td><td>Power_Steering key</td></tr><tr><td>G9</td><td>MidPO12 15A</td><td>Caveman Sw</td><td>always ON</td></tr><tr><td>G10</td><td>LowPO12 10A</td><td>EPSTrigger</td><td>Power_Steering key</td></tr><tr><td>G23</td><td>Ignition wake</td><td>—</td><td>from battery cutoff ✓</td></tr><tr><td>B10/11/22/32/33</td><td>GND/CAN0/+Vb</td><td>GPS patch</td><td>matches AiM GPS08 guide note ✓</td></tr><tr><td>B30/31</td><td>CAN1</td><td>~~to ECU (M150 CAN1 = D17/D18)~~ — <b>wrong, see the banner.</b> The PDM is on M150 <b>CAN3</b> (A28/A29); D17/D18 is the Racespec wideband</td></tr></tbody></table></div>
+<p>Keypad mapping in config: K1 IGNITION, K2 Start, K3 Power Steering, K4 Wiper (3-pos), K6 Fuel Pump, K7 Rad Fan, K8 Cabin Air, K9 Defroster, K11 Compressor Power, K12 Next Display Page (K5, K10 unused).</p>
+<hr>
+<h2>2. Issues found</h2>
+<h3>Config bugs (in the PDM32 itself)</h3>
+<ol><li><b>Headlights can never turn on.</b> HighPO2 (B12+23) is enabled at 20 A, but its trigger math channel is hard-coded to constant <code>0</code>. No keypad key, triggered command, or other logic drives it anywhere in the config. Either the trigger formula was wiped, or headlight control was never finished.</li></ol>
+<ol><li><b>PCM12Vpwr2 (HBP3, G24+25, 35 A) turns ON when IGNITION is OFF.</b> Its twin, PCM 12VPWR (HBP1, G1+2), is ON when ignition is ON. If both feed the DME/PCM, the second output is live the entire time the PDM is awake with ignition off. If the intent was a redundant second feed, the trigger is inverted by mistake; if it&#x27;s a deliberate keep-alive, confirm and document it.</li></ol>
+<ol><li><b>&quot;Compressor Power&quot; keypad key (K11) is orphaned.</b> AIR SHIFT COMP (HBP4, G34+35, 35 A) triggers on battery &gt;12 V AND ignition ON — it never references the K11 key. Either the key or the automatic logic is leftover; as configured, the compressor runs whenever the engine&#x27;s up, and the keypad button does nothing.</li></ol>
+<ol><li><b>High Beam dash indicator reads the wrong channel.</b> The <code>High_Beam</code> display channel references the <i>Cabin Fan</i> output state (channel 1037) instead of Headlights (1048). Copy/paste error — the icon will light when the cabin fan runs.</li></ol>
+<h3>Documentation gaps (config has it, spreadsheet doesn&#x27;t)</h3>
+<ol><li><b>Four enabled outputs are missing from the layout spreadsheet:</b></li><li><b>PCM 12VPWR</b> — HBP1, Grey 1+2, 35 A (sheet shows the pins blank)</li><li><b>PCM12Vpwr2</b> — HBP3, Grey 24+25, 35 A (sheet lists as unused &quot;Half Bridge Output 3&quot;)</li><li><b>AIR SHIFT COMP</b> — HBP4, Grey 34+35, 35 A (sheet blank)</li><li><b>Transponder</b> — LowPO10, Grey 6, 10 A, always-ON (sheet blank)</li></ol>
+<p>The grey connector is doing far more than the sheet says — all three used half-bridge pairs carry 35 A circuits.</p>
+<h3>Duplication / conflict risks</h3>
+<ol><li><b>Brake/tail output is always-on.</b> B8 (&quot;brake/tail light → wires near steering column&quot;) is constant-ON whenever the PDM is awake. Fine for tail/running lights; wrong if the circuit includes brake lamps (no brake switching exists in the config). Verify what that wire actually feeds.</li></ol>
+<ol><li><b>CAN2 accessories are powered from two places.</b> The sheet feeds &quot;CAN 2, smartycam&quot; from B20 (LowPO7, switched output, always-ON in config) <i>and</i> wires Grey 17 (+Vb OUT) / Grey 18 (GND) to &quot;CAN 2&quot; — already flagged &quot;CHECK MAY BE WRONG&quot; in the sheet. The SmartyCam additionally shows external power on sheet 4/4. Two 12 V sources on the same bus risks backfeeding an off output; pick one supply per device.</li></ol>
+<ol><li><b>EPS labels are self-contradictory.</b> The sheet calls B24/25 &quot;EPS 3 / EPS 4&quot; and B34/35 &quot;EPS 1 / EPS 2&quot;; the config has only EPS1 (on B24+25) and EPS2 (on B34+35). It&#x27;s really two 20 A outputs, all four pins spliced, feeding one pump. Suggest relabeling: B24+25 = EPS1, B34+35 = EPS2, splice noted once.</li></ol>
+<ol><li><b>Paralleled distinct channels</b> (deliberate, but worth a note in the doc): fuel pump = B2+B3 spliced, rad fan = B4+B5 spliced, ECU ign = B6+B7 spliced, EPS = B24/25+B34/35 spliced. Trigger logic for each pair is identical in the config ✓, so they switch together — but each half is a separately-protected channel; if one trips, its partner carries the full load. Also, both &quot;Rad Fan&quot; channels share one physical fan with the same thresholds — no staging.</li></ol>
+<h3>Minor</h3>
+<ol><li>Spreadsheet header typo: Low Power Output rating shows <b>&quot;10:00 AM&quot;</b> (Excel auto-formatted &quot;10 A&quot;).</li><li>Config short names on the always-on grey outputs (&quot;Caveman Sw&quot;, &quot;transponde&quot;) would benefit from real circuit descriptions in the sheet.</li></ol>
+<hr>
+<h2>3. M150 side</h2>
+<p>The M1 package identifies as <b>GPRP Pro (M150) [01.06.0552, July 2022] T1, FRANK M3 S54</b> — its calibration (including ECU pin assignments) is encrypted and can&#x27;t be read outside MoTeC Tune. The &quot;M150 M3&quot; sheet currently has empty Function columns for all A/B/C/D connector pins, so there is no ECU-side wiring documentation to cross-check yet. Recommend filling in at least: injectors/coils (S54 = 6 cyl), CAN1 to PDM, sensor inputs in use, and the legacy &quot;Power/Sensor Connector&quot; sheets marked as superseded to avoid confusion.</p>
+<hr>
+<h2>4. Suggested next actions</h2>
+<ol><li>Fix the Headlights trigger in RaceStudio (assign a keypad key or input — none is currently free-labeled for it).</li><li>Confirm/flip the PCM12Vpwr2 ignition-off trigger.</li><li>Decide keypad-vs-auto for the air shift compressor (K11 currently dead).</li><li>Fix the High Beam indicator source channel.</li><li>Update the layout sheet: add the four undocumented grey-connector circuits, fix EPS labels, fix the &quot;10:00 AM&quot; typo, resolve the CAN2 dual-power question.</li></ol><footer>rendered from <code>01-pdm32-wiring-crosscheck.md</code> — edit that, not this — <code>render/docs.py</code></footer></div></body></html>

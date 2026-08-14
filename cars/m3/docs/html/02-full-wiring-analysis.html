@@ -1,0 +1,105 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ravin M3 — Full Wiring Analysis v2 (MoTeC M150 ↔ AiM PDM32)</title>
+<style>:root{color-scheme:light;--s1:#fcfcfb;--pg:#f9f9f7;--tp:#0b0b0b;--ts:#52514e;--tm:#898781;
+--gl:#e1e0d9;--bl:#c3c2b7;--bd:rgba(11,11,11,.10);--crit:#d03b3b;--warn:#fab219;--good:#0ca30c;}
+@media(prefers-color-scheme:dark){:root:where(:not([data-theme=light])){color-scheme:dark;
+--s1:#1a1a19;--pg:#0d0d0d;--tp:#fff;--ts:#c3c2b7;--tm:#898781;--gl:#2c2c2a;--bl:#383835;
+--bd:rgba(255,255,255,.10);}}
+:root[data-theme=dark]{color-scheme:dark;--s1:#1a1a19;--pg:#0d0d0d;--tp:#fff;--ts:#c3c2b7;
+--tm:#898781;--gl:#2c2c2a;--bl:#383835;--bd:rgba(255,255,255,.10);}
+*{box-sizing:border-box}
+body{margin:0;background:var(--pg);color:var(--tp);
+font:14px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1400px;margin:0 auto;padding:32px 24px 64px}
+h1{font-size:24px;margin:0 0 4px;letter-spacing:-.01em}
+.sub{color:var(--ts);margin:0 0 4px}
+.meta{color:var(--tm);font-size:12px;margin:0 0 24px}
+h2{font-size:16px;margin:40px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--gl)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;padding:12px 14px;background:var(--s1);
+border:1px solid var(--bd);border-radius:8px;margin-bottom:20px}
+.lg{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--ts);white-space:nowrap}
+.lg i{width:11px;height:11px;border-radius:3px;flex:none}
+.conn header{padding:11px 14px;border-bottom:1px solid var(--gl)}
+.conn h3{margin:0;font-size:14px}
+.conn header p{margin:2px 0 0;font-size:11.5px;color:var(--tm)}
+.grid{display:flex;flex-direction:column}
+.pin:last-child{border-bottom:0}
+.hd{font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--tm);
+background:var(--pg);padding-top:6px;padding-bottom:6px}
+.pn{font-variant-numeric:tabular-nums;color:var(--tm);text-align:right}
+.f-crit{background:color-mix(in srgb,var(--crit) 11%,transparent)}
+.f-warn{background:color-mix(in srgb,var(--warn) 13%,transparent)}
+.note{background:var(--s1);border:1px solid var(--bd);border-left:3px solid var(--crit);
+border-radius:8px;padding:12px 15px;margin:0 0 16px;font-size:13px;color:var(--ts)}
+.note b{color:var(--tp)}
+.note.w{border-left-color:var(--warn)}
+code{font:11.5px ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--pg);
+padding:1px 5px;border-radius:4px;border:1px solid var(--gl)}
+th{text-align:left;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;
+color:var(--tm);padding:8px 12px;background:var(--pg);border-bottom:1px solid var(--gl)}
+td{padding:5px 12px;border-bottom:1px solid var(--gl);color:var(--ts);vertical-align:top}
+td:first-child{font-weight:600;color:var(--tp);white-space:nowrap}
+tr:last-child td{border-bottom:0}
+footer{margin-top:44px;padding-top:14px;border-top:1px solid var(--gl);font-size:11.5px;color:var(--tm)}
+h3{font-size:14px;margin:28px 0 8px}h4{font-size:13px;margin:20px 0 6px}
+p{max-width:76ch}li{max-width:72ch;margin:3px 0}ul,ol{padding-left:24px;color:var(--ts)}
+pre{background:var(--s1);border:1px solid var(--bd);border-radius:8px;padding:12px 15px;overflow-x:auto}
+pre code{border:0;background:none;padding:0;font-size:12px;line-height:1.5}
+blockquote{margin:12px 0;padding:2px 16px;border-left:3px solid var(--bl);color:var(--ts)}
+.tbl{overflow-x:auto}table{border-collapse:collapse;min-width:50%}
+hr{border:0;border-top:1px solid var(--gl);margin:32px 0}
+a{color:inherit}
+</style></head><body><div class="wrap">
+<p class="meta"><a href="index.html">&larr; all docs</a></p><h1>Ravin M3 — Full Wiring Analysis v2 (MoTeC M150 ↔ AiM PDM32)</h1>
+<p><b>Date:</b> 2026-08-01 <b>Sources:</b></p>
+<ul><li><code>Ravin M3.pdf</code> — RMod Wiring &amp; Fabrication engine harness pinout, REV 01, 1/18/26 (E46 / S52 / MoTeC M150 / AiM PDM / paddle shift / sequential)</li><li><code>M3 PDM32.zconf2</code> — AiM PDM32 RaceStudio config (fully decoded: outputs, pins, trigger logic)</li><li><code>Ravin M3 PDM32 layout.xlsx</code> + <code>E46 M3 Ravin.pdf</code> — PDM chassis wiring docs (2022–24 era)</li><li><code>GPRP Pro M150 [01.06.0552] FRANK M3 S54.m1pkgarchive</code> — package identity only (calibration encrypted)</li></ul>
+<hr>
+<h2>1. CRITICAL — PDM feed to MoTeC is inverted on Grey 24/25</h2>
+<p>The harness doc (p.9, &quot;Power from AIM PDM32&quot;) assigns:</p>
+<div class=tbl><table><thead><tr><th>PDM pins</th><th>Circuit per harness doc</th><th>PDM config output</th><th>PDM trigger as configured</th></tr></thead><tbody><tr><td>Black 1+13</td><td>Starter solenoid</td><td><code>Starter</code> (HighPO1, 20 A)</td><td>Start key → ✓</td></tr><tr><td>Black 6+7</td><td>MOTEC / COIL / INJ / VSS</td><td><code>Ign On 1</code>/<code>Ign On2</code> (MidPO5/6, 15 A ea)</td><td>IGNITION ON → ✓</td></tr><tr><td>Grey 1+2</td><td>MOTEC / COIL / INJ / VSS</td><td><code>PCM 12VPWR</code> (HBPO1, 35 A)</td><td>IGNITION ON → ✓</td></tr><tr><td><b>Grey 24+25</b></td><td><b>MOTEC / COIL / INJ / VSS</b></td><td><b><code>PCM12Vpwr2</code> (HBPO3, 35 A)</b></td><td><b>IGNITION OFF → ✗ WRONG</b></td></tr><tr><td>Grey 34+35</td><td>Compressor power</td><td><code>AIR SHIFT COMP</code> (HBPO4, 35 A)</td><td>Ign ON + V&gt;12 → ✓</td></tr></tbody></table></div>
+<p><code>PCM12Vpwr2</code> is configured to switch ON only when IGNITION is <b>OFF</b> — the exact inverse of its two sister feeds. Whatever branch of MOTEC/COIL/INJ/VSS lands on Grey 24/25 is <b>dead while the ignition is on</b> and hot when it&#x27;s off. This was flagged as &quot;verify intent&quot; in v1; the harness doc now proves it&#x27;s a bug. <b>Fix in RaceStudio: trigger = IGNITION == ON (match HBPO1).</b></p>
+<h3>Which branch is on which feed — not in REV 01, but bounded</h3>
+<p><b>All 20 pages of REV 01 were read for this on 12 Aug 2026. There is no splice map, no branch table, nothing that assigns MoTeC / coils / injectors / VSS to a particular feed.</b> p.9 labels all three feeds identically. The Black-connector splice numbers in <code>data/pdm32.json</code> are pairing splices — Black 6 ↔ &quot;splice 7&quot;, Black 7 ↔ &quot;splice 6&quot;, the two halves of one output — not branch assignments. Re-reading the document will not answer this.</p>
+<p>What it <i>is</i> bounded by, using one fact from outside the file — <b>the car runs</b>:</p>
+<p>With the ignition ON, Grey 24/25 is OFF. So <b>every load the engine needs to run is fed by Black 6/7 and/or Grey 1/2</b>, and whatever is on Grey 24/25 is either unused or duplicated. Two readings survive that, with very different consequences:</p>
+<ul><li><b>(a) Orphan feed.</b> Grey 24/25 feeds a branch nothing depends on. The fault is inert and a 35 A output is wasted.</li><li><b>(b) Parallel feed.</b> Grey 24/25 is spliced alongside Grey 1/2 (or Black 6/7) into the same branch. The car runs on the surviving feed, so nothing looks wrong — but that branch carries its whole load on one feed instead of two, with no redundancy, <b>and it sits at 12 V with the key out.</b></li></ul>
+<p>The symptoms cannot separate them: in both cases the car simply runs. (b) is the one worth knowing about.</p>
+<h3>The test that settles it — and why it has to happen first</h3>
+<p>The branch supplies are individually accessible at the 61-pin milspec bulkhead (p.6), so this is a multimeter job, not a loom trace. Probe each to ground, <b>key OFF, then key ON</b>:</p>
+<div class=tbl><table><thead><tr><th>Pins</th><th>Branch</th></tr></thead><tbody><tr><td>GG, HH, JJ, KK, LL, MM</td><td>Coil 1–6 12 V</td></tr><tr><td>s, t, u, v, w, x</td><td>Injector 1–6 12 V</td></tr><tr><td>Z</td><td>Front VSS 12 V</td></tr><tr><td>c / FF</td><td>CAN 1 / CAN 2 power</td></tr><tr><td>B13, B19, C26</td><td>M150 battery feeds, at the ECU</td></tr></tbody></table></div>
+<ul><li><b>hot with the key OFF</b> → that branch is on Grey 24/25</li><li><b>dead with the key ON</b> → on Grey 24/25 <i>only</i> — reading (a)</li><li><b>hot in both</b> → parallel-fed — reading (b), the case that matters</li></ul>
+<p><b>Do this before flipping the HBPO3 trigger.</b> Right now the inverted fault is the only thing making the feeds distinguishable: Grey 24/25 is the sole output live with the key out, so anything hot key-off is unambiguously on it. Correct the trigger first and all three feeds switch together — key off, everything dead; key on, everything live — and the mapping becomes untestable without tracing the loom. The bug is currently doing the diagnostic work for you, and fixing it destroys the evidence.</p>
+<h2>2. HIGH — PDM automatic logic depends on ECU CAN data that must be re-verified after the MoTeC swap</h2>
+<p>PDM CAN1 (Black 30/31) ↔ M150 <b>CAN3</b> (A28/29) is the ECU↔PDM bus — both documents agree on the physical link. What the archive adds is exactly which channels the automation depends on, read out of the trigger formulas themselves:</p>
+<div class=tbl><table><thead><tr><th>Output</th><th>Pins</th><th>Trigger, decoded from the formula</th><th>Channel</th><th>FID</th></tr></thead><tbody><tr><td>Fuel Pump 1 / 2</td><td>B2 / B3</td><td><code>RPM 01 &gt; 50 rpm</code> OR <code>Fuel Pump</code> key</td><td>RPM 01</td><td>15</td></tr><tr><td>Rad Fan 1 / 2</td><td>B4 / B5</td><td>latched: ON <code>Water Temp 01 &gt; 90.556 °C</code>, OFF <code>&lt; 85 °C</code>; OR/AND <code>Rad Fan</code> key</td><td>Water Temp 01</td><td>4241</td></tr></tbody></table></div>
+<p>Both channels carry <code>ChTipoFeatCont=14</code> — the <b>CAN1 Stream</b> feature, which is the ECU protocol. They do not come from a PDM input pin or a math channel. So the dependency is not an inference from the layout sheet: the two automations read the ECU stream and nothing else. If the stream does not match what the M150 transmits, <b>fuel pumps do not prime on crank and the fans never auto-trigger</b>, and the keypad is the only path.</p>
+<p>The CAN1 Stream feature is present and selected, and defines <b>73 ECU channels</b> (<code>ECU IGN TIME</code>, <code>ECU THROTTLE</code>, <code>ECU CY1–8 KNK</code>, <code>ECU IN/EX CM P1/P2</code>, <code>ECU V BATT</code>, …).</p>
+<h3>What the archive will not give up</h3>
+<p><b>The protocol&#x27;s identity and its CAN IDs are not in readable form.</b> The device manifest names <code>can1_stream.c1.xml</code>, but the archive contains only <code>can1_stream.c1.xc1</code>: a 4-byte little-endian plaintext-length header followed by a body padded to the next multiple of 8. It is encrypted, not compressed — no standard container decompresses it, and the block structure gives the mode away:</p>
+<ul><li>CAN1 and CAN1V2 share exactly <b>304 identical leading bytes — 38 whole 8-byte blocks, block-aligned</b>, because they start with the same plaintext.</li><li>The CAN1 body is 63 022 blocks but only <b>11 640 distinct</b>, one repeating 730 times.</li></ul>
+<p>Identical plaintext producing identical ciphertext, in 8-byte units, is <b>ECB with a 64-bit block cipher and a fixed vendor key</b>. The companion <code>can1.kff</code> is obfuscated too (byte range 1–159). So &quot;check for RPM on CAN ID 0x___&quot; cannot be answered from this file — that has to come off the device or out of RaceStudio&#x27;s protocol list.</p>
+<h3>What that leaves for the bench</h3>
+<ul><li><b>RPM 01 is on two display pages</b>, so the RPM half is checkable at the car with no laptop: crank and watch it move.</li><li><b>Water Temp 01 is on none of the three pages.</b> The channel the rad fans depend on cannot be seen at the car at all — the fans would simply never come on, with nothing on the dash to say why. <code>tools/aim_audit.py</code> now raises this as its own finding rather than leaving it to prose.</li><li>Many other ECU channels <i>are</i> displayed (<code>ECU FUEL P</code>, <code>ECU IGN TIME</code>, <code>ECU THROTTLE</code>, <code>ECU CY1/2/4 KNK</code>, <code>ECU IAT</code>, <code>ECU GEAR</code>). If the protocol is wrong they all go dead together, which is a faster tell than watching one field.</li></ul>
+<p>Decoded from the archive 12 Aug 2026. Note this describes <code>source/M3 PDM32.zconf2</code>, which is <b>not what is on the device</b> — see the note at the top of the car README.</p>
+<h2>3. CAN bus map + termination issues</h2>
+<div class=tbl><table><thead><tr><th>Bus</th><th>M150 pins</th><th>Connects to</th><th>Termination per doc</th><th>Note</th></tr></thead><tbody><tr><td>CAN1</td><td>D17/18</td><td>Racespec wideband</td><td>100 Ω each end</td><td>100 Ω is non-standard (120 Ω typical) but works</td></tr><tr><td>CAN2</td><td>A30/31</td><td>Haltech EGT</td><td>100 Ω each end</td><td>same note</td></tr><tr><td>CAN3</td><td>A28/29</td><td>AiM PDM32</td><td><b>none // AiM 120 Ω only</b></td><td><b>single-terminated bus — add 120 Ω at the M150 end</b></td></tr></tbody></table></div>
+<p>The ECU↔PDM bus (the most important one in the car) is the only one running a single terminator. It may work on the bench and fail intermittently hot/loaded. Add a 120 Ω resistor at the M150 end of CAN3.</p>
+<p>⚠️ <b>Doc conflict:</b> the old &quot;M150 M3&quot; sheet in the project says M150 <b>CAN1</b> (D17/18) goes to the PDM. REV 01 reassigns D17/18 to the Racespec wideband and moves the PDM to CAN3. The old sheet is superseded — retire or annotate it.</p>
+<h2>4. Compressor architecture — resolved, one leftover</h2>
+<p>Now coherent across all three sources:</p>
+<ul><li><b>Power:</b> PDM HBPO4 (Grey 34/35, 35 A) → compressor relay box (AS612-98SN: pins 1–3 12 V, 9 = relay 12 V, 10 = relay signal). PDM trigger (ign ON + battery &gt;12 V) is correct for a supply feed.</li><li><b>Control:</b> M150 C1 (OUT HB2) → compressor relay trigger, routed via the vehicle-rear connector pin 2.</li></ul>
+<p>Leftover: PDM keypad key 11 is still labeled <b>&quot;Compressor power&quot; and does nothing</b> (the config never references it). Remove/relabel the key to avoid a driver expecting it to work.</p>
+<h2>5. Findings from v1 that still stand (chassis side)</h2>
+<ol><li><b>Headlights can never turn on</b> — HighPO2 (B12+23, 20 A) enabled, trigger hard-coded to constant 0. Nothing else drives it.</li><li><b>High Beam dash icon reads the Cabin Fan channel</b> (1037) instead of Headlights (1048) — copy/paste error.</li><li><b>Undocumented live circuits in the layout sheet:</b> transponder (Grey 6, always-on), plus the three MoTeC feeds and compressor feed above — the sheet shows all the grey half-bridge pins as unused. Update it from the table in §1.</li><li><b>Brake/tail (B8) is always-on</b> — fine for tails, wrong if brake lamps are in that circuit.</li><li><b>CAN2 accessory power dual-feed</b> — B20 (LowPO7) and Grey 17 (+Vb OUT) both power &quot;CAN 2&quot; devices; sheet already flags &quot;CHECK MAY BE WRONG.&quot; Pick one.</li><li><b>EPS labels</b> — sheet says &quot;EPS 1–4&quot;; reality is EPS1 = B24+25, EPS2 = B34+35, all four spliced to one pump, identical triggers ✓.</li><li>Paralleled pairs (fuel pump B2+B3, fans B4+B5, ign B6+B7) have identical triggers ✓ — deliberate, but each half is separately protected; note it in the doc.</li><li>Layout sheet typo: Low Power rating cell shows &quot;10:00 AM&quot; (should be 10 A).</li></ol>
+<h2>6. M150 harness summary (REV 01) — for the record</h2>
+<ul><li><b>Coils 1–6:</b> C3–C8 (IGN LS1–6) · <b>Inj 1–6:</b> C23/C24/B9/B15/B8/B14 (INJ LS1–6)</li><li><b>Crank/cam:</b> D1/D2 (UDIG1/2) · <b>ECT/oil temp:</b> D3/D4 (AT1/2) · <b>IAT plenum/filter:</b> A1/A2 (AT5/6)</li><li><b>Fuel/oil press, MAP:</b> A3/A4/A5 (AV15/16/17) · <b>ECT press:</b> C25 (AV5)</li><li><b>TPS1/2:</b> B10/B11 · <b>APP1/2:</b> B16/B17 · <b>DBW:</b> B20/B21 (HB7/8)</li><li><b>Paddle shift:</b> down D8 (UDIG3), up D9 (UDIG4); gear 1/2 C16/C17 (AV3/4); KMP up/down valves C33/C34 (HB5/6); KMP press D20 (AV6, 0.5–4.5 V = 0–10 bar); clutch press D21 (AV7)</li><li><b>Brake press / steering angle:</b> C14/C15 (AV1/2) · <b>VSS front/rear:</b> B3/B4 (UDIG8/9)</li><li><b>Alternator control:</b> B1 (OUT HB9)</li><li>Sub-connectors: 61-pin milspec bulkhead, dash hanger 12-pin (gear/paddle/APP/KMP), rear vehicle 4-pin (VSS rear, compressor trigger, 12 V ign), spare aux 6-pin, LF aux 12-pin (steering angle, VSS front, brake/clutch press)</li></ul>
+<h3>Aux naming — not inconsistent, just undocumented</h3>
+<p>This was carried as a doc nit (&quot;A15 DIG2 = Aux2 but A16 DIG3 = Aux4 — normalise it&quot;). It is not an inconsistency and normalising it would have destroyed the information. <b>&quot;Aux N&quot; is the pin number on the spare-aux 6-pin connector</b>, not the M150 designation. Every one of them lines up, and pins 1 and 6 are the supply and ground, which is why the numbering starts at 2:</p>
+<div class=tbl><table><thead><tr><th>Spare-aux pin</th><th>Sheet label</th><th>M150 pin</th><th>Designation</th><th>Called</th></tr></thead><tbody><tr><td>1</td><td><code>5v ref</code></td><td>A18/A10</td><td>SEN 5V</td><td>—</td></tr><tr><td>2</td><td><code>Aux dig 2</code></td><td>A15</td><td>DIG2</td><td>Aux 2</td></tr><tr><td>3</td><td><code>Avi 11 / steering knob switch</code></td><td>B12</td><td>AV11</td><td>Aux 3</td></tr><tr><td>4</td><td><code>Dig 4</code></td><td>A16</td><td><b>DIG3</b></td><td>Aux 4</td></tr><tr><td>5</td><td><code>Avi 14</code></td><td>B18</td><td>AV14</td><td>Aux 5</td></tr><tr><td>6</td><td><code>Sensor grd</code></td><td>A27</td><td>SEN 0V C2</td><td>Aux grd</td></tr></tbody></table></div>
+<p>Two traps fall out of this, both now recorded on the pins themselves in <code>data/m150.json</code>:</p>
+<ul><li><b>The sheet&#x27;s <code>Dig 4</code> is DIG3, not DIG4.</b> DIG4 (A17) exists and is unused; connector A&#x27;s own sheet shows DIG3 = &quot;Aux4&quot; and leaves DIG4 blank. Probing A17 because a wiring list said &quot;Dig 4&quot; would find nothing and prove nothing.</li><li><b>B12 AV11 lost its aux number in transcription</b> — the connector B sheet reads &quot;Aux 3/ steering wheel turn knob switch&quot;, the data said only &quot;Steering wheel rotary knob&quot;. Restored, which is what makes Aux 3 visible and the run 2–5 complete.</li></ul>
+<p>Confirmed against REV 01 connector A (p.2), connector B (p.3) and the spare-aux table (p.9). Resolved 12 Aug 2026.</p>
+<hr>
+<h2>7. Action list (priority order)</h2>
+<ol><li><b>Measure the three MoTeC feeds at the 61-pin bulkhead, key off and key on</b> (§1). This is what answers &quot;which branch is on which feed&quot;, and it has to happen <b>before</b> step 2 — correcting the trigger is what destroys the evidence.</li><li><b>Flip <code>PCM12Vpwr2</code> (HBPO3) trigger to IGNITION == ON</b> in RaceStudio. <i>(Critical — a third of the ECU/coil/inj/VSS supply is dead while running.)</i></li><li><b>Add 120 Ω termination at the M150 end of CAN3</b> (ECU↔PDM bus currently single-terminated).</li><li><b>Verify the PDM CAN1 ECU protocol against the M150 stream</b> so fuel-pump and fan automation work (§2). <code>RPM 01</code> is already on two display pages; <b>put <code>Water Temp 01</code> on a page first</b>, because the channel the fans depend on is currently invisible at the car.</li><li>Fix <b>Headlights</b> trigger (currently constant-off) and the <b>High Beam</b> indicator source.</li><li>Relabel/remove dead <b>keypad key 11</b> (&quot;Compressor power&quot;).</li><li>Update the <b>PDM32 layout sheet</b> (grey-connector feeds, transponder, EPS labels, &quot;10:00 AM&quot; typo, CAN2 dual-feed decision). The old <b>&quot;M150 M3&quot; CAN1→PDM</b> claim is marked superseded where this repo repeats it — <code>01-pdm32-wiring-crosscheck.md</code> carries a banner and the row is struck through as of 12 Aug 2026 — but <b>the sheet itself lives in Google Drive and still needs annotating there</b>; nothing in this repo can do that.</li></ol><footer>rendered from <code>02-full-wiring-analysis.md</code> — edit that, not this — <code>render/docs.py</code></footer></div></body></html>
