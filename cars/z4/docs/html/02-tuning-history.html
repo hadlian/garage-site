@@ -56,12 +56,12 @@ a{color:inherit}
 <p>Written 2026-08-07, the day the fuel and ignition tables became readable (<code>formats/e35_map.json</code>, <code>calibration_tables</code>). Everything below comes from <code>parsers.motec_e35.read_tables</code> over <code>source/m800-tunes/</code>; reproduce any diff with <code>tools/diff_e35.py</code>, which decodes table runs to cells. File timestamps are useless (everything was copied into the repo on one day), so ordering rests on names and whole-file byte distance — stated where it matters.</p>
 <h2>Lineage</h2>
 <p>Two eras, joined in the middle, plus two files that are not this car&#x27;s:</p>
-<pre><code>2016-dyno ──&gt; QRWTune (= Frank, same bytes renamed) ──&gt; QRW23 ──&gt; QRW23-after
+<pre><code>2016-dyno ──&gt; QRWTune (= the owner-named tune, same bytes renamed) ──&gt; QRW23 ──&gt; QRW23-after
                                                                       │
                                                         ~424 bytes    ▼
               Stroker404 &lt;── 2_1_25 ──&gt; 2_1_25test ──&gt; LambdaChange &lt;──&gt; 12_19_25test
                  (branch)                                            (21 bytes apart)</code></pre>
-<p>Foreign: <code>Mike Behrman...4.0</code> (different engine, different axes) and factory <code>Start.e35</code>. Frank is the owner, not a car — <code>Frank.e35</code> is <code>Z4QRWTune.e35</code> with nine bytes of name changed.</p>
+<p>Foreign: <code>Mike Behrman...4.0</code> (different engine, different axes) and factory <code>Start.e35</code>. That tune is named after the owner, not after a car — <code>owner-named.e35</code> is <code>Z4QRWTune.e35</code> with nine bytes of name changed.</p>
 <h2>The one-line history</h2>
 <p><b>The tuning has been frozen since <code>2_1_25</code>.</b> Fuel and ignition in the current tune (<code>12_19_25test</code>) are byte-identical to <code>Z4 config 2_1_25.e35</code>; every save since — <code>2_1_25test</code>, <code>LambdaChange</code>, <code>12_19_25test</code> — changed IO, logging and sensor setup, never a table cell. Ignition has been touched <b>once in the car&#x27;s recorded life</b>.</p>
 <h2>Fuel Main, transition by transition</h2>
