@@ -61,7 +61,7 @@ color:var(--ts);font-size:13px}
 <p class="meta">76 channels · 10.6 min · 4,145,574 bytes</p>
 <h2>Findings</h2>
 <p class="meta">Thresholds from <code>cars/e46-canada/tools/log_profile.json</code>.</p>
-<div class="f WARN"><span class="sev WARN">WARN</span><h3>Lean under load</h3><p>4 samples (0.4 s) above lambda 1.05 with throttle over 60%. Leanest 1.210. Threshold is a generic default, not this car&#x27;s: lean_lambda, load_throttle_pct — see log_checks.DEFAULTS.</p><p class="fix">Sustained lean at load is what damages pistons — investigate before the next session.</p></div>
+<div class="ok">Nothing flagged. Read that against the next section before taking it as a clean bill of health — a check that could not run is not a check that passed.</div>
 <h2>Where the power is</h2>
 <div class="ok">No wide-open-throttle pull long enough to measure. A power curve needs the engine accelerating against its own load at full throttle for a sustained run; without one, nothing here can say where the power is — and inventing a curve from a few samples would be worse than saying so.</div>
 <h2>How lean or rich</h2>
