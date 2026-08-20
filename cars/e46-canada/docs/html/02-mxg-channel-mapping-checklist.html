@@ -1,0 +1,64 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MXG 1.2 — settling which pin each channel is on</title>
+<style>:root{color-scheme:light;--s1:#fcfcfb;--pg:#f9f9f7;--tp:#0b0b0b;--ts:#52514e;--tm:#898781;
+--gl:#e1e0d9;--bl:#c3c2b7;--bd:rgba(11,11,11,.10);--crit:#d03b3b;--warn:#fab219;--good:#0ca30c;}
+@media(prefers-color-scheme:dark){:root:where(:not([data-theme=light])){color-scheme:dark;
+--s1:#1a1a19;--pg:#0d0d0d;--tp:#fff;--ts:#c3c2b7;--tm:#898781;--gl:#2c2c2a;--bl:#383835;
+--bd:rgba(255,255,255,.10);}}
+:root[data-theme=dark]{color-scheme:dark;--s1:#1a1a19;--pg:#0d0d0d;--tp:#fff;--ts:#c3c2b7;
+--tm:#898781;--gl:#2c2c2a;--bl:#383835;--bd:rgba(255,255,255,.10);}
+*{box-sizing:border-box}
+body{margin:0;background:var(--pg);color:var(--tp);
+font:14px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1400px;margin:0 auto;padding:32px 24px 64px}
+h1{font-size:24px;margin:0 0 4px;letter-spacing:-.01em}
+.sub{color:var(--ts);margin:0 0 4px}
+.meta{color:var(--tm);font-size:12px;margin:0 0 24px}
+h2{font-size:16px;margin:40px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--gl)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;padding:12px 14px;background:var(--s1);
+border:1px solid var(--bd);border-radius:8px;margin-bottom:20px}
+.lg{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--ts);white-space:nowrap}
+.lg i{width:11px;height:11px;border-radius:3px;flex:none}
+.conn header{padding:11px 14px;border-bottom:1px solid var(--gl)}
+.conn h3{margin:0;font-size:14px}
+.conn header p{margin:2px 0 0;font-size:11.5px;color:var(--tm)}
+.grid{display:flex;flex-direction:column}
+.pin:last-child{border-bottom:0}
+.hd{font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--tm);
+background:var(--pg);padding-top:6px;padding-bottom:6px}
+.pn{font-variant-numeric:tabular-nums;color:var(--tm);text-align:right}
+.f-crit{background:color-mix(in srgb,var(--crit) 11%,transparent)}
+.f-warn{background:color-mix(in srgb,var(--warn) 13%,transparent)}
+.note{background:var(--s1);border:1px solid var(--bd);border-left:3px solid var(--crit);
+border-radius:8px;padding:12px 15px;margin:0 0 16px;font-size:13px;color:var(--ts)}
+.note b{color:var(--tp)}
+.note.w{border-left-color:var(--warn)}
+code{font:11.5px ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--pg);
+padding:1px 5px;border-radius:4px;border:1px solid var(--gl)}
+th{text-align:left;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;
+color:var(--tm);padding:8px 12px;background:var(--pg);border-bottom:1px solid var(--gl)}
+td{padding:5px 12px;border-bottom:1px solid var(--gl);color:var(--ts);vertical-align:top}
+td:first-child{font-weight:600;color:var(--tp);white-space:nowrap}
+tr:last-child td{border-bottom:0}
+footer{margin-top:44px;padding-top:14px;border-top:1px solid var(--gl);font-size:11.5px;color:var(--tm)}
+h3{font-size:14px;margin:28px 0 8px}h4{font-size:13px;margin:20px 0 6px}
+p{max-width:76ch}li{max-width:72ch;margin:3px 0}ul,ol{padding-left:24px;color:var(--ts)}
+pre{background:var(--s1);border:1px solid var(--bd);border-radius:8px;padding:12px 15px;overflow-x:auto}
+pre code{border:0;background:none;padding:0;font-size:12px;line-height:1.5}
+blockquote{margin:12px 0;padding:2px 16px;border-left:3px solid var(--bl);color:var(--ts)}
+.tbl{overflow-x:auto}table{border-collapse:collapse;min-width:50%}
+hr{border:0;border-top:1px solid var(--gl);margin:32px 0}
+a{color:inherit}
+</style></head><body><div class="wrap">
+<p class="meta"><a href="index.html">&larr; all docs</a></p><h1>MXG 1.2 — settling which pin each channel is on</h1>
+<p><b>The claim under test.</b> <code>Ch0N</code> in the configuration is <code>Analog Input N</code> on the connector, so <code>Ch01</code> is pin 22, <code>Ch02</code> is 26, <code>Ch03</code> is 30 and <code>Ch04</code> is 34. It is marked <b>probable</b> and lives in <a href="../../data/mxg-1.2-pinout.json"><code>data/mxg-1.2-pinout.json</code></a> under <code>channel_mapping</code> — that file is the source of truth for the status, and this one is the procedure. When an item below lands, both move in the same commit.</p>
+<p><b>Why it is only probable.</b> The pin functions come from the manufacturer&#x27;s own sheet and are confirmed. Which sensor is on which <i>channel</i> comes from the configuration and is confirmed. That the two line up by number is neither: it is the obvious reading, taken because the device has exactly eight analogue inputs and the configuration names four channels <code>Ch01</code>–<code>Ch04</code>. Nothing in either file says so outright.</p>
+<p><b>What it costs to be wrong.</b> Someone traces a wire to the wrong pin. That is the whole exposure — no analysis in this repo depends on it, because every finding so far is about what a channel <i>reads</i>, not where it enters. It is worth one free reading and not worth a trip on its own.</p>
+<h2>The items, cheapest first</h2>
+<div class=tbl><table><thead><tr><th>#</th><th>Open</th><th>Do</th><th>Write down</th><th>What it settles</th></tr></thead><tbody><tr><td><b>0 — free, no car</b></td><td>RaceStudio 3, with <code>source/MXG 1.2.zconfig</code> loaded. Channels tab.</td><td>Read what the tool prints beside each configured channel. Change nothing and save nothing.</td><td>Whether the row for <code>Ch01</code> names an input — &quot;Analog Input 1&quot;, &quot;Analog 1&quot;, or nothing at all — and the same for <code>Ch02</code>–<code>Ch04</code>. Screenshot it.</td><td><b>Everything, if the tool says it.</b> This is the same class of evidence that named the EMTRON stream: the vendor&#x27;s own tool stating a thing no file in this repo carries. If RS3 shows the input beside the channel, the mapping is confirmed and items 1 and 2 are unnecessary.</td></tr><tr><td><b>1 — free, no car</b></td><td>The MXG 1.2 <i>user manual</i> — not the technical sheet, which is already transcribed and does not state it.</td><td>Find the wiring or channels section and see whether it states the correspondence between analogue input number and channel number.</td><td>The sentence, and the manual&#x27;s version.</td><td>The same thing as item 0, from a second source. Worth doing only if item 0 comes back empty.</td></tr><tr><td><b>2 — decisive, needs the car</b></td><td>The car, ignition on, dash powered, RaceStudio 3 connected live. Engine OFF.</td><td>Disconnect <b>one</b> sensor at a time and watch which channel&#x27;s live value moves to its open-circuit reading. Reconnect before the next. Nothing is configured, nothing is saved, nothing is flashed.</td><td>Which <code>Ch</code> number went open for each sensor unplugged, and which pin that sensor&#x27;s wire lands on at the connector.</td><td>The mapping directly, and it is the only item here that ties a <b>pin</b> to a channel rather than an input <i>number</i> to a channel number. It also settles something items 0 and 1 cannot: whether this car is wired the way the configuration assumes at all.</td></tr></tbody></table></div>
+<h2>What does NOT settle it</h2>
+<p>Listed so nobody spends a session on it.</p>
+<ul><li><b>Renaming a channel in RaceStudio 3 and diffing the export.</b> That is the controlled edit this repo usually reaches for, and here it answers a different question. It would confirm which record in the <code>.zconfig</code> carries which <code>Ch</code> label — useful if the parser ever doubts itself, which it does not — and says nothing about pins.</li><li><b>Anything in either <code>.xrk</code>.</b> The logs were checked. The channel table carries a name, a short name, a sample period, a width and a data type, plus the <code>fid</code>/<code>typ</code> fields, and none of them is an input index. A log records what a channel read, never where it entered.</li><li><b>The MXS 1.08 sheet or the out-of-production MXG page.</b> Both are for other devices — see the note in <code>mxg-1.2-pinout.json</code>. The MXS disagrees with the MXG on the 22-pin connector&#x27;s RS232 pins, which is exactly how a wrong-document mapping would look right and be wrong.</li></ul>
+<h2>Protocol</h2>
+<ol><li>Item 2 is a <b>reading</b>, not an edit. Nothing is saved to the device and nothing is exported. If a session ends with a new <code>.zconfig</code>, something went wrong.</li><li>Do not chain: reconnect each sensor before disconnecting the next, or two channels go open at once and the result names nothing.</li><li>Whatever lands, update <code>channel_mapping.status</code> in <code>data/mxg-1.2-pinout.json</code> in the same commit, and say in the message which item settled it. The page reads its status from that file.</li><li>If item 0 or 1 disagrees with item 2, the car wins and the disagreement is the finding — it would mean the dash is wired against its own convention.</li></ol><footer>rendered from <code>02-mxg-channel-mapping-checklist.md</code> — edit that, not this — <code>render/docs.py</code></footer></div></body></html>
