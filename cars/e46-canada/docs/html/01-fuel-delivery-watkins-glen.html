@@ -1,0 +1,75 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Fuel delivery, Watkins Glen, 18 August 2026</title>
+<style>:root{color-scheme:light;--s1:#fcfcfb;--pg:#f9f9f7;--tp:#0b0b0b;--ts:#52514e;--tm:#898781;
+--gl:#e1e0d9;--bl:#c3c2b7;--bd:rgba(11,11,11,.10);--crit:#d03b3b;--warn:#fab219;--good:#0ca30c;}
+@media(prefers-color-scheme:dark){:root:where(:not([data-theme=light])){color-scheme:dark;
+--s1:#1a1a19;--pg:#0d0d0d;--tp:#fff;--ts:#c3c2b7;--tm:#898781;--gl:#2c2c2a;--bl:#383835;
+--bd:rgba(255,255,255,.10);}}
+:root[data-theme=dark]{color-scheme:dark;--s1:#1a1a19;--pg:#0d0d0d;--tp:#fff;--ts:#c3c2b7;
+--tm:#898781;--gl:#2c2c2a;--bl:#383835;--bd:rgba(255,255,255,.10);}
+*{box-sizing:border-box}
+body{margin:0;background:var(--pg);color:var(--tp);
+font:14px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1400px;margin:0 auto;padding:32px 24px 64px}
+h1{font-size:24px;margin:0 0 4px;letter-spacing:-.01em}
+.sub{color:var(--ts);margin:0 0 4px}
+.meta{color:var(--tm);font-size:12px;margin:0 0 24px}
+h2{font-size:16px;margin:40px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--gl)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;padding:12px 14px;background:var(--s1);
+border:1px solid var(--bd);border-radius:8px;margin-bottom:20px}
+.lg{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--ts);white-space:nowrap}
+.lg i{width:11px;height:11px;border-radius:3px;flex:none}
+.conn header{padding:11px 14px;border-bottom:1px solid var(--gl)}
+.conn h3{margin:0;font-size:14px}
+.conn header p{margin:2px 0 0;font-size:11.5px;color:var(--tm)}
+.grid{display:flex;flex-direction:column}
+.pin:last-child{border-bottom:0}
+.hd{font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--tm);
+background:var(--pg);padding-top:6px;padding-bottom:6px}
+.pn{font-variant-numeric:tabular-nums;color:var(--tm);text-align:right}
+.f-crit{background:color-mix(in srgb,var(--crit) 11%,transparent)}
+.f-warn{background:color-mix(in srgb,var(--warn) 13%,transparent)}
+.note{background:var(--s1);border:1px solid var(--bd);border-left:3px solid var(--crit);
+border-radius:8px;padding:12px 15px;margin:0 0 16px;font-size:13px;color:var(--ts)}
+.note b{color:var(--tp)}
+.note.w{border-left-color:var(--warn)}
+code{font:11.5px ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--pg);
+padding:1px 5px;border-radius:4px;border:1px solid var(--gl)}
+th{text-align:left;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;
+color:var(--tm);padding:8px 12px;background:var(--pg);border-bottom:1px solid var(--gl)}
+td{padding:5px 12px;border-bottom:1px solid var(--gl);color:var(--ts);vertical-align:top}
+td:first-child{font-weight:600;color:var(--tp);white-space:nowrap}
+tr:last-child td{border-bottom:0}
+footer{margin-top:44px;padding-top:14px;border-top:1px solid var(--gl);font-size:11.5px;color:var(--tm)}
+h3{font-size:14px;margin:28px 0 8px}h4{font-size:13px;margin:20px 0 6px}
+p{max-width:76ch}li{max-width:72ch;margin:3px 0}ul,ol{padding-left:24px;color:var(--ts)}
+pre{background:var(--s1);border:1px solid var(--bd);border-radius:8px;padding:12px 15px;overflow-x:auto}
+pre code{border:0;background:none;padding:0;font-size:12px;line-height:1.5}
+blockquote{margin:12px 0;padding:2px 16px;border-left:3px solid var(--bl);color:var(--ts)}
+.tbl{overflow-x:auto}table{border-collapse:collapse;min-width:50%}
+hr{border:0;border-top:1px solid var(--gl);margin:32px 0}
+a{color:inherit}
+</style></head><body><div class="wrap">
+<p class="meta"><a href="index.html">&larr; all docs</a></p><h1>Fuel delivery, Watkins Glen, 18 August 2026</h1>
+<p>The 09:21 session lost fuel rail pressure seven times in its last 200 seconds, and the engine went lean at wide-open throttle each time. The 09:41 session, twenty minutes later, does neither — its rail never drops below 72 psi and it has no finding at all.</p>
+<p><b>This is fuel delivery, not mixture.</b> The distinction matters because the report&#x27;s one critical finding is titled &quot;lean under load&quot;, which reads like a tuning problem and is not one.</p>
+<h2>What both logs are asked, and what only one answers</h2>
+<div class=tbl><table><thead><tr><th></th><th>0261 · 09:21</th><th>0265 · 09:41</th></tr></thead><tbody><tr><td>fuel pressure, median</td><td>75.9 psi</td><td>75.8 psi</td></tr><tr><td>fuel pressure, minimum</td><td><b>23.6 psi</b></td><td>72.2 psi</td></tr><tr><td>samples under 60 psi</td><td>20 of 2,625</td><td><b>0</b> of 3,245</td></tr><tr><td>distinct excursions</td><td><b>7</b></td><td>none</td></tr><tr><td>lean-at-load samples</td><td>20 (1.9 s)</td><td>none</td></tr></tbody></table></div>
+<p>Both sessions are the same car, the same morning, the same circuit, and the same logger — the identity block in the two files is byte-identical and the odometer runs from one to the next.</p>
+<h2>At every lean sample</h2>
+<div class=tbl><table><thead><tr><th></th><th>reading</th><th>normal for the session</th></tr></thead><tbody><tr><td>dash fuel pressure</td><td>23.6–47 psi</td><td>~76 psi</td></tr><tr><td>injector duty</td><td>45–57%</td><td>peaks at 77%</td></tr><tr><td>lambda target</td><td>0.85, unchanged</td><td>0.85</td></tr><tr><td>fuel cut</td><td>0</td><td>0</td></tr><tr><td>supply voltage</td><td>13.32–13.41 V</td><td>12.59–13.50 V</td></tr></tbody></table></div>
+<p>The ECU asks for 0.85 and does not get it. Read down that column: nothing was commanded, the injectors have a third of their duty in reserve, and the electrical supply never moves.</p>
+<h2>What it is not</h2>
+<p>Each of these is ruled out by the data rather than by argument.</p>
+<ul><li><b>Not injector-limited.</b> Duty sits at 45–57% while the session&#x27;s own peak is 77%. An engine out of injector is at its ceiling, not two-thirds of the way up.</li><li><b>Not commanded.</b> <code>LambTarg</code> holds 0.85 through every excursion. The ECU did not decide to run lean.</li><li><b>Not a fuel cut.</b> <code>FuelCut</code> is zero at every one.</li><li><b>Not supply voltage.</b> 13.3–13.4 V at every excursion, against a session range of 12.59–13.50. The pump is not being starved electrically.</li><li><b>Not a sensor glitch.</b> This is the strongest point: two independent sensors on two different paths agree. The dash&#x27;s own analogue fuel-pressure input collapses, and the ECU&#x27;s wideband — a different sensor, arriving over CAN — reads lean at the same moments.</li><li><b>Not cornering surge, on this evidence.</b> When pressure is low the lateral load is <i>lower</i> than usual: median |g| 0.42 against 0.54 for the session. A pickup uncovering in a long corner would show the opposite.</li></ul>
+<h2>The shape of it</h2>
+<p>All seven excursions fall in the last 200 seconds of a 524-second session, and five of the seven in the final 40. Depth grows as the session goes on, to 23.6 psi. Then twenty minutes pass and the next session is clean.</p>
+<p>Progressive collapse late in a run under sustained high rpm and throttle, absent from the following run, is what a draining tank or a pump or filter under sustained demand looks like. Which of those it is, these two files cannot say.</p>
+<h2>How far to trust this</h2>
+<p>The core rests on <b>confirmed</b> channels. Lambda1 and Throttle1 are each confirmed on two independent cursor matches, and the dash&#x27;s fuel pressure has its units verified against RaceStudio at two cursors. That the rail collapses and the mixture goes lean at wide-open throttle is as solid as anything in this repo.</p>
+<p>The eliminations rest on <b>probable</b> channels, and that is a weaker footing: <code>InjDuty</code>, <code>LambTarg</code> and <code>FuelCut</code> are placed by the log&#x27;s own <code>&lt;hGRP&gt;</code> table and corroborated by their shape, not by a cursor match. If any of the three is misnamed, the corresponding bullet above falls — the finding does not, because the finding is the pressure and the lambda.</p>
+<p><b>The minimum is a floor, not the depth.</b> <code>Fuel_Pressure</code> is delivered at about 5 Hz where its three neighbours arrive at 10 — see <code>parsers/aim_xrk.py</code> <code>measured_rates</code> — so the sensor is only looked at every 200 ms and the true minimum may be lower than 23.6 psi.</p>
+<h2>What is missing, and what would settle it</h2>
+<ul><li><b>There is no fuel level channel</b> anywhere in either log. Low tank level cannot be confirmed or excluded from these files.</li><li><b>The ECU&#x27;s own <code>FuelPr</code> is constant zero and <code>FuelDif</code> constant −1</b> — both are enabled on the stream and nothing feeds them. <code>FuelDif</code> is the one that would answer this directly, being rail pressure against manifold. Feeding those two inputs would put a second, independent view of the rail on the CAN stream, next to the dash&#x27;s.</li><li>Off the car: the fuel level at the end of the 09:21 session, and the state of the pump and filter.</li></ul>
+<p>Worth checking those before touching the tune. Nothing in either log suggests the mixture is wrong when the fuel arrives.</p><footer>rendered from <code>01-fuel-delivery-watkins-glen.md</code> — edit that, not this — <code>render/docs.py</code></footer></div></body></html>
