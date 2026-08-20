@@ -61,6 +61,7 @@ color:var(--ts);font-size:13px}
 <p class="meta">76 channels · 8.8 min · 3,430,994 bytes</p>
 <h2>Findings</h2>
 <p class="meta">Thresholds from <code>cars/e46-canada/tools/log_profile.json</code>.</p>
+<div class="f CRIT"><span class="sev CRIT">CRIT</span><h3>Fuel pressure below floor</h3><p>21 samples (0.80% of the running log) under 65 psi at load and 55 otherwise, in 7 excursion(s); longest 1.2 s, minimum 23.6 psi at 7,361 rpm. Threshold is a generic default, not this car&#x27;s: load_throttle_pct, running_rpm — see log_checks.DEFAULTS.</p><p class="fix">A rail that leaves its floor under load is a pump, a filter or a regulator before it is a tune.</p></div>
 <div class="f CRIT"><span class="sev CRIT">CRIT</span><h3>Lean under load</h3><p>20 samples (1.9 s) above lambda 1.05 with throttle over 60%. Leanest 2.150. Threshold is a generic default, not this car&#x27;s: lean_lambda, load_throttle_pct — see log_checks.DEFAULTS.</p><p class="fix">Sustained lean at load is what damages pistons — investigate before the next session.</p></div>
 <h2>Where the power is</h2>
 <div class="ok">No wide-open-throttle pull long enough to measure. A power curve needs the engine accelerating against its own load at full throttle for a sustained run; without one, nothing here can say where the power is — and inventing a curve from a few samples would be worse than saying so.</div>
