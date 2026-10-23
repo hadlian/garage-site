@@ -1,0 +1,84 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PDM32 update, 22 Oct 2026 — checked against the email that announced it</title>
+<style>:root{color-scheme:light;--s1:#fcfcfb;--pg:#f9f9f7;--tp:#0b0b0b;--ts:#52514e;--tm:#898781;
+--gl:#e1e0d9;--bl:#c3c2b7;--bd:rgba(11,11,11,.10);--crit:#d03b3b;--warn:#fab219;--good:#0ca30c;}
+@media(prefers-color-scheme:dark){:root:where(:not([data-theme=light])){color-scheme:dark;
+--s1:#1a1a19;--pg:#0d0d0d;--tp:#fff;--ts:#c3c2b7;--tm:#898781;--gl:#2c2c2a;--bl:#383835;
+--bd:rgba(255,255,255,.10);}}
+:root[data-theme=dark]{color-scheme:dark;--s1:#1a1a19;--pg:#0d0d0d;--tp:#fff;--ts:#c3c2b7;
+--tm:#898781;--gl:#2c2c2a;--bl:#383835;--bd:rgba(255,255,255,.10);}
+*{box-sizing:border-box}
+body{margin:0;background:var(--pg);color:var(--tp);
+font:14px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1400px;margin:0 auto;padding:32px 24px 64px}
+h1{font-size:24px;margin:0 0 4px;letter-spacing:-.01em}
+.sub{color:var(--ts);margin:0 0 4px}
+.meta{color:var(--tm);font-size:12px;margin:0 0 24px}
+h2{font-size:16px;margin:40px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--gl)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;padding:12px 14px;background:var(--s1);
+border:1px solid var(--bd);border-radius:8px;margin-bottom:20px}
+.lg{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--ts);white-space:nowrap}
+.lg i{width:11px;height:11px;border-radius:3px;flex:none}
+.conn header{padding:11px 14px;border-bottom:1px solid var(--gl)}
+.conn h3{margin:0;font-size:14px}
+.conn header p{margin:2px 0 0;font-size:11.5px;color:var(--tm)}
+.grid{display:flex;flex-direction:column}
+.pin:last-child{border-bottom:0}
+.hd{font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--tm);
+background:var(--pg);padding-top:6px;padding-bottom:6px}
+.pn{font-variant-numeric:tabular-nums;color:var(--tm);text-align:right}
+.f-crit{background:color-mix(in srgb,var(--crit) 11%,transparent)}
+.f-warn{background:color-mix(in srgb,var(--warn) 13%,transparent)}
+.note{background:var(--s1);border:1px solid var(--bd);border-left:3px solid var(--crit);
+border-radius:8px;padding:12px 15px;margin:0 0 16px;font-size:13px;color:var(--ts)}
+.note b{color:var(--tp)}
+.note.w{border-left-color:var(--warn)}
+code{font:11.5px ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--pg);
+padding:1px 5px;border-radius:4px;border:1px solid var(--gl)}
+th{text-align:left;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;
+color:var(--tm);padding:8px 12px;background:var(--pg);border-bottom:1px solid var(--gl)}
+td{padding:5px 12px;border-bottom:1px solid var(--gl);color:var(--ts);vertical-align:top}
+td:first-child{font-weight:600;color:var(--tp);white-space:nowrap}
+tr:last-child td{border-bottom:0}
+footer{margin-top:44px;padding-top:14px;border-top:1px solid var(--gl);font-size:11.5px;color:var(--tm)}
+h3{font-size:14px;margin:28px 0 8px}h4{font-size:13px;margin:20px 0 6px}
+p{max-width:76ch}li{max-width:72ch;margin:3px 0}ul,ol{padding-left:24px;color:var(--ts)}
+pre{background:var(--s1);border:1px solid var(--bd);border-radius:8px;padding:12px 15px;overflow-x:auto}
+pre code{border:0;background:none;padding:0;font-size:12px;line-height:1.5}
+blockquote{margin:12px 0;padding:2px 16px;border-left:3px solid var(--bl);color:var(--ts)}
+.tbl{overflow-x:auto}table{border-collapse:collapse;min-width:50%}
+hr{border:0;border-top:1px solid var(--gl);margin:32px 0}
+a{color:inherit}
+</style></head><body><div class="wrap">
+<p class="meta"><a href="index.html">&larr; all docs</a></p><h1>PDM32 update, 22 Oct 2026 — checked against the email that announced it</h1>
+<p><b>Checked:</b> 23 Oct 2026, by the process in <code>CONVENTIONS.md</code> (&quot;When an update arrives&quot;). <b>Arrived as:</b> an email with two attachments, a new PDM32 configuration and an adapter-flange model. Both are kept verbatim, with the email, in the M3 drop folder beside the repo (<code>M3/2026-10-23 PDM update/</code>). <b>Tracked as:</b></p>
+<div class=tbl><table><thead><tr><th>File</th><th>sha256 (first 16)</th><th></th></tr></thead><tbody><tr><td><code>source/M3 PDM32 2026-10-22.zconf2</code></td><td><code>4cb29336681f2682</code></td><td>the new configuration — now current in <code>car.json</code></td></tr><tr><td><code>source/M3 PDM32.zconf2</code></td><td><code>546f7a4d1d517f93</code></td><td>the configuration it was diffed against</td></tr><tr><td><code>source/parts/ATL adapter flange 2026-10-23.stl</code></td><td><code>1b037f3f4f101385</code></td><td>the flange</td></tr></tbody></table></div>
+<p>The configuration names itself <code>RMOD 10 21 2026</code>. Only the file name was changed on the way in, to the <code>M3 PDM32 &lt;date&gt;</code> pattern; the bytes are the ones that arrived.</p>
+<h2>⚠️ Three alarms may not be on the PDM</h2>
+<p>The file&#x27;s own history:</p>
+<div class=tbl><table><thead><tr><th>Event</th><th>When</th></tr></thead><tbody><tr><td>Received from the device</td><td>22 Oct 2026 00:05</td></tr><tr><td>Saved as</td><td>22 Oct 2026 00:26</td></tr><tr><td><b>Transmitted to the device</b></td><td><b>22 Oct 2026 00:39</b></td></tr><tr><td>Exported</td><td>22 Oct 2026 02:17</td></tr><tr><td><b>Modified</b></td><td><b>23 Oct 2026 03:04</b></td></tr></tbody></table></div>
+<p>Three text alarms carry creation times in their IDs, and all three fall <b>after</b> the last transmission:</p>
+<div class=tbl><table><thead><tr><th>Alarm</th><th>Created</th></tr></thead><tbody><tr><td>OIL TEMP HOT</td><td>23 Oct 2026 02:11</td></tr><tr><td>LOW FUEL PRESSURE</td><td>23 Oct 2026 02:15</td></tr><tr><td>LOW FUEL LEVEL</td><td>23 Oct 2026 02:16</td></tr></tbody></table></div>
+<p>So unless the configuration was sent again after 03:04 on 23 Oct, <b>these three are in the file and not on the PDM.</b> The other changes carry no timestamp of their own, so nothing here says which of them were made before 00:39 and which after. The owner reports the configuration is on the PDM; this file was made current on that basis, with this caveat. One send from RaceStudio clears it; a fresh export off the device, run through <code>garage.py diff m3</code>, proves it.</p>
+<h2>The email, item by item</h2>
+<p>The email&#x27;s claims are paraphrased, not quoted. Verdicts are against <code>garage.py diff</code> and the parsed configuration.</p>
+<div class=tbl><table><thead><tr><th>#</th><th>The email says</th><th>Verdict</th><th>The file shows</th></tr></thead><tbody><tr><td>1</td><td>Fuel level sensor added; a message below 15 % fuel above 25 mph</td><td><b>confirmed</b></td><td><code>LOW FUEL LEVEL</code>: <code>FUEL LEVEL &lt; 15 % AND SPEED &gt; 25.0 mph</code>. Logged at 1 Hz on <code>Ch01</code>. One of the three alarms above</td></tr><tr><td>2</td><td>A low-fuel warning <b>light</b> below 10 %, regardless of speed</td><td><b>contradicted</b></td><td>An icon for exactly that exists — <code>Ico_3</code>, <code>FUEL LEVEL &lt; 10 %</code> — but it is <b>disabled</b>. So are the other four new icons (<code>Ico_1</code>, <code>Ico_2</code>, <code>Ico_4</code>, <code>Ico_5</code>)</td></tr><tr><td>3</td><td>A surge-tank level switch; the lift pump runs until the tank is full; both pumps run above 50 rpm</td><td><b>confirmed, with a gap</b></td><td>Both lift pumps: <code>(ENGINE RPM &gt; 50 rpm OR Fuel Pump key) OR surge tank switch &gt; 1300 mV</code>. Whether more than 1300 mV means &quot;not full&quot; depends on how the switch is wired, which no file records — <b>not checked</b>. The new main pumps differ: FUEL PUMP 2 starts at 50 rpm, <b>FUEL PUMP 1 at 31 rpm</b></td></tr><tr><td>4</td><td>An oil pressure message below <b>10 psi</b> at 1000 rpm or above</td><td><b>contradicted</b></td><td><code>OIL PRESS &lt; 15 psi AND ENGINE RPM &gt; 1000 rpm</code> — the threshold is <b>15 psi</b>, and the rpm test is strictly above. The message existed before at 15 psi with no rpm condition</td></tr><tr><td>5</td><td>A low fuel (pressure) message below 50 psi above 2500 rpm</td><td><b>confirmed</b></td><td><code>LOW FUEL PRESSURE</code>: <code>ENGINE RPM &gt; 2500 rpm AND FUEL PRESS &lt; 50.00 psi</code>. Named for pressure, so it is distinct from item 1. One of the three alarms above</td></tr><tr><td>6</td><td>An oil temperature message above 250 °F above 1000 rpm</td><td><b>confirmed</b></td><td><code>OIL TEMP HOT</code>: <code>OIL TEMP &gt; 250.0 F AND ENGINE RPM &gt; 1000 rpm</code>. One of the three alarms above</td></tr><tr><td>7</td><td>A low battery message below 12.8 V above <b>2500 rpm</b></td><td><b>contradicted</b></td><td><code>BATTERY VOLT &lt; 12.8 V AND ENGINE RPM &gt; 2000 rpm</code> — <b>2000 rpm</b>. This is the old <code>ECU Voltage Low</code>, renamed and rebound: it used to watch ignition timing, the fault <code>04-config-audit</code> flagged as critical. That fault is fixed</td></tr><tr><td>8</td><td>A coolant temperature message above 212 °F</td><td><b>confirmed</b></td><td><code>COOLANT TEMP HIGH</code>: <code>WATER TEMP &gt; 212 F</code> — the existing <code>Water Temp</code> message, renamed</td></tr><tr><td>9</td><td>Dash page 2: pressures from bar to psi, fuel level from gallons to percent</td><td><b>confirmed</b></td><td>Page 2 fuel pressure is psi (was <code>ECU FUEL P</code> in bar), fuel level is % (was gal). Page 1 moved to psi too. <b>Page 3 still shows <code>ECU FUEL P</code> in bar</b></td></tr><tr><td>10</td><td>Lambda math channel fixed to show AFR (× 14.7)</td><td><b>confirmed</b></td><td><code>AFR</code> is now <code>EXHAUST LAMBDA</code> × 14.7; it was computed from <code>ECU ENG EFICY</code>, an engine-efficiency channel. The page 2 field now carries the unit <b>lambda</b> while showing AFR — worth a look on the dash. (The parser prints this operator as &quot;+&quot;; for a linear-correction channel it is the gain. A parser label to fix, not a config fault)</td></tr><tr><td>11</td><td>Page 2 gains oil temp, oil pressure, lambda, coolant pressure, coolant temp, MAP, battery voltage and GPS speed</td><td><b>confirmed</b></td><td>All present, with <code>SPEED</code> for speed. Lambda was already on the page as <code>AFR</code>. IAT and yaw rate were added too</td></tr><tr><td>12</td><td>The dash camera comes on only in reverse or 1st <b>between 500 and 1500 rpm</b>; before, it came on as soon as the engine ran</td><td><b>contradicted in part</b></td><td><code>rear_camera</code>: <code>GEAR == 1 OR GEAR == R</code> — <b>no rpm window</b>. The <i>old</i> condition was the rpm window alone, <code>RPM 01 &gt; 500 AND &lt; 1500</code>, so &quot;came on as soon as the engine ran&quot; does not describe the old file either</td></tr></tbody></table></div>
+<h2>Not in the email</h2>
+<p>Differences the diff shows that the email does not mention. They may be part of this update or older drift: the earlier file was itself edited after it was last sent.</p>
+<p><b>Power and keypad</b></p>
+<ul><li><b>The Ignition key became a Power key.</b> All four MoTeC / coil / injector / VSS feeds — Black 6/7, Grey 1/2 and Grey 24/25 — now switch on <code>Power == ON</code>. That <b>fixes confirmed fault 1</b> (Grey 24/25 live with ignition off). It also closes the cheap way to answer open question 2 in the car README, which relied on that fault. The keypad position of the new key is not decoded; <code>pdm32.json</code> assumes K1, where Ignition was.</li><li><b>The compressor output</b> (Grey 34/35) is renamed <code>CMPSR PMP</code> and switches on the Power key, instead of <code>Ext Battery &gt; 12.0 V AND IGNITION</code>. The <code>Compressor power</code> key (K11), which no output ever used, is gone. Whether this output powers the compressor or only signals its relay is still open; this file does not settle it.</li><li><b>The alternator output</b> (Grey 7, 10 A) is now <b>enabled, always on</b>. <code>data/pdm32.json</code> records the alternator field as on M150 HB9, so which of the two drives it is a question for the loom.</li></ul>
+<p><b>Fuel pumps</b></p>
+<ul><li>The old Fuel Pump 1/2 (Black 2/3) are renamed <code>LIFT PUMP</code> / <code>LIFT PUMP 2</code>.</li><li>Two previously disabled outputs, Mid power out 9 and 10 (Grey 4/5), are enabled as <code>FUEL PUMP 1</code> / <code>FUEL PUMP 2</code> — the 31 rpm / 50 rpm pair in item 3.</li></ul>
+<p><b>Protection settings</b></p>
+<ul><li>The <b>inductive-load</b> flag was cleared on both lift pumps and both radiator fans, and set on <code>PCM12Vpwr2</code>. Inrush was cleared on Rad Fan 2 and set on both new fuel pumps. The audit&#x27;s inductive-load warning now lists seven outputs, up from five.</li></ul>
+<p><b>Alarms and display</b></p>
+<ul><li><code>ALT OVER CHARGING</code> was <b>removed</b>.</li><li>The battery warning icon&#x27;s threshold moved from 12.0 V to 11.8 V.</li><li>Page 2 <b>lost</b> the knock (cylinders 1, 2, 4), ignition timing, fuel time, fuel used and <code>Sensor Failure 6</code> fields. Page 1 lost <code>ECU GEAR</code> for <code>Calculated Gear</code>.</li><li>Many channels were <b>renamed</b> — <code>RPM 01</code> → <code>ENGINE RPM</code>, <code>Water Temp 01</code> → <code>WATER TEMP</code>, <code>Oil P 01</code> → <code>OIL PRESS</code>, <code>GPS Speed</code> → <code>SPEED</code>, and more. The underlying channel IDs for RPM and coolant are unchanged (15 and 4241), so the fan and pump automations still read the same CAN stream.</li><li>The SmartyCam overlay went from 9 to 22 mapped functions. The brake-pressure slot is fed from oil pressure, as before.</li></ul>
+<p><b>Still open from before</b></p>
+<ul><li>Confirmed fault 2 is untouched: the headlight outputs (Black 12/23) still never switch on, and the High Beam icon still watches the cabin fan.</li><li>The shift lights still start at 8200 rpm.</li></ul>
+<h2>What changed in the repo</h2>
+<ul><li><code>car.json</code> points the PDM at <code>M3 PDM32 2026-10-22.zconf2</code>. Three new log markers (<code>CMPSR_PMP</code>, <code>LIFT_PUMP_2</code>, <code>surge_tank_switc</code>) join the old eight, which stay so logs from before the update still match.</li><li><code>data/pdm32.json</code> re-read for the outputs, feeds and keys above. The schematic shows one red fault instead of two, and the three-alarm caveat.</li><li><code>04-config-audit</code> regenerated from the new file. Its check for an alarm &quot;measuring the wrong quantity&quot; read only the first channel in a condition, and flagged LOW FUEL PRESSURE because that channel is rpm. It now passes an alarm if any of its channels has the right unit. Against the old file it still catches <code>ECU Voltage Low</code>.</li></ul>
+<h2>The adapter flange</h2>
+<p><code>source/parts/ATL adapter flange 2026-10-23.stl</code> — a binary STL from an Autodesk exporter, 6,802 triangles, watertight. STL carries no units; the dimensions are only plausible in millimetres.</p>
+<div class=tbl><table><thead><tr><th></th><th></th></tr></thead><tbody><tr><td>Outside diameter</td><td>147.3 mm</td></tr><tr><td>Through bore</td><td>89.7 mm</td></tr><tr><td>Underside</td><td>a flat spigot, 120 mm across and 5 mm proud</td></tr><tr><td>Top</td><td>contoured, not flat — roughly a 170 mm radius one way, with some twist; 26.5 mm at its highest</td></tr><tr><td>Volume</td><td>124 cm³ (about 335 g in aluminium)</td></tr></tbody></table></div>
+<p>There are <b>no bolt holes</b>, and at the low points of the contour only about 4 mm of material sits above the flange&#x27;s underside. An STL has no tolerances or threads; if it is to be machined, a STEP or the native CAD file is the better thing to ask for.</p><footer>rendered from <code>05-pdm-update-2026-10-22.md</code> — edit that, not this — <code>render/docs.py</code></footer></div></body></html>
