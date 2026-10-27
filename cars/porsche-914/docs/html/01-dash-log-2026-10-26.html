@@ -1,0 +1,69 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The 26 Oct 2026 dash log — what it settles, and what it shows</title>
+<style>:root{color-scheme:light;--s1:#fcfcfb;--pg:#f9f9f7;--tp:#0b0b0b;--ts:#52514e;--tm:#898781;
+--gl:#e1e0d9;--bl:#c3c2b7;--bd:rgba(11,11,11,.10);--crit:#d03b3b;--warn:#fab219;--good:#0ca30c;}
+@media(prefers-color-scheme:dark){:root:where(:not([data-theme=light])){color-scheme:dark;
+--s1:#1a1a19;--pg:#0d0d0d;--tp:#fff;--ts:#c3c2b7;--tm:#898781;--gl:#2c2c2a;--bl:#383835;
+--bd:rgba(255,255,255,.10);}}
+:root[data-theme=dark]{color-scheme:dark;--s1:#1a1a19;--pg:#0d0d0d;--tp:#fff;--ts:#c3c2b7;
+--tm:#898781;--gl:#2c2c2a;--bl:#383835;--bd:rgba(255,255,255,.10);}
+*{box-sizing:border-box}
+body{margin:0;background:var(--pg);color:var(--tp);
+font:14px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1400px;margin:0 auto;padding:32px 24px 64px}
+h1{font-size:24px;margin:0 0 4px;letter-spacing:-.01em}
+.sub{color:var(--ts);margin:0 0 4px}
+.meta{color:var(--tm);font-size:12px;margin:0 0 24px}
+h2{font-size:16px;margin:40px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--gl)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;padding:12px 14px;background:var(--s1);
+border:1px solid var(--bd);border-radius:8px;margin-bottom:20px}
+.lg{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--ts);white-space:nowrap}
+.lg i{width:11px;height:11px;border-radius:3px;flex:none}
+.conn header{padding:11px 14px;border-bottom:1px solid var(--gl)}
+.conn h3{margin:0;font-size:14px}
+.conn header p{margin:2px 0 0;font-size:11.5px;color:var(--tm)}
+.grid{display:flex;flex-direction:column}
+.pin:last-child{border-bottom:0}
+.hd{font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--tm);
+background:var(--pg);padding-top:6px;padding-bottom:6px}
+.pn{font-variant-numeric:tabular-nums;color:var(--tm);text-align:right}
+.f-crit{background:color-mix(in srgb,var(--crit) 11%,transparent)}
+.f-warn{background:color-mix(in srgb,var(--warn) 13%,transparent)}
+.note{background:var(--s1);border:1px solid var(--bd);border-left:3px solid var(--crit);
+border-radius:8px;padding:12px 15px;margin:0 0 16px;font-size:13px;color:var(--ts)}
+.note b{color:var(--tp)}
+.note.w{border-left-color:var(--warn)}
+code{font:11.5px ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--pg);
+padding:1px 5px;border-radius:4px;border:1px solid var(--gl)}
+th{text-align:left;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;
+color:var(--tm);padding:8px 12px;background:var(--pg);border-bottom:1px solid var(--gl)}
+td{padding:5px 12px;border-bottom:1px solid var(--gl);color:var(--ts);vertical-align:top}
+td:first-child{font-weight:600;color:var(--tp);white-space:nowrap}
+tr:last-child td{border-bottom:0}
+footer{margin-top:44px;padding-top:14px;border-top:1px solid var(--gl);font-size:11.5px;color:var(--tm)}
+h3{font-size:14px;margin:28px 0 8px}h4{font-size:13px;margin:20px 0 6px}
+p{max-width:76ch}li{max-width:72ch;margin:3px 0}ul,ol{padding-left:24px;color:var(--ts)}
+pre{background:var(--s1);border:1px solid var(--bd);border-radius:8px;padding:12px 15px;overflow-x:auto}
+pre code{border:0;background:none;padding:0;font-size:12px;line-height:1.5}
+blockquote{margin:12px 0;padding:2px 16px;border-left:3px solid var(--bl);color:var(--ts)}
+.tbl{overflow-x:auto}table{border-collapse:collapse;min-width:50%}
+hr{border:0;border-top:1px solid var(--gl);margin:32px 0}
+a{color:inherit}
+</style></head><body><div class="wrap">
+<p class="meta"><a href="index.html">&larr; all docs</a></p><h1>The 26 Oct 2026 dash log — what it settles, and what it shows</h1>
+<p>One AiM <code>.xrk</code> from the MXP, recorded 26 Oct 2026 at Monticello (track &quot;MMC Full&quot;, session &quot;Generic testing&quot;), 181 channels. It is run data and stays local like every log here; this page records what was read out of it. It was read with <code>parsers/aim_xrk.py</code>, using <b>the file&#x27;s own group table</b> to name the ECU stream. The reader&#x27;s built-in stream names were fitted to the M3&#x27;s MoTeC ECU and do not apply to this car.</p>
+<h2>What it settles</h2>
+<p><b>The committed dash configuration is the one in the car.</b> Every expansion module the <code>.zconf2</code> declares with a serial number appears in the log under the same serial, with the same channel names:</p>
+<div class=tbl><table><thead><tr><th>Module</th><th>Serial</th><th>In the log</th></tr></thead><tbody><tr><td>LambdaCAN</td><td>1011938</td><td>yes</td></tr><tr><td>Channel Expander (×6)</td><td>2001138, 2002023, 2000317, 2001145, 2001272, 2002012</td><td>yes, all six</td></tr><tr><td>K8 keypad</td><td>1900122</td><td>yes</td></tr><tr><td>EPM08</td><td>3800108</td><td>yes, with its outputs named: fuel pump, coils, trans pump, trans fan, LCU, injectors</td></tr></tbody></table></div>
+<p>The shift light and the GS dash carry serial 0 in the configuration and log no channels of their own. Placeholder channels the configuration leaves unnamed (<code>0Ch02</code>, <code>2Ch04</code> and the like) are not logged, which is consistent with nothing being wired to them. That last point is a reading, not a check.</p>
+<p><b>The ECU and the dash agree on the CAN link.</b> The tune sets <code>CAN Protocol MaxxECU = 1</code>, and the dash reads the ECU with AiM&#x27;s &quot;MAXXECU - CAN&quot; driver on frames from <code>0x520</code> up, with 33 of the driver&#x27;s 90 channels enabled. The ECU values in the log are those 33.</p>
+<h2>What it shows</h2>
+<p><b>Neither committed tune is what the car runs</b> — <i>probable</i>. The ECU&#x27;s own firmware channel reads <code>11.53</code> throughout, which reads as firmware 1.153. The committed tunes are 1.149 (<code>source/2024-5-13.MaxxECU-save</code>) and 1.147 (the 2023 &quot;after dyno&quot; file). The tune embedded in the 27 Apr 2025 MaxxECU log is 1.153.18144, and it already differs from the 2024 file in 27 settings, including lambda control (<code>Lambdareg Type</code> 0 → 2, <code>Lambdareg MinCLT</code> 10 → 90). Ignition cannot tell the tunes apart: the logged ignition angle fits all three within 0.1° median, the embedded one slightly best. What settles it is a tune saved from the ECU now. See <a href="02-whats-needed.html"><code>02-whats-needed.md</code></a>.</p>
+<p><b>Lambda A was not reading in this session</b> — <i>probable</i>. Above 2,000 rpm, <code>LambA</code> sits at exactly 2.4 on 50,806 of 55,728 samples (91%) and never drops below 1.5. Over the same samples the lambda correction <code>LaCorA</code> sits at +5% on 79%: closed loop adding fuel to chase a reading that does not move. <code>LambB</code> is 0 throughout. In the 27 Apr 2025 MaxxECU log the same sensor read a plausible 0.63–0.90, with correction between −5% and 0. A flat 2.4 is the shape of a sensor that is disconnected, unheated or failed rather than a real mixture. What it is not: proof of a lean engine. The dash&#x27;s own LambdaCAN would be the cross-check, and the reader does not decode expansion-module data yet (below).</p>
+<p>Other ECU channels look ordinary: coolant 73.6–97.2 °C, intake air 26.7–34.8 °C, rpm to 7,368, error count 0 throughout.</p>
+<h2>What the reader could not do with this file</h2>
+<p>These are gaps in <code>parsers/aim_xrk.py</code> that this file exposed, not facts about the car:</p>
+<ul><li><b>No expansion-module data.</b> The LambdaCAN, channel expander and EPM08 input channels are declared in the log but no samples are decoded for them, so oil pressure, fuel pressure, the module temperatures and the dash&#x27;s own lambda are not read.</li><li><b>Four stream groups come back empty</b>: lambda target; the three knock channels; <code>Fuel_Pressure_1</code>; the virtual fuel tank.</li><li><b>The lap list is wrong.</b> It reports 1,619 laps. The first three durations are plausible (176.4 s and 178.3 s for laps 1 and 2); every one after repeats 174.993 s.</li><li><b>The built-in stream names are the M3&#x27;s.</b> For this car the names come from the file&#x27;s group table (<code>group_table()</code>), which is what this page used.</li></ul>
+<h2>Also settled with the MaxxECU log</h2>
+<p>The MaxxECU tune&#x27;s table row order, previously probable, is now <b>confirmed</b>: the 27 Apr 2025 log carries the tune it was running, and reading that tune&#x27;s Lambda Table 1 the way the parser does reproduces the logged lambda target exactly on 17,276 of 21,302 samples, against 721 with the rows reversed. The evidence lives in <code>formats/maxxecu_map.json</code> under <code>table_row_order</code>, and <code>parsers/test_maxxecu.py</code> repeats the check.</p><footer>rendered from <code>01-dash-log-2026-10-26.md</code> — edit that, not this — <code>render/docs.py</code></footer></div></body></html>
