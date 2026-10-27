@@ -1,0 +1,71 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Did the tune look right, and did any alarm go off?</title>
+<style>:root{color-scheme:light;--s1:#fcfcfb;--pg:#f9f9f7;--tp:#0b0b0b;--ts:#52514e;--tm:#898781;
+--gl:#e1e0d9;--bl:#c3c2b7;--bd:rgba(11,11,11,.10);--crit:#d03b3b;--warn:#fab219;--good:#0ca30c;}
+@media(prefers-color-scheme:dark){:root:where(:not([data-theme=light])){color-scheme:dark;
+--s1:#1a1a19;--pg:#0d0d0d;--tp:#fff;--ts:#c3c2b7;--tm:#898781;--gl:#2c2c2a;--bl:#383835;
+--bd:rgba(255,255,255,.10);}}
+:root[data-theme=dark]{color-scheme:dark;--s1:#1a1a19;--pg:#0d0d0d;--tp:#fff;--ts:#c3c2b7;
+--tm:#898781;--gl:#2c2c2a;--bl:#383835;--bd:rgba(255,255,255,.10);}
+*{box-sizing:border-box}
+body{margin:0;background:var(--pg);color:var(--tp);
+font:14px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1400px;margin:0 auto;padding:32px 24px 64px}
+h1{font-size:24px;margin:0 0 4px;letter-spacing:-.01em}
+.sub{color:var(--ts);margin:0 0 4px}
+.meta{color:var(--tm);font-size:12px;margin:0 0 24px}
+h2{font-size:16px;margin:40px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--gl)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;padding:12px 14px;background:var(--s1);
+border:1px solid var(--bd);border-radius:8px;margin-bottom:20px}
+.lg{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--ts);white-space:nowrap}
+.lg i{width:11px;height:11px;border-radius:3px;flex:none}
+.conn header{padding:11px 14px;border-bottom:1px solid var(--gl)}
+.conn h3{margin:0;font-size:14px}
+.conn header p{margin:2px 0 0;font-size:11.5px;color:var(--tm)}
+.grid{display:flex;flex-direction:column}
+.pin:last-child{border-bottom:0}
+.hd{font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--tm);
+background:var(--pg);padding-top:6px;padding-bottom:6px}
+.pn{font-variant-numeric:tabular-nums;color:var(--tm);text-align:right}
+.f-crit{background:color-mix(in srgb,var(--crit) 11%,transparent)}
+.f-warn{background:color-mix(in srgb,var(--warn) 13%,transparent)}
+.note{background:var(--s1);border:1px solid var(--bd);border-left:3px solid var(--crit);
+border-radius:8px;padding:12px 15px;margin:0 0 16px;font-size:13px;color:var(--ts)}
+.note b{color:var(--tp)}
+.note.w{border-left-color:var(--warn)}
+code{font:11.5px ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--pg);
+padding:1px 5px;border-radius:4px;border:1px solid var(--gl)}
+th{text-align:left;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;
+color:var(--tm);padding:8px 12px;background:var(--pg);border-bottom:1px solid var(--gl)}
+td{padding:5px 12px;border-bottom:1px solid var(--gl);color:var(--ts);vertical-align:top}
+td:first-child{font-weight:600;color:var(--tp);white-space:nowrap}
+tr:last-child td{border-bottom:0}
+footer{margin-top:44px;padding-top:14px;border-top:1px solid var(--gl);font-size:11.5px;color:var(--tm)}
+h3{font-size:14px;margin:28px 0 8px}h4{font-size:13px;margin:20px 0 6px}
+p{max-width:76ch}li{max-width:72ch;margin:3px 0}ul,ol{padding-left:24px;color:var(--ts)}
+pre{background:var(--s1);border:1px solid var(--bd);border-radius:8px;padding:12px 15px;overflow-x:auto}
+pre code{border:0;background:none;padding:0;font-size:12px;line-height:1.5}
+blockquote{margin:12px 0;padding:2px 16px;border-left:3px solid var(--bl);color:var(--ts)}
+.tbl{overflow-x:auto}table{border-collapse:collapse;min-width:50%}
+hr{border:0;border-top:1px solid var(--gl);margin:32px 0}
+a{color:inherit}
+</style></head><body><div class="wrap">
+<p class="meta"><a href="index.html">&larr; all docs</a></p><h1>Did the tune look right, and did any alarm go off?</h1>
+<p>Two logs: the dash&#x27;s from 26 Oct 2026 (Monticello) and the ECU&#x27;s own from 27 Apr 2025. Both are run data and stay local; this page records what was read out of them. Where a check could not be made, it says so and why.</p>
+<p><b>A caution on durations.</b> The dash log&#x27;s sample times do not hold up: they give 600 samples to each of the first 21 minutes and 49,000 to the last one, for a stream that runs at a steady ~47 Hz. Durations below are therefore given as a share of the session&#x27;s samples, with the seconds that share would be if sampling was even.</p>
+<h2>The tune</h2>
+<p><b>Ignition did what the tune says.</b> At every logged rpm and throttle, the ignition angle matches the tune&#x27;s IgnAdv Table 1: median error 0.08°, within 0.15° on 84–89% of samples, against any of the three tunes held (their tables are too close for the log to pick between them). The ECU trimmed timing by up to 5° on about 15% of samples. Why is not read: the knock channels come back empty from this file.</p>
+<p><b>Nothing reached a limit.</b> Peak 7,368 rpm against a rev limit of 7,500 (control range 200, from the 1.153 tune in the April 2025 log). Fuel cut and ignition cut are 0 for the whole session. Coolant ran 73.6–97.2 °C and intake air 26.7–34.8 °C; the ECU&#x27;s error channel is 0 throughout.</p>
+<p><b>Mixture cannot be judged.</b> Lambda A sat at a flat 2.4 (see <a href="01-dash-log-2026-10-26.html"><code>01-dash-log-2026-10-26.md</code></a>), and closed loop added +5% fuel on 39% of full-throttle samples chasing it. The logged lambda target comes back empty from this file, so it could not be set against the tune&#x27;s lambda table either.</p>
+<p><b>Injector duty is worth a look</b> — <i>probable</i>. It peaked at 88.1%, above 80% on 91 samples and above 85% on 20, all between 6,600 and 7,370 rpm. That is close to where an injector runs out of headroom. Some of it is the +5% the dead lambda reading was adding, so it may fall once the sensor is fixed. This reads the dash&#x27;s <code>FuelDut</code> channel as a plain percentage, which has not been checked against MTune.</p>
+<h2>The dash&#x27;s alarms</h2>
+<p>The configuration sets 16: thirteen LED alarms and three text messages. One LED alarm (<code>Batt_Fan</code>) is listed twice. Thresholds as the reader decodes them:</p>
+<div class=tbl><table><thead><tr><th>Alarm</th><th>Condition</th></tr></thead><tbody><tr><td>Batt_Fan</td><td>RPM &gt; 500 and Ext Battery &lt; 12.5 V, held 2 s</td></tr><tr><td>Oil_Press_Low</td><td>(RPM &gt; 500 and oil pressure &lt; 10 psi) or (RPM &gt; 3,000 and &lt; 30 psi)</td></tr><tr><td>Low_Fuel_Press</td><td>RPM &gt; 500 and fuel pressure &lt; 45 psi</td></tr><tr><td>Oil_Filter_Hot / Warm / Cold</td><td>RPM &gt; 500 and filter &gt; 295 °F / &gt; 275 °F; RPM <b>&lt;</b> 500 and &lt; 140 °F</td></tr><tr><td>Oil_Tank_Hot / Warm / Cold</td><td>RPM &gt; 500 and tank &gt; 255 °F / &gt; 240 °F / &lt; 140 °F</td></tr><tr><td>Trans_Hot / Warm / Cold</td><td>RPM &gt; 500 and trans &gt; 205 °F / &gt; 200 °F / &lt; 125 °F</td></tr><tr><td>EPM_Error</td><td>RPM &gt; 500 and the EPM08&#x27;s SV_Error is not in its first state (the formula&#x27;s last operator is not decoded, so probable)</td></tr><tr><td>Text: Oil filter warm, Oil tank warm, Trans warm</td><td>the same conditions as the LED alarms of those names</td></tr></tbody></table></div>
+<p><b>The log does not say which fired.</b> Fourteen of the fifteen alarm channels come back with no samples. The fifteenth, EPM_Error, reads a constant 13,248 — the same word the K8&#x27;s unlit button LEDs carry, so a placeholder, not a state. What can be done is to evaluate a condition from its source channels, and only one alarm&#x27;s sources are readable:</p>
+<p><b>Batt_Fan would have been on for the first stretch of the session</b> — <i>probable</i>. The dash&#x27;s own battery input read 11.46–12.5 V over the first 10% of samples (about 2 minutes if evenly spaced) with the engine near 1,350 rpm, and the ECU&#x27;s battery channel agrees: 11.27 V minimum, 11.81 V median. Once driving it ran at about 13.6 V. Below 12.5 V at that idle speed reads as the charging system not keeping up at idle; it recovers as soon as the revs rise. The oil pressure, fuel pressure and oil and transmission temperature alarms cannot be evaluated: their sensors are on expansion modules whose data the reader does not decode yet.</p>
+<p><b>Every alarm depends on the dash&#x27;s own RPM input</b> — <i>not established</i>. The &quot;RPM&quot; in these conditions is channel id 15, the MXP&#x27;s RPM input on pin 15 of the 37-pin connector, not the ECU&#x27;s rpm, which arrives over CAN. That channel is not in the 26 Oct log. The rev counter on display pages 2 and 3 and the shift lights use the same input. If the rev counter works, the input is live and the alarms arm as intended. If it does not, every alarm gated on &quot;RPM &gt; 500&quot; can never fire, and Oil_Filter_Cold, gated on RPM &lt; 500, lights whenever the filter is under 140 °F. See <a href="02-whats-needed.html"><code>02-whats-needed.md</code></a>.</p>
+<p><b>What switches the EPM08&#x27;s outputs.</b> The keypad does most of it. The coils, LCU and injector outputs are triggered by <code>IGN == S1</code>: button 1 on the <b>K8 keypad</b> (serial 1900122), named &quot;IGN&quot;. The fuel pump is triggered by the EPM08&#x27;s own FP_Trigger input. Wipers 1 and 2 are set never-on, which is why neither is in the 26 Oct log. The page showed all three of the keypad&#x27;s outputs as <code>FP Trigger == S1</code> until 27 Oct 2026: the EPM08&#x27;s input and the K8&#x27;s button share a channel id and input number, and the reader ignored the module serial that tells them apart. That is fixed in <code>parsers/aim_zconf.py</code>.</p>
+<h2>The ECU&#x27;s own errors (27 Apr 2025 log)</h2>
+<ul><li><b>Error code count 0</b> and <b>ignition cut never</b>, across all 21,566 rows.</li><li><b>Three trigger sync losses, all with the engine stopped.</b> The lost-sync count steps 0 → 3 between 693.6 s and 697.4 s, with rpm at 0 on every row that is out of sync. That is the engine stopping or restarting, not a fault while running.</li><li><b>23 fuel cuts, all on overrun.</b> 3,532–4,850 rpm with the throttle closed on 98% of the cut rows; the two exceptions are the row the throttle reopens on.</li></ul>
+<p>The 26 Oct dash log carries the same ECU channels over CAN: error 0, fuel cut 0, ignition cut 0 throughout.</p><footer>rendered from <code>03-tune-and-alarms.md</code> — edit that, not this — <code>render/docs.py</code></footer></div></body></html>
