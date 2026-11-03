@@ -1,0 +1,57 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>What is still needed, and what each item settles</title>
+<style>:root{color-scheme:light;--s1:#fcfcfb;--pg:#f9f9f7;--tp:#0b0b0b;--ts:#52514e;--tm:#898781;
+--gl:#e1e0d9;--bl:#c3c2b7;--bd:rgba(11,11,11,.10);--crit:#d03b3b;--warn:#fab219;--good:#0ca30c;}
+@media(prefers-color-scheme:dark){:root:where(:not([data-theme=light])){color-scheme:dark;
+--s1:#1a1a19;--pg:#0d0d0d;--tp:#fff;--ts:#c3c2b7;--tm:#898781;--gl:#2c2c2a;--bl:#383835;
+--bd:rgba(255,255,255,.10);}}
+:root[data-theme=dark]{color-scheme:dark;--s1:#1a1a19;--pg:#0d0d0d;--tp:#fff;--ts:#c3c2b7;
+--tm:#898781;--gl:#2c2c2a;--bl:#383835;--bd:rgba(255,255,255,.10);}
+*{box-sizing:border-box}
+body{margin:0;background:var(--pg);color:var(--tp);
+font:14px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1400px;margin:0 auto;padding:32px 24px 64px}
+h1{font-size:24px;margin:0 0 4px;letter-spacing:-.01em}
+.sub{color:var(--ts);margin:0 0 4px}
+.meta{color:var(--tm);font-size:12px;margin:0 0 24px}
+h2{font-size:16px;margin:40px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--gl)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;padding:12px 14px;background:var(--s1);
+border:1px solid var(--bd);border-radius:8px;margin-bottom:20px}
+.lg{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--ts);white-space:nowrap}
+.lg i{width:11px;height:11px;border-radius:3px;flex:none}
+.conn header{padding:11px 14px;border-bottom:1px solid var(--gl)}
+.conn h3{margin:0;font-size:14px}
+.conn header p{margin:2px 0 0;font-size:11.5px;color:var(--tm)}
+.grid{display:flex;flex-direction:column}
+.pin:last-child{border-bottom:0}
+.hd{font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--tm);
+background:var(--pg);padding-top:6px;padding-bottom:6px}
+.pn{font-variant-numeric:tabular-nums;color:var(--tm);text-align:right}
+.f-crit{background:color-mix(in srgb,var(--crit) 11%,transparent)}
+.f-warn{background:color-mix(in srgb,var(--warn) 13%,transparent)}
+.note{background:var(--s1);border:1px solid var(--bd);border-left:3px solid var(--crit);
+border-radius:8px;padding:12px 15px;margin:0 0 16px;font-size:13px;color:var(--ts)}
+.note b{color:var(--tp)}
+.note.w{border-left-color:var(--warn)}
+code{font:11.5px ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--pg);
+padding:1px 5px;border-radius:4px;border:1px solid var(--gl)}
+th{text-align:left;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;
+color:var(--tm);padding:8px 12px;background:var(--pg);border-bottom:1px solid var(--gl)}
+td{padding:5px 12px;border-bottom:1px solid var(--gl);color:var(--ts);vertical-align:top}
+td:first-child{font-weight:600;color:var(--tp);white-space:nowrap}
+tr:last-child td{border-bottom:0}
+footer{margin-top:44px;padding-top:14px;border-top:1px solid var(--gl);font-size:11.5px;color:var(--tm)}
+h3{font-size:14px;margin:28px 0 8px}h4{font-size:13px;margin:20px 0 6px}
+p{max-width:76ch}li{max-width:72ch;margin:3px 0}ul,ol{padding-left:24px;color:var(--ts)}
+pre{background:var(--s1);border:1px solid var(--bd);border-radius:8px;padding:12px 15px;overflow-x:auto}
+pre code{border:0;background:none;padding:0;font-size:12px;line-height:1.5}
+blockquote{margin:12px 0;padding:2px 16px;border-left:3px solid var(--bl);color:var(--ts)}
+.tbl{overflow-x:auto}table{border-collapse:collapse;min-width:50%}
+hr{border:0;border-top:1px solid var(--gl);margin:32px 0}
+a{color:inherit}
+</style></head><body><div class="wrap">
+<p class="meta"><a href="index.html">&larr; all docs</a></p><h1>What is still needed, and what each item settles</h1>
+<p>Everything on the car&#x27;s page is read from one VCM Editor template. Only two of its 309 IDs are bound to names. These are the things that file cannot say, in the order they should be done. None of them changes or flashes the tune.</p>
+<div class=tbl><table><thead><tr><th>#</th><th>Ask for</th><th>Why</th><th>What it settles</th></tr></thead><tbody><tr><td><b>1 — next</b></td><td>Five single-parameter templates in VCM Editor, one each for <code>TCS Enable ECT</code>, <code>Delivered Torque Max</code>, <code>BTM disabled by TCS</code>, <code>Brake Torque Limit</code> and <code>Brake Torque Limit Mult</code>. Each is a new template holding only that parameter, saved as <code>.htt</code>.</td><td>These five bear directly on how traction control and brake torque management behave. The names export lists them but carries no IDs, so none of them can be found in the 309-record template yet.</td><td>Each parameter&#x27;s ID.</td></tr><tr><td><b>2 — with item 1</b></td><td>Parse each template and check its record count.</td><td>A one-record template binds its name to that record&#x27;s ID. VCM Editor may add dependency records; if a template holds more than one, compare it against an empty or baseline template to find the selected parameter.</td><td>That each binding is real, not assumed.</td></tr><tr><td><b>3 — no new file</b></td><td>Read the five bound IDs out of <code>source/c7-corvette-torque-management.htt</code>.</td><td>Their values are already in this export, unnamed.</td><td>The car&#x27;s actual values and tables for those five parameters.</td></tr><tr><td><b>4 — the comparison</b></td><td>The same five-parameter selection exported from the closest stock calibration available: an E92A controller, a 2017 LT1 Corvette with the manual transmission, preferably OS <code>12678648</code>, with matching segment IDs where possible.</td><td>Values at numeric ceilings (see <a href="01-template-inventory.html"><code>01-template-inventory.md</code></a>) may be factory or tuner; only stock can tell.</td><td>Which of the five differ from stock, and by how much. Confirm the IDs match with the same single-parameter method on the stock file.</td></tr><tr><td><b>5 — later</b></td><td>More single-parameter templates as questions need them: <code>Max Engine Torque Limit</code>, the Driver Demand tables (<code>Driver Demand - A</code>, <code>- B</code>, <code>- C</code>, <code>- Reduced Power</code>, <code>Torque Shaping</code>, <code>Calculated VSS</code>, <code>NV Ratio</code>), <code>Pass By Torque Torque Limit</code>, and the torque-model coefficients <code>Engine Torque Coeff AirmassSq A/B/D</code>, <code>Exhaust Cam Angle Map</code> and <code>EQ Ratio</code>.</td><td>The rest of the template stays unnamed until then.</td><td>Names for the remaining tables that matter.</td></tr><tr><td><b>6 — after the comparison</b></td><td>VCM Scanner and CAN logs from normal driving: rpm, speed, gear, pedal and throttle; requested and delivered torque with limit and reduction sources; airmass, MAP, MAF and temperatures; cam positions; spark and knock retard; traction control and ABS activity, brake pressure and wheel speeds.</td><td>Whether any limit ever acts on the car, and what traction control actually requests.</td><td>Behaviour, not just settings. Any loaded testing only on a suitable dyno or closed course with an experienced operator.</td></tr></tbody></table></div>
+<p>When an item lands, the file goes into <code>source/</code> with <code>garage.py add-source</code> (or, for a binding, into <code>car.json</code>&#x27;s <code>bindings</code> with its evidence), and the row it settles moves in the same commit.</p><footer>rendered from <code>02-whats-needed.md</code> — edit that, not this — <code>render/docs.py</code></footer></div></body></html>

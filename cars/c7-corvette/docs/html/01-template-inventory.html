@@ -1,0 +1,78 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>What the torque-management template establishes</title>
+<style>:root{color-scheme:light;--s1:#fcfcfb;--pg:#f9f9f7;--tp:#0b0b0b;--ts:#52514e;--tm:#898781;
+--gl:#e1e0d9;--bl:#c3c2b7;--bd:rgba(11,11,11,.10);--crit:#d03b3b;--warn:#fab219;--good:#0ca30c;}
+@media(prefers-color-scheme:dark){:root:where(:not([data-theme=light])){color-scheme:dark;
+--s1:#1a1a19;--pg:#0d0d0d;--tp:#fff;--ts:#c3c2b7;--tm:#898781;--gl:#2c2c2a;--bl:#383835;
+--bd:rgba(255,255,255,.10);}}
+:root[data-theme=dark]{color-scheme:dark;--s1:#1a1a19;--pg:#0d0d0d;--tp:#fff;--ts:#c3c2b7;
+--tm:#898781;--gl:#2c2c2a;--bl:#383835;--bd:rgba(255,255,255,.10);}
+*{box-sizing:border-box}
+body{margin:0;background:var(--pg);color:var(--tp);
+font:14px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1400px;margin:0 auto;padding:32px 24px 64px}
+h1{font-size:24px;margin:0 0 4px;letter-spacing:-.01em}
+.sub{color:var(--ts);margin:0 0 4px}
+.meta{color:var(--tm);font-size:12px;margin:0 0 24px}
+h2{font-size:16px;margin:40px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--gl)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;padding:12px 14px;background:var(--s1);
+border:1px solid var(--bd);border-radius:8px;margin-bottom:20px}
+.lg{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--ts);white-space:nowrap}
+.lg i{width:11px;height:11px;border-radius:3px;flex:none}
+.conn header{padding:11px 14px;border-bottom:1px solid var(--gl)}
+.conn h3{margin:0;font-size:14px}
+.conn header p{margin:2px 0 0;font-size:11.5px;color:var(--tm)}
+.grid{display:flex;flex-direction:column}
+.pin:last-child{border-bottom:0}
+.hd{font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--tm);
+background:var(--pg);padding-top:6px;padding-bottom:6px}
+.pn{font-variant-numeric:tabular-nums;color:var(--tm);text-align:right}
+.f-crit{background:color-mix(in srgb,var(--crit) 11%,transparent)}
+.f-warn{background:color-mix(in srgb,var(--warn) 13%,transparent)}
+.note{background:var(--s1);border:1px solid var(--bd);border-left:3px solid var(--crit);
+border-radius:8px;padding:12px 15px;margin:0 0 16px;font-size:13px;color:var(--ts)}
+.note b{color:var(--tp)}
+.note.w{border-left-color:var(--warn)}
+code{font:11.5px ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--pg);
+padding:1px 5px;border-radius:4px;border:1px solid var(--gl)}
+th{text-align:left;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;
+color:var(--tm);padding:8px 12px;background:var(--pg);border-bottom:1px solid var(--gl)}
+td{padding:5px 12px;border-bottom:1px solid var(--gl);color:var(--ts);vertical-align:top}
+td:first-child{font-weight:600;color:var(--tp);white-space:nowrap}
+tr:last-child td{border-bottom:0}
+footer{margin-top:44px;padding-top:14px;border-top:1px solid var(--gl);font-size:11.5px;color:var(--tm)}
+h3{font-size:14px;margin:28px 0 8px}h4{font-size:13px;margin:20px 0 6px}
+p{max-width:76ch}li{max-width:72ch;margin:3px 0}ul,ol{padding-left:24px;color:var(--ts)}
+pre{background:var(--s1);border:1px solid var(--bd);border-radius:8px;padding:12px 15px;overflow-x:auto}
+pre code{border:0;background:none;padding:0;font-size:12px;line-height:1.5}
+blockquote{margin:12px 0;padding:2px 16px;border-left:3px solid var(--bl);color:var(--ts)}
+.tbl{overflow-x:auto}table{border-collapse:collapse;min-width:50%}
+hr{border:0;border-top:1px solid var(--gl);margin:32px 0}
+a{color:inherit}
+</style></head><body><div class="wrap">
+<p class="meta"><a href="index.html">&larr; all docs</a></p><h1>What the torque-management template establishes</h1>
+<p>The car&#x27;s ECU is represented here by one file: a VCM Editor template (<code>source/c7-corvette-torque-management.htt</code>) exported from the car&#x27;s tune, with VCM Editor&#x27;s names export beside it. The tune itself is an encrypted <code>.hpt</code> the garage cannot read and does not hold. Everything below is read from the template&#x27;s bytes by <code>parsers/hp_tuners_htt.py</code>; what a value <i>means</i> is stated only where the evidence says so.</p>
+<h2>The file</h2>
+<div class=tbl><table><thead><tr><th>Check</th><th>Result</th></tr></thead><tbody><tr><td>Records</td><td>14 enumerations + 38 scalars + 257 tables = 309, equal to the 309 rows of the names export</td></tr><tr><td>Unique IDs</td><td>309 of 309</td></tr><tr><td>Table framing</td><td>Every table&#x27;s length prefix ends exactly on its <code>00 00</code> terminator; the file ends with a 6-byte zero trailer</td></tr><tr><td>Text</td><td>Strict UTF-8, table texts 44–5469 bytes</td></tr><tr><td>Grids</td><td>Equal-width rows in every table; no empty or non-numeric data cells</td></tr><tr><td>Not mapped</td><td>The header words <code>850, 0, 0, 0</code>; each scalar&#x27;s trailing byte</td></tr></tbody></table></div>
+<h2>Names bound to IDs</h2>
+<p>The template stores IDs and never names; the names export stores names and never IDs, so its rows are not joined to records by position. Two IDs are bound, by VCM Editor screenshots of 3 Nov 2026:</p>
+<div class=tbl><table><thead><tr><th>ID</th><th>Name</th><th>Record</th></tr></thead><tbody><tr><td>32433</td><td><code>Engine Torque Coeff AirmassSq C</code></td><td>Table, 0–30 ° (5 rows) × 550–6600 rpm, values −0.001896 to 0.001101. Byte-identical to 32432, 32434, 32435, 32436, 32437 and 32438, which stay unbound.</td></tr><tr><td>25017</td><td><code>Maximum MAP</code></td><td>Scalar: an eight-byte value decoded as 99.59999918937683; VCM Editor displays 99.60. Its original numeric representation is not established. No unit in the record.</td></tr></tbody></table></div>
+<p>Every other record is identified by its ID and the text inside its own table.</p>
+<h2>Labelled tables</h2>
+<p>A label is text written inside the table. It is not the parameter&#x27;s name.</p>
+<div class=tbl><table><thead><tr><th>ID</th><th>Label</th><th>Axes</th><th>Values</th></tr></thead><tbody><tr><td>19049</td><td><code>Torque Limit</code>, N m</td><td>0–340 km/h</td><td>0 at 0 km/h, rising to 2970 at 340 km/h</td></tr><tr><td>26460</td><td><code>Torque Limit</code>, N m</td><td>−100…100, no unit</td><td>10324 → 0 at axis 0 → −1476</td></tr><tr><td>12836</td><td><code>Torque Limit</code>, N m</td><td>0–8192 rpm</td><td>8191 in all 9 cells</td></tr><tr><td>12872</td><td><code>Wheel Torque Limit</code>, N m</td><td>0–80 kPa</td><td>131068 in all 17 cells</td></tr><tr><td>32924</td><td><code>Torque</code>, N m</td><td>1–6250 rpm</td><td>8191 in all cells</td></tr><tr><td>23618</td><td><code>Torque</code>, N m</td><td>1000–5000, axis unit <code>rpm / 1000</code></td><td>4096 in all cells</td></tr><tr><td>12820</td><td>corner <code>N m</code>; rows Reverse, 1st–8th Gear</td><td>500–3000, no unit</td><td>8191.875 in all cells</td></tr><tr><td>12838</td><td><code>Mapped Gear</code></td><td>gear rows</td><td>1st–6th → 0–5; EVT 1/2 → 5; Neutral → 7; Reverse → 1; Park → 7; <code>??</code> → 6. No 7th Gear row.</td></tr><tr><td>23619</td><td><code>On=1 Off=0</code></td><td>same gear rows</td><td>0 in every row</td></tr><tr><td>33474</td><td><code>Airmass Limit</code>, g</td><td>115–130 °C</td><td>1.2 → 0.5</td></tr><tr><td>33476</td><td><code>Airmass Limit</code>, g</td><td>90–110 °C</td><td>1.2 → 0.5</td></tr><tr><td>33478</td><td><code>Airmass Limit</code>, g</td><td>140–160 °C</td><td>1.2 → 0.5</td></tr><tr><td>33460</td><td><code>Boost Limit</code>, kPa</td><td>−30…60 °C</td><td>175–240</td></tr><tr><td>33469</td><td><code>Pressure Delta Factor</code></td><td>400–6000 rpm</td><td>1.1 flat</td></tr><tr><td>33408</td><td><code>Gain</code></td><td>1–2, no unit</td><td>4 → 0.1</td></tr><tr><td>33400, 33403, 33404</td><td><code>Gain</code></td><td>kPa</td><td>0.6–1, 0.1–1, 0–1</td></tr><tr><td>33406, 33413, 33414</td><td><code>Gain</code></td><td>g/s</td><td>0.2–1, 0.6 flat, 0.5 flat</td></tr><tr><td>32451</td><td><code>Exhaust Cam Mapping</code>, <code>°</code>, columns A/B/C/D</td><td>—</td><td>0, 10, 20, 30</td></tr></tbody></table></div>
+<p>The row set of 12838 and 23619 (EVT 1/2, <code>??</code>) is shared across GM operating systems; how this car&#x27;s 7th gear is indexed is not visible in the template.</p>
+<h2>Unlabelled tables</h2>
+<div class=tbl><table><thead><tr><th>ID</th><th>Axes</th><th>Values</th></tr></thead><tbody><tr><td>32920</td><td>N m × 1–6250 rpm × 0/10/85/100 %</td><td>480.75–1043.75; rows identical except at 3000 rpm (0 % row 843.5, others 847.5)</td></tr><tr><td>32923</td><td>same axes</td><td>8191.75 everywhere</td></tr><tr><td>27389</td><td>N m × −40…180 °C × rpm</td><td>4096 everywhere</td></tr><tr><td>12880</td><td>N m × −30…130 °C × 0–6400 rpm</td><td>0 everywhere</td></tr><tr><td>33050 = 33051 = 33052</td><td>0–260, no unit × 0–100 %</td><td>−115.2 to 655.7</td></tr><tr><td>33053</td><td>same axes</td><td>−148.1 to 113.4; its 100 % row is 0.173 × the other three&#x27;s</td></tr><tr><td>19532</td><td>575–6000 × 0–100, no units</td><td>−35 to 1070</td></tr><tr><td>9509 = 9510, 9511 = 9512</td><td>N m −50…710 × rows 0–7</td><td>negative values; row 7 and the last column −8192 / −8191</td></tr><tr><td>9513 = 9514</td><td>N m −50…400 × rows 0–7</td><td>8191.75 everywhere</td></tr><tr><td>9515 = 9516</td><td>same</td><td>23–280; row 7 8191.75</td></tr><tr><td>33482 = 33471</td><td>g × −20…0 ° × 1000–6000 rpm</td><td>0.205–0.879</td></tr><tr><td>33495</td><td>same</td><td>33482 with its columns reversed</td></tr><tr><td>32930–32934</td><td>N m × 600–3200 kPa × 900–6000 rpm</td><td>0.25–19.1</td></tr><tr><td>32447</td><td>0.8–1.6 × 0–6400, no units</td><td>0.82–1.04</td></tr><tr><td>12869</td><td>0–100 % × 0–25 km/h</td><td>1 everywhere</td></tr></tbody></table></div>
+<h2>The 208 grids</h2>
+<p>IDs 32431–32797 except 32447 and 32451 share the axes 0, 7.5, 15, 22.5, 30 ° × 550–6600 rpm. One of them is 32433, bound above. They hold 39 distinct grids:</p>
+<div class=tbl><table><thead><tr><th>Pattern</th><th>Members</th></tr></thead><tbody><tr><td>13 groups of 8</td><td>32439–32446; and 12 pairs of 4-ID blocks, 32550–32553 with 32750–32753 through 32594–32597 with 32794–32797</td></tr><tr><td>13 groups of 7</td><td>32432–32438; and 12 groups of the form 32453–32455 with 32500–32503, through 32497–32499 with 32544–32547</td></tr><tr><td>13 single tables</td><td>32431, 32452, 32456, 32460, 32464, 32468, 32472, 32476, 32480, 32484, 32488, 32492, 32496</td></tr></tbody></table></div>
+<p>The names export describes the A–D coefficient sets as interpolation sets chosen by exhaust cam angle. Identical sets are normal where a coefficient does not vary with cam angle; which set each ID is stays unbound.</p>
+<h2>Values at numeric ceilings</h2>
+<p>These are numbers at power-of-two ceilings, recorded as numbers only. Whether any of them means a limit that is never reached, and whether they differ from stock, is not established; see <a href="02-whats-needed.html"><code>02-whats-needed.md</code></a>.</p>
+<div class=tbl><table><thead><tr><th>Value</th><th>Where</th></tr></thead><tbody><tr><td>8191</td><td>12836, 32924; scalars 2850, 2851, 2869</td></tr><tr><td>8191.75</td><td>32923; 9513/9514; row 7 of 9515/9516</td></tr><tr><td>8191.875</td><td>12820</td></tr><tr><td>4096</td><td>27389, 23618; scalars 23570, 23594, 23595</td></tr><tr><td>131068</td><td>12872</td></tr><tr><td>131072</td><td>Scalars 2807, 2808, 2811–2815</td></tr><tr><td>−8192 / −8191</td><td>9509–9512</td></tr></tbody></table></div>
+<h2>Enumerations and scalars</h2>
+<p>No labels; identified by ID only.</p>
+<div class=tbl><table><thead><tr><th>Kind</th><th>IDs and values</th></tr></thead><tbody><tr><td>Enumerations</td><td>289 Enable · 295 Disabled · 247 Enable · 27388 Disabled · 20218/20219 Disable · 26590 Engine Torque · 9508 Enabled · 215 None · 216 Turbo WG · 189 DC Motor · 190/191 Vacuum · 219 Disable</td></tr><tr><td>Scalars</td><td>2807, 2808, 2811–2815 = 131072 · 2850, 2851, 2869 = 8191 · 23570, 23594, 23595 = 4096 · 3306, 3307, 3312 = 0.6 · 2861 = 255 · 23609 = 3 · 26461 = 100 · 9653 = 1170 · 9654 = 780 · 3316 = 1000 · 3317 = 70 · 3308/3309/3310 = 5/98/0 · 25015/25016 = 150/15 · 25017 = 99.59999918937683 (<code>Maximum MAP</code>)</td></tr></tbody></table></div>
+<p>Boost and supercharger entries (33460, enum 216) are part of a shared GM operating system; whether this naturally aspirated car uses them is not established.</p><footer>rendered from <code>01-template-inventory.md</code> — edit that, not this — <code>render/docs.py</code></footer></div></body></html>
